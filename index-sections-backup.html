@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Olixer Forex — Smart Forex Signals, Copy Trading &amp; Execution</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBFAF7;
+    --ink:#15171A;
+    --ink-soft:#3D4147;
+    --gray:#6C7076;
+    --gray-light:#9A9EA4;
+    --line:#E9E6E0;
+    --line-soft:#EFEDE7;
+    --card:#FFFFFF;
+    --orange:#F0821E;
+    --orange-line:#F3B27C;
+    --green:#1FA357;
+    --green-soft:#E7F6EC;
+    --blue:#2962FF;
+    --blue-soft:#E4EBFF;
+    --navy:#141B22;
+    --radius:12px;
+    --shadow-card:0 1px 2px rgba(21,23,26,.04), 0 10px 30px -12px rgba(21,23,26,.14);
+    --shadow-tile:0 2px 4px rgba(21,23,26,.05), 0 24px 48px -16px rgba(21,23,26,.18);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+
+  /* ---------- NAV ---------- */
+  nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+  .logo-mark{flex:0 0 auto}
+  .logo-name{font-size:14.5px;font-weight:700;line-height:1.15;letter-spacing:-.01em}
+  .nav-links{display:flex;align-items:center;gap:30px;list-style:none}
+  .nav-links a{
+    display:flex;align-items:center;gap:5px;
+    font-size:14px;font-weight:500;color:var(--ink-soft);text-decoration:none;
+    transition:color .18s ease;
+  }
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a svg{opacity:.55;transition:transform .18s ease}
+  .nav-links a:hover svg{transform:translateY(1px)}
+  .nav-right{display:flex;align-items:center;gap:22px}
+  .login{font-size:14px;font-weight:500;color:var(--ink-soft);text-decoration:none;transition:color .18s}
+  .login:hover{color:var(--ink)}
+  .btn-dark{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--navy);color:#fff;border:none;cursor:pointer;
+    font-family:inherit;font-size:14px;font-weight:600;
+    padding:12px 22px;border-radius:10px;text-decoration:none;
+    transition:background .18s ease, transform .18s ease;
+  }
+  .btn-dark:hover{background:#222C36;transform:translateY(-1px)}
+  .btn-ghost{
+    display:inline-flex;align-items:center;
+    background:#fff;color:var(--ink);cursor:pointer;
+    font-family:inherit;font-size:14px;font-weight:600;
+    padding:12px 24px;border-radius:10px;text-decoration:none;
+    border:1px solid var(--line);
+    transition:border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+  }
+  .btn-ghost:hover{border-color:#D6D2CA;transform:translateY(-1px);box-shadow:0 6px 18px -8px rgba(21,23,26,.12)}
+
+  /* ---------- HERO COPY ---------- */
+  .hero{text-align:center;padding-top:26px}
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:#fff;border:1px solid var(--line);
+    padding:8px 16px;border-radius:999px;
+    font-size:12.5px;font-weight:500;color:var(--ink-soft);
+  }
+  h1{
+    font-family:'Source Serif 4',Georgia,serif;
+    font-weight:500;
+    font-size:clamp(36px,4.5vw,56px);
+    line-height:1.16;
+    letter-spacing:-.012em;
+    margin-top:22px;
+  }
+  .sub{
+    margin:18px auto 0;max-width:560px;
+    font-size:16px;line-height:1.6;color:var(--gray);font-weight:400;
+  }
+  .cta-row{display:flex;justify-content:center;gap:14px;margin-top:28px}
+  .cta-row .btn-dark{padding:14px 26px;font-size:14.5px}
+  .cta-row .btn-ghost{padding:14px 28px;font-size:14.5px}
+
+  /* ---------- SOCIAL PROOF AVATARS (MaskedAvatars, vanilla port) ---------- */
+  .social-proof{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:28px}
+  .av-stack{display:flex;list-style:none;margin:0;padding:0}
+  .av-stack li{position:relative;width:44px;height:44px;border-radius:50%}
+  .av-stack li+li{margin-left:-14px}
+  .av-stack li:nth-child(1){z-index:6}.av-stack li:nth-child(2){z-index:5}
+  .av-stack li:nth-child(3){z-index:4}.av-stack li:nth-child(4){z-index:3}
+  .av-stack li:nth-child(5){z-index:2}
+  .av-stack img{
+    width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;
+    border:2.5px solid var(--bg);background:#DDD8CF;
+    transition:transform .28s cubic-bezier(.34,1.5,.5,1);
+    will-change:transform;
+  }
+  .av-stack li+li img{
+    -webkit-mask-image:radial-gradient(circle 25px at -8px 50%, transparent 24px, #fff 25px);
+    mask-image:radial-gradient(circle 25px at -8px 50%, transparent 24px, #fff 25px);
+  }
+  .av-stack li:hover img{transform:translateY(-8px) scale(1.08)}
+  .av-stack li::after{
+    content:attr(data-name);
+    position:absolute;left:50%;top:-26px;
+    transform:translateX(-50%) translateY(5px);
+    background:var(--navy);color:#fff;
+    font-size:10px;font-weight:600;padding:3px 9px;border-radius:6px;
+    white-space:nowrap;opacity:0;pointer-events:none;
+    filter:blur(3px);
+    transition:opacity .2s ease, transform .2s ease, filter .2s ease;
+  }
+  .av-stack li:hover::after{opacity:1;transform:translateX(-50%) translateY(0);filter:blur(0)}
+  .social-proof .cap{font-size:13px;color:var(--gray)}
+  .social-proof .cap b{color:var(--ink);font-weight:700}
+
+  /* ---------- DIAGRAM ---------- */
+  .diagram-outer{margin-top:38px}
+  .diagram{
+    position:relative;
+    width:1192px;height:400px;
+    margin:0 auto;
+  }
+  .connectors{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible}
+  .connectors .wire{fill:none;stroke-width:2}
+  .connectors .wire.l{stroke:#CBC6BB}
+  .connectors .wire.r{stroke:#F19E52}
+  .connectors .wire.f{
+    stroke:#DBD7CE;stroke-width:1.1;stroke-dasharray:3 6;stroke-linecap:round;
+    opacity:0;animation:fadeIn .9s ease 1.7s forwards;
+  }
+  @keyframes fadeIn{to{opacity:1}}
+
+  .abs{position:absolute;z-index:2}
+
+  .feat{display:flex;align-items:center;gap:16px}
+  .feat-text .t{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+  .feat-text .s{font-size:11.5px;color:var(--gray);margin-top:3px}
+  .feat.left{flex-direction:row;justify-content:flex-end;text-align:right}
+  .feat-icon{
+    width:54px;height:54px;flex:0 0 auto;border-radius:50%;
+    background:#fff;border:1.5px solid #E2DED5;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 1px 2px rgba(21,23,26,.05), 0 10px 24px -10px rgba(21,23,26,.16);
+  }
+  .feat-text .t{font-size:11.5px}
+
+  .right-group .feat-text .t{text-align:left}
+  .right-group{display:flex;align-items:flex-start;gap:16px}
+  .right-body{padding-top:4px}
+
+  /* mini cards */
+  .mini{
+    background:var(--card);border:1px solid var(--line-soft);border-radius:10px;
+    box-shadow:var(--shadow-card);
+    margin-top:9px;
+  }
+  .mini-copy{width:188px;padding:8px 10px;display:flex;align-items:center;gap:8px}
+  .avatar{width:22px;height:22px;border-radius:50%;flex:0 0 auto;
+    background:radial-gradient(circle at 35% 30%,#C6BBAF,#7E6F60 70%);}
+  .mini-copy .lines{flex:1;min-width:0}
+  .mini-copy .l1{font-size:8.5px;font-weight:600;color:var(--ink);white-space:nowrap}
+  .mini-copy .l2{font-size:8.5px;color:var(--gray);white-space:nowrap;margin-top:1px}
+  .mini-exec{width:168px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between}
+  .mini-exec .k{font-size:9.5px;font-weight:600;color:var(--ink)}
+  .pill-filled{
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--green-soft);color:var(--green);
+    font-size:8.5px;font-weight:700;padding:3px 8px;border-radius:999px;
+  }
+  .pill-filled .dot{width:5px;height:5px;border-radius:50%;background:var(--green)}
+  .mini-risk{width:168px;padding:8px 10px}
+  .mini-risk .row{display:flex;justify-content:space-between;align-items:baseline}
+  .mini-risk .k{font-size:8.5px;color:var(--gray);font-weight:500}
+  .mini-risk .v{font-size:9px;font-weight:700;color:var(--ink)}
+  .slider{position:relative;height:3px;border-radius:2px;background:#ECEAE4;margin-top:8px}
+  .slider .fill{position:absolute;left:0;top:0;bottom:0;width:62%;border-radius:2px;background:var(--ink)}
+  .slider .knob{
+    position:absolute;left:62%;top:50%;transform:translate(-50%,-50%);
+    width:11px;height:11px;border-radius:50%;background:#fff;
+    border:1px solid #D9D5CE;box-shadow:0 1px 3px rgba(0,0,0,.18);
+  }
+  .mini-pos{width:168px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between}
+  .mini-pos .k{font-size:8.5px;color:var(--gray);font-weight:500}
+  .mini-pos .v{font-size:10.5px;font-weight:700;color:var(--ink)}
+  .mini-pos .end{display:flex;align-items:center;gap:10px}
+
+  /* center tile */
+  .tile{
+    width:108px;height:108px;border-radius:26px;
+    background:linear-gradient(150deg,#FFFFFF 15%,#F2EFE9 100%);
+    border:1px solid var(--line);
+    box-shadow:var(--shadow-tile);
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  /* price card */
+  .price-card{
+    width:170px;background:var(--card);border:1px solid var(--line-soft);
+    border-radius:12px;box-shadow:var(--shadow-card);padding:10px 12px;
+  }
+  .price-card .top{display:flex;align-items:center;gap:6px}
+  .price-card .pair{font-size:11px;font-weight:700}
+  .price-card .chg{margin-left:auto;font-size:10.5px;font-weight:700;color:var(--green)}
+  .price-card .bottom{display:flex;align-items:flex-end;justify-content:space-between;margin-top:5px}
+  .price-card .px{font-size:17px;font-weight:700;letter-spacing:-.01em}
+  .gdot{width:6px;height:6px;border-radius:50%;background:var(--green);flex:0 0 auto}
+
+  /* signal card */
+  .signal-card{
+    width:188px;background:var(--card);border:1px solid var(--line-soft);
+    border-radius:12px;box-shadow:var(--shadow-card);overflow:hidden;
+  }
+  .signal-card .head{
+    display:flex;align-items:center;gap:6px;
+    padding:8px 12px;border-bottom:1px solid var(--line-soft);
+  }
+  .signal-card .head .k{font-size:9.5px;font-weight:600;color:var(--ink)}
+  .signal-card .head .status{margin-left:auto;font-size:9px;color:var(--gray)}
+  .signal-card .pair-row{display:flex;align-items:center;gap:8px;padding:9px 12px 4px}
+  .signal-card .pair{font-size:13px;font-weight:800;letter-spacing:-.01em}
+  .pill-buy{
+    background:var(--blue-soft);color:var(--blue);
+    font-size:9px;font-weight:800;padding:3px 9px;border-radius:6px;letter-spacing:.03em;
+  }
+  .signal-card .levels{display:flex;gap:18px;padding:4px 12px 11px}
+  .signal-card .lvl .lk{font-size:8px;color:var(--gray-light);font-weight:600}
+  .signal-card .lvl .lv{font-size:10.5px;font-weight:700;margin-top:2px}
+
+  /* ---------- PARTNER BAR ---------- */
+  .partners{border-top:1px solid var(--line);margin-top:46px;padding:40px 0 48px}
+  .marquee{position:relative;overflow:hidden}
+  .marquee::before,.marquee::after{
+    content:"";position:absolute;top:0;bottom:0;width:140px;z-index:2;pointer-events:none;
+  }
+  .marquee::before{left:0;background:linear-gradient(90deg,var(--bg) 12%,transparent)}
+  .marquee::after{right:0;background:linear-gradient(270deg,var(--bg) 12%,transparent)}
+  .marquee-track{display:flex;width:max-content;animation:mloop 32s linear infinite}
+  .marquee:hover .marquee-track{animation-play-state:paused}
+  .mgroup{display:flex;align-items:center;gap:76px;padding-right:76px}
+  @keyframes mloop{to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion:reduce){.marquee-track{animation:none}}
+  .plogo{
+    display:flex;align-items:center;gap:8px;
+    color:#8F939A;fill:#8F939A;
+    user-select:none;
+  }
+  .plogo .wm{font-weight:800;letter-spacing:-.02em}
+  .plogo img{display:block;filter:grayscale(1) opacity(.68);transition:filter .25s ease}
+  .plogo:hover img{filter:grayscale(0) opacity(1)}
+  .plogo.ct .wm{font-style:italic;font-weight:900;font-size:21px;letter-spacing:-.03em;transition:color .25s ease}
+  .plogo.ct .c-red{transition:color .25s ease}
+  .plogo.ct:hover .wm{color:#2B2B2B}
+  .plogo.ct:hover .c-red{color:#E32B2B}
+  .plogo svg{transition:fill .25s ease}
+  .plogo.tv:hover{fill:#2962FF;color:#131722}
+
+  /* ---------- ENTRANCE ANIMATION ---------- */
+  .rise{opacity:0;transform:translateY(16px);animation:rise .8s cubic-bezier(.22,.61,.36,1) forwards}
+  @keyframes rise{to{opacity:1;transform:translateY(0)}}
+  .pop{opacity:0;transform:scale(.92);animation:pop .6s cubic-bezier(.34,1.4,.5,1) forwards}
+  @keyframes pop{to{opacity:1;transform:scale(1)}}
+  @media (prefers-reduced-motion:reduce){
+    .rise,.pop{opacity:1;transform:none;animation:none}
+    .connectors .wire{stroke-dashoffset:0;animation:none}
+    .connectors .node{opacity:1;animation:none}
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  .diagram-scale{transform-origin:top center}
+  @media (min-width:1360px){
+    .diagram-scale{transform:scale(1.16)}
+    .diagram-outer{height:calc(400px*1.16 + 46px)}
+  }
+  @media (min-width:1600px){
+    .diagram-scale{transform:scale(1.3)}
+    .diagram-outer{height:calc(400px*1.3 + 54px)}
+  }
+  @media (max-width:1260px){
+    .diagram-scale{transform:scale(.82)}
+    .diagram-outer{height:calc(400px*.82 + 44px)}
+  }
+  @media (max-width:1024px){
+    .nav-links{display:none}
+    .diagram-scale{transform:scale(.62)}
+    .diagram-outer{height:calc(400px*.62 + 44px)}
+  }
+  @media (max-width:760px){
+    .diagram-scale{transform:scale(.42)}
+    .diagram-outer{height:calc(400px*.42 + 30px)}
+    .cta-row{flex-direction:column;align-items:center}
+    .partners-row{justify-content:center;gap:26px 34px}
+  }
+
+  /* ---------- CTA SECTION (Assemble-style card + widgets) ---------- */
+  .cta{
+    position:relative;
+    background:#141B22;
+    border-radius:50px 50px 0 0;
+    min-height:92vh;
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+    margin-top:20px;
+  }
+  .cta::before{
+    content:"";position:absolute;inset:0;
+    background-image:radial-gradient(rgba(255,255,255,.09) 1px, transparent 1px);
+    background-size:24px 24px;
+    pointer-events:none;
+  }
+  .cta-ring{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    border-radius:50%;border:1px solid rgba(255,255,255,.09);
+    pointer-events:none;
+  }
+  .cta-ring.r1{width:820px;height:820px}
+  .cta-ring.r2{width:1080px;height:1080px;border-color:rgba(255,255,255,.055)}
+  .cta-glow{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:900px;height:520px;border-radius:50%;
+    background:radial-gradient(closest-side, rgba(240,130,30,.28), transparent 70%);
+    filter:blur(60px);pointer-events:none;
+  }
+  .cta-card{
+    position:relative;z-index:3;
+    width:min(620px,90%);
+    background:#fff;border-radius:30px;
+    box-shadow:4px 8px 30px rgba(0,0,0,.25);
+    padding:60px 48px 52px;
+    text-align:center;
+  }
+  .cta-card h2{
+    font-family:'Source Serif 4',Georgia,serif;
+    font-weight:500;font-size:clamp(30px,4vw,44px);
+    letter-spacing:-.015em;color:var(--ink);
+    margin-top:24px;
+  }
+  .cta-buttons{display:flex;justify-content:center;gap:16px;margin-top:36px}
+  .btn-yes,.btn-no{
+    display:inline-flex;align-items:center;justify-content:center;
+    height:54px;width:157px;border-radius:50px;
+    font-family:inherit;font-size:19px;font-weight:600;cursor:pointer;
+    transition:width .4s cubic-bezier(.34,1.56,.64,1), transform .3s cubic-bezier(.34,1.56,.64,1), background .25s ease, border-color .25s ease;
+    text-decoration:none;
+  }
+  .btn-yes{
+    background:var(--orange);color:#16130E;
+    border:.5px solid #141B22;
+  }
+  .btn-yes:hover{width:196px}
+  .btn-no{
+    background:#fff;color:var(--ink);
+    border:.5px solid #B9B4AC;
+  }
+  .btn-no:hover{transform:scale(.93);border-color:#8F8A82}
+  .cta-sub{margin-top:34px;display:flex;flex-direction:column;gap:9px;align-items:center}
+  .cta-sub .row{display:flex;align-items:center;gap:8px;font-size:16.5px;color:var(--gray)}
+  .cta-sub .row b{color:var(--ink);font-weight:600}
+  .cta-tile{
+    position:absolute;z-index:2;
+    border-radius:24%;
+    background:linear-gradient(150deg,#FFFFFF 10%,#E8E4DC 100%);
+    border:1px solid rgba(255,255,255,.35);
+    box-shadow:0 20px 40px -12px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.8);
+    display:flex;align-items:center;justify-content:center;
+    will-change:transform;
+  }
+  .cta-tile:hover{cursor:pointer}
+  .cta-chip{
+    position:absolute;z-index:2;will-change:transform;
+    background:var(--card);border:1px solid var(--line-soft);border-radius:10px;
+    box-shadow:0 20px 40px -12px rgba(0,0,0,.5);
+    padding:9px 12px;
+  }
+  @media (max-width:900px){
+    .cta-tile,.cta-chip{display:none}
+    .cta{min-height:80vh;border-radius:28px 28px 0 0}
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  .sec{padding:104px 24px}
+  .sec .inner{max-width:1240px;margin:0 auto}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--navy);color:#fff;
+    font-size:12.5px;font-weight:600;padding:8px 20px;border-radius:999px;
+  }
+  .eyebrow .edot{width:7px;height:7px;border-radius:50%;background:var(--orange)}
+  .sec-head{text-align:center;max-width:660px;margin:0 auto 54px}
+  .sec-head h2{
+    font-family:'Source Serif 4',Georgia,serif;font-weight:500;
+    font-size:clamp(30px,3.6vw,44px);letter-spacing:-.015em;margin-top:20px;
+  }
+  .sec-head p{margin-top:14px;color:var(--gray);font-size:16.5px;line-height:1.6}
+
+  /* ---------- S1: BENTO ---------- */
+  .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .bento-card{
+    background:#fff;border:1px solid var(--line-soft);border-radius:18px;
+    padding:26px;box-shadow:var(--shadow-card);
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .bento-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 2px 4px rgba(21,23,26,.05), 0 26px 50px -18px rgba(21,23,26,.2);
+  }
+  .bento-card.lg{grid-column:span 2;display:flex;flex-direction:column}
+  .bento-icon{
+    width:44px;height:44px;border-radius:12px;
+    background:var(--bg);border:1px solid var(--line-soft);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .bento-card h3{font-size:17px;font-weight:700;margin:16px 0 6px}
+  .bento-card p{font-size:13.5px;color:var(--gray);line-height:1.55}
+  .bento-visual{margin-top:auto;padding-top:18px}
+  .bento-chartrow{display:flex;gap:16px;margin-top:14px}
+  .bento-chartrow .mini{margin-top:0}
+
+  /* ---------- S2: STEP FLOW ---------- */
+  .steps{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .step-wire{position:absolute;top:0;left:10%;width:80%;height:56px;z-index:1;overflow:visible}
+  .step-wire path{stroke:var(--orange-line);stroke-width:2;fill:none}
+  .step{position:relative;z-index:2;text-align:center;padding:0 16px}
+  .step-num{
+    width:56px;height:56px;border-radius:50%;margin:0 auto;
+    background:#fff;border:1.5px solid #E2DED5;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:15px;color:var(--orange);
+    box-shadow:0 1px 2px rgba(21,23,26,.05), 0 10px 24px -10px rgba(21,23,26,.16);
+  }
+  .step h3{font-size:17px;font-weight:700;margin:20px 0 8px}
+  .step p{font-size:13.5px;color:var(--gray);line-height:1.6}
+
+  /* ---------- S3: STATS ---------- */
+  .stats{
+    position:relative;background:#141B22;border-radius:28px;
+    padding:76px 32px 30px;color:#fff;overflow:hidden;
+  }
+  .stats-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:28px;
+    max-width:1080px;margin:0 auto;text-align:center;
+  }
+  .stat .num{
+    font-family:'Source Serif 4',Georgia,serif;font-weight:600;
+    font-size:clamp(34px,4vw,54px);letter-spacing:-.01em;
+  }
+  .stat .num i{font-style:normal;color:var(--orange)}
+  .stat .lbl{color:#98A0A8;font-size:13.5px;margin-top:8px}
+  .tickwrap{position:relative;overflow:hidden;margin-top:60px;border-top:1px solid rgba(255,255,255,.08);padding-top:22px}
+  .tickwrap::before,.tickwrap::after{
+    content:"";position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none;
+  }
+  .tickwrap::before{left:0;background:linear-gradient(90deg,#141B22 10%,transparent)}
+  .tickwrap::after{right:0;background:linear-gradient(270deg,#141B22 10%,transparent)}
+  .tick-track{display:flex;width:max-content;animation:mloop 26s linear infinite}
+  .tick-group{display:flex;align-items:center;gap:52px;padding-right:52px;font-size:13px}
+  .tick-group .pair{font-weight:700;color:#E7EAED}
+  .tick-group .px{color:#98A0A8;margin-left:7px}
+  .tick-group .up{color:#3DD37E;margin-left:7px;font-weight:600}
+  .tick-group .dn{color:#F26D6D;margin-left:7px;font-weight:600}
+
+  /* ---------- S4: STACKED DECK ---------- */
+  .deck-wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1080px;margin:0 auto}
+  .deck-copy .eyebrow{margin-bottom:18px}
+  .deck-copy h2{
+    font-family:'Source Serif 4',Georgia,serif;font-weight:500;
+    font-size:clamp(28px,3.2vw,40px);letter-spacing:-.015em;
+  }
+  .deck-copy>p{margin-top:14px;color:var(--gray);font-size:16px;line-height:1.65}
+  .deck-list{list-style:none;margin-top:22px;display:flex;flex-direction:column;gap:11px}
+  .deck-list li{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--ink-soft)}
+  .deck-list .gdot{flex:0 0 auto}
+  .deck{position:relative;height:300px}
+  .deck-card{
+    position:absolute;top:20px;left:50%;margin-left:-180px;width:360px;
+    background:#fff;border:1px solid var(--line-soft);border-radius:16px;
+    box-shadow:var(--shadow-tile);padding:18px 22px;will-change:transform;
+  }
+  .deck-card .dhead{display:flex;align-items:center;gap:7px;padding-bottom:10px;border-bottom:1px solid var(--line-soft)}
+  .deck-card .dhead .k{font-size:12px;font-weight:600}
+  .deck-card .dhead .status{margin-left:auto;font-size:11px;color:var(--gray)}
+  .deck-card .dpair{display:flex;align-items:center;gap:10px;margin:13px 0 5px}
+  .deck-card .dpair .pair{font-size:19px;font-weight:800;letter-spacing:-.01em}
+  .pill-sell{background:#FDE8E8;color:#D64545;font-size:11px;font-weight:800;padding:4px 11px;border-radius:6px;letter-spacing:.03em}
+  .deck-card .pill-buy{font-size:11px;padding:4px 11px}
+  .deck-card .dlevels{display:flex;gap:26px;margin-top:8px}
+  .deck-card .lk{font-size:10px;color:var(--gray-light);font-weight:600}
+  .deck-card .lv{font-size:14px;font-weight:700;margin-top:3px}
+
+  /* ---------- S5: PRICING ---------- */
+  .ptoggle{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:44px}
+  .ptoggle .plabel{font-size:14px;font-weight:600;color:var(--gray);transition:color .25s}
+  .ptoggle .plabel.active{color:var(--ink)}
+  .ptoggle .save{background:var(--green-soft);color:var(--green);font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px}
+  .switch{width:56px;height:30px;border-radius:999px;background:var(--navy);position:relative;cursor:pointer;flex:0 0 auto}
+  .switch .knob{
+    position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;
+    transition:left .35s cubic-bezier(.34,1.56,.64,1);
+    box-shadow:0 1px 3px rgba(0,0,0,.3);
+  }
+  .switch.on .knob{left:29px}
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1060px;margin:0 auto;align-items:start}
+  .plan{
+    background:#fff;border:1px solid var(--line-soft);border-radius:20px;
+    padding:34px 30px;box-shadow:var(--shadow-card);position:relative;
+  }
+  .plan .pname{font-size:15px;font-weight:700}
+  .plan .pdesc{font-size:12.5px;color:var(--gray);margin-top:4px}
+  .plan .price{margin:22px 0 4px;font-size:46px;font-weight:800;letter-spacing:-.02em}
+  .plan .price small{font-size:14px;font-weight:500;color:var(--gray)}
+  .plan ul{list-style:none;margin-top:22px;display:flex;flex-direction:column;gap:11px}
+  .plan li{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--ink-soft)}
+  .plan .pcta{
+    display:block;text-align:center;margin-top:26px;padding:13px 0;border-radius:10px;
+    font-size:14px;font-weight:600;text-decoration:none;
+    background:#fff;color:var(--ink);border:1px solid var(--line);
+    transition:transform .2s ease, background .2s ease;
+  }
+  .plan .pcta:hover{transform:translateY(-2px)}
+  .plan.featured{background:var(--navy);color:#fff;transform:translateY(-12px);border-color:var(--navy)}
+  .plan.featured .pdesc{color:#98A0A8}
+  .plan.featured .price small{color:#98A0A8}
+  .plan.featured li{color:#D7DBDF}
+  .plan.featured .pcta{background:var(--orange);color:#16130E;border-color:var(--orange)}
+  .plan .badge{
+    position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+    background:var(--orange);color:#16130E;font-size:11px;font-weight:800;
+    padding:5px 14px;border-radius:999px;white-space:nowrap;
+  }
+
+  /* ---------- S6: TESTIMONIALS LOOP ---------- */
+  .tmarq .mgroup{gap:18px;padding-right:18px}
+  .tcard{
+    width:370px;flex:0 0 auto;
+    background:#fff;border:1px solid var(--line-soft);border-radius:16px;
+    padding:26px;box-shadow:var(--shadow-card);
+  }
+  .tcard .quote{font-size:14.5px;line-height:1.65;color:var(--ink-soft)}
+  .tcard .who{display:flex;align-items:center;gap:11px;margin-top:20px}
+  .tcard .who img{width:38px;height:38px;border-radius:50%;object-fit:cover}
+  .tcard .who .nm{font-size:13.5px;font-weight:700}
+  .tcard .who .hd{font-size:12px;color:var(--gray)}
+
+  /* ---------- S8: ANIMATED FOOTER ---------- */
+  .foot{
+    position:relative;background:#0F1216;color:#fff;overflow:hidden;
+    padding:90px 24px 0;min-height:88vh;
+    display:flex;flex-direction:column;
+  }
+  .foot-hands{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;pointer-events:none}
+  .foot-hand{position:relative;width:36%;min-width:220px;will-change:transform}
+  .foot-hand canvas{display:block;width:100%;height:auto}
+  .foot-top{position:relative;z-index:2;max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px}
+  .foot-brand .logo-name{color:#fff}
+  .foot-brand p{margin-top:14px;font-size:13px;line-height:1.6;color:#8A9199;max-width:250px}
+  .foot h4{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:#8A9199;margin-bottom:15px;font-weight:600}
+  .foot-col a{display:block;color:#D7DBDF;text-decoration:none;font-size:14px;margin-bottom:10px;transition:color .2s}
+  .foot-col a:hover{color:var(--orange)}
+  .foot-disc{
+    position:relative;z-index:2;max-width:1100px;margin:44px auto 0;width:100%;
+    color:#5C646B;font-size:11px;line-height:1.65;
+    border-top:1px solid rgba(255,255,255,.07);padding-top:20px;
+  }
+  .foot-big{position:relative;z-index:2;display:flex;justify-content:center;align-items:flex-end;flex:1;padding:40px 0 24px}
+  .foot-big h2{
+    font-family:'Source Serif 4',Georgia,serif;font-weight:600;
+    font-size:clamp(64px,13vw,180px);line-height:.95;letter-spacing:-.02em;
+    overflow:hidden;padding-bottom:.1em;margin-bottom:-.05em;
+  }
+  .foot-big h2 span{display:inline-block;will-change:transform}
+
+  @media (max-width:900px){
+    .sec{padding:72px 20px}
+    .bento{grid-template-columns:1fr}
+    .bento-card.lg{grid-column:span 1}
+    .steps{grid-template-columns:1fr;gap:40px}
+    .step-wire{display:none}
+    .stats-grid{grid-template-columns:repeat(2,1fr)}
+    .deck-wrap{grid-template-columns:1fr;gap:44px}
+    .deck-card{width:300px;margin-left:-150px}
+    .plans{grid-template-columns:1fr}
+    .plan.featured{transform:none}
+    .foot-top{grid-template-columns:1fr 1fr}
+    .foot-hand{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <!-- ================= NAV ================= -->
+  <nav>
+    <a class="logo" href="#">
+      <svg class="logo-mark" width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+        <rect x="4" y="4" width="26" height="26" rx="8.5" stroke="#15171A" stroke-width="3.2"/>
+      </svg>
+      <span class="logo-name">Olixer<br>Forex</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Product <svg width="9" height="6" viewBox="0 0 9 6" fill="none"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li>
+      <li><a href="#">Features</a></li>
+      <li><a href="#">Pricing</a></li>
+      <li><a href="#">Resources <svg width="9" height="6" viewBox="0 0 9 6" fill="none"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li>
+      <li><a href="#">Company <svg width="9" height="6" viewBox="0 0 9 6" fill="none"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="login" href="#">Log in</a>
+      <a class="btn-dark" href="#">Start free trial</a>
+    </div>
+  </nav>
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <div class="badge rise" style="animation-delay:.05s">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="#15171A"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2z"/></svg>
+      Trusted by traders worldwide
+    </div>
+    <h1>
+      <span class="rise" style="display:block;animation-delay:.12s">Smart Forex Signals.</span>
+      <span class="rise" style="display:block;animation-delay:.2s">Copy Top Traders.</span>
+      <span class="rise" style="display:block;animation-delay:.28s">Execute with Confidence.</span>
+    </h1>
+    <p class="sub rise" style="animation-delay:.38s">
+      Real-time market intelligence, institutional-grade execution,<br>
+      and copy trading — all in one powerful platform.
+    </p>
+    <div class="cta-row rise" style="animation-delay:.46s">
+      <a class="btn-dark" href="#">Start free trial
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="btn-ghost" href="#">Explore platform</a>
+    </div>
+
+    <!-- MaskedAvatars — vanilla port of the React/Framer component -->
+    <div class="social-proof rise" style="animation-delay:.54s" role="group" aria-label="Trader avatars">
+      <ul class="av-stack">
+        <li data-name="@AlexFX"><img src="https://i.pravatar.cc/150?u=a" alt="@AlexFX"></li>
+        <li data-name="@NovaTrades"><img src="https://i.pravatar.cc/150?u=b" alt="@NovaTrades"></li>
+        <li data-name="@PipQueen"><img src="https://i.pravatar.cc/150?u=c" alt="@PipQueen"></li>
+        <li data-name="@FXShark"><img src="https://i.pravatar.cc/150?u=d" alt="@FXShark"></li>
+        <li data-name="@DeltaKing"><img src="https://i.pravatar.cc/150?u=e" alt="@DeltaKing"></li>
+      </ul>
+      <span class="cap"><b>12,000+</b> traders copy signals here</span>
+    </div>
+  </header>
+
+  <!-- ================= DIAGRAM ================= -->
+  <div class="diagram-outer">
+  <div class="diagram-scale">
+  <div class="diagram">
+
+    <!-- connector wires : smooth S-curves converging into the vertical middle
+         of the candle tile (tile center = 592,180). Junction dots are placed
+         exactly ON the curves by the script at the bottom of the page. -->
+    <svg class="connectors" width="1192" height="400" viewBox="0 0 1192 400" fill="none">
+      <!-- left bundle : icons → tile middle -->
+      <path class="wire l" d="M254 22  C390 22,  440 168, 585 172"/>
+      <path class="wire l" d="M254 110 C390 110, 440 176, 585 177"/>
+      <path class="wire l" d="M254 199 C390 199, 440 184, 585 183"/>
+      <path class="wire l" d="M254 291 C390 291, 440 192, 585 188"/>
+      <!-- right bundle : tile middle → icons -->
+      <path class="wire r" d="M600 172 C745 168, 795 22,  886 22"/>
+      <path class="wire r" d="M600 177 C745 176, 795 129, 886 129"/>
+      <path class="wire r" d="M600 183 C745 184, 795 217, 886 217"/>
+      <path class="wire r" d="M600 188 C745 192, 795 307, 886 307"/>
+      <!-- faint dashed links : price + signal cards → candle tile -->
+      <path class="wire f" d="M604 101 C601 110, 597 117, 594 125"/>
+      <path class="wire f" d="M596 236 C598 244, 600 253, 602 260"/>
+    </svg>
+
+    <!-- ===== LEFT FEATURES ===== -->
+    <div class="abs feat left pop" style="right:938px;top:-4px;animation-delay:.5s">
+      <div class="feat-text">
+        <div class="t">Economic Calendar</div>
+        <div class="s">Global events &amp; impact</div>
+      </div>
+      <div class="feat-icon">
+        <!-- design bank: tabler/calendar-event -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#15171A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12"/>
+          <path d="M16 3l0 4"/><path d="M8 3l0 4"/><path d="M4 11l16 0"/><path d="M8 15h2v2h-2l0 -2"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="abs feat left pop" style="right:938px;top:84px;animation-delay:.58s">
+      <div class="feat-text">
+        <div class="t">Live Market Data</div>
+        <div class="s">Real-time FX prices</div>
+      </div>
+      <div class="feat-icon">
+        <!-- design bank: tabler/chart-bar -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1FA357" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -6"/>
+          <path d="M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -10"/>
+          <path d="M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -14"/>
+          <path d="M4 20h14"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="abs feat left pop" style="right:938px;top:173px;animation-delay:.66s">
+      <div class="feat-text">
+        <div class="t">TradingView</div>
+        <div class="s">Advanced charting</div>
+      </div>
+      <div class="feat-icon">
+        <!-- Official TradingView mark (brand kit) -->
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#2962FF" role="img" aria-label="TradingView">
+          <path d="M15.8654 8.2789c0 1.3541-1.0978 2.4519-2.452 2.4519-1.354 0-2.4519-1.0978-2.4519-2.452 0-1.354 1.0978-2.4518 2.452-2.4518 1.3541 0 2.4519 1.0977 2.4519 2.4519zM9.75 6H0v4.9038h4.8462v7.2692H9.75Zm8.5962 0H24l-5.1058 12.173h-5.6538z"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="abs feat left pop" style="right:938px;top:265px;animation-delay:.74s">
+      <div class="feat-text">
+        <div class="t">Top Brokers</div>
+        <div class="s">Deep liquidity access</div>
+      </div>
+      <div class="feat-icon">
+        <!-- design bank: tabler/building-bank -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#15171A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 21l18 0"/><path d="M3 10l18 0"/><path d="M5 6l7 -3l7 3"/>
+          <path d="M4 10l0 11"/><path d="M20 10l0 11"/>
+          <path d="M8 14l0 3"/><path d="M12 14l0 3"/><path d="M16 14l0 3"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ===== CENTER ===== -->
+    <div class="abs price-card pop" style="left:518px;top:44px;animation-delay:.9s">
+      <div class="top">
+        <span class="gdot"></span><span class="pair">EUR/USD</span><span class="chg">+0.42%</span>
+      </div>
+      <div class="bottom">
+        <span class="px">1.08672</span>
+        <svg width="56" height="20" viewBox="0 0 56 20" fill="none">
+          <path d="M1 15 C7 15,9 11,13 12 S20 16,25 13 S33 5,38 7 S46 4,55 2" stroke="#1FA357" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="abs tile pop" style="left:538px;top:126px;animation-delay:.45s">
+      <!-- Candlestick mark — pure SVG, black + orange -->
+      <svg width="54" height="54" viewBox="0 0 64 64" fill="none">
+        <path d="M16 13v38" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
+        <rect x="11" y="22" width="10" height="20" rx="2.5" fill="#15171A"/>
+        <path d="M32 7v50" stroke="#F0821E" stroke-width="2.6" stroke-linecap="round"/>
+        <rect x="26.5" y="16" width="11" height="30" rx="2.8" fill="#F0821E"/>
+        <path d="M48 17v34" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
+        <rect x="43" y="26" width="10" height="16" rx="2.5" fill="#15171A"/>
+      </svg>
+    </div>
+
+    <div class="abs signal-card pop" style="left:508px;top:262px;animation-delay:1s">
+      <div class="head">
+        <span class="gdot" style="width:5px;height:5px"></span>
+        <span class="k">Smart Signal</span>
+        <span class="status">Active</span>
+      </div>
+      <div class="pair-row">
+        <span class="pair">GBP/JPY</span>
+        <span class="pill-buy">BUY</span>
+      </div>
+      <div class="levels">
+        <div class="lvl"><div class="lk">Entry</div><div class="lv">195.842</div></div>
+        <div class="lvl"><div class="lk">TP</div><div class="lv">196.850</div></div>
+        <div class="lvl"><div class="lk">SL</div><div class="lv">194.820</div></div>
+      </div>
+    </div>
+
+    <!-- ===== RIGHT FEATURES ===== -->
+    <div class="abs right-group pop" style="left:886px;top:-4px;animation-delay:.55s">
+      <div class="feat-icon">
+        <!-- design bank: tabler/users-group -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F0821E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/>
+          <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1"/>
+          <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/>
+          <path d="M17 10h2a2 2 0 0 1 2 2v1"/>
+          <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/>
+          <path d="M3 13v-1a2 2 0 0 1 2 -2h2"/>
+        </svg>
+      </div>
+      <div class="right-body">
+        <div class="feat-text">
+          <div class="t">Copy Trading</div>
+          <div class="s">Follow top traders</div>
+        </div>
+        <div class="mini mini-copy">
+          <span class="avatar"></span>
+          <div class="lines">
+            <div class="l1">Strategy: Momentum Pro</div>
+            <div class="l2">Provider: @AlexFX</div>
+          </div>
+          <svg width="42" height="16" viewBox="0 0 42 16" fill="none">
+            <path d="M1 12 C5 12,7 8,10 9 S15 13,19 10 S25 3,29 5 S36 3,41 1.5" stroke="#1FA357" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="abs right-group pop" style="left:886px;top:102px;animation-delay:.63s">
+      <div class="feat-icon">
+        <!-- design bank: tabler/bolt (filled) -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#F0821E" stroke="#F0821E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"/>
+        </svg>
+      </div>
+      <div class="right-body">
+        <div class="feat-text">
+          <div class="t">Smart Execution</div>
+          <div class="s">Low latency fills</div>
+        </div>
+        <div class="mini mini-exec">
+          <span class="k">Market Order</span>
+          <span class="pill-filled"><span class="dot"></span>Filled</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="abs right-group pop" style="left:886px;top:191px;animation-delay:.71s">
+      <div class="feat-icon">
+        <!-- design bank: tabler/shield-check -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F0821E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06"/>
+          <path d="M15 19l2 2l4 -4"/>
+        </svg>
+      </div>
+      <div class="right-body">
+        <div class="feat-text">
+          <div class="t">Risk Management</div>
+          <div class="s">Protect your capital</div>
+        </div>
+        <div class="mini mini-risk">
+          <div class="row"><span class="k">Risk per trade</span><span class="v">1.00%</span></div>
+          <div class="slider"><span class="fill"></span><span class="knob"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="abs right-group pop" style="left:886px;top:281px;animation-delay:.79s">
+      <div class="feat-icon">
+        <!-- design bank: tabler/chart-pie-2 -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F0821E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3v9h9"/>
+          <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/>
+        </svg>
+      </div>
+      <div class="right-body">
+        <div class="feat-text">
+          <div class="t">Portfolio Insights</div>
+          <div class="s">Track &amp; optimize</div>
+        </div>
+        <div class="mini mini-pos">
+          <span class="k">Open Positions</span>
+          <span class="end">
+            <span class="v">8</span>
+            <svg width="34" height="14" viewBox="0 0 34 14" fill="#B9BDC2">
+              <rect x="0"  y="9" width="3" height="5" rx="1"/>
+              <rect x="6"  y="6" width="3" height="8" rx="1"/>
+              <rect x="12" y="8" width="3" height="6" rx="1"/>
+              <rect x="18" y="4" width="3" height="10" rx="1"/>
+              <rect x="24" y="7" width="3" height="7" rx="1"/>
+              <rect x="30" y="2" width="3" height="12" rx="1" fill="#15171A"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /diagram -->
+  </div><!-- /diagram-scale -->
+  </div><!-- /diagram-outer -->
+
+  <!-- ================= PARTNER BAR — infinite horizontal loop ================= -->
+  <section class="partners rise" style="animation-delay:.9s">
+    <div class="marquee">
+      <div class="marquee-track">
+
+        <div class="mgroup">
+          <!-- cTrader — faithful wordmark (no public vector kit) -->
+          <span class="plogo ct" title="cTrader">
+            <span class="wm"><span class="c-red">c</span>TRADER</span>
+          </span>
+          <!-- MetaTrader — official mark (Wikimedia Commons) -->
+          <span class="plogo" title="MetaTrader 4|5">
+            <img src="assets/logos/metatrader-official.png" alt="MetaTrader" height="28">
+            <span class="wm" style="font-size:18px;font-weight:600">MetaTrader</span>
+            <span style="font-size:19px;font-weight:300;letter-spacing:.05em">4|5</span>
+          </span>
+          <!-- TradingView — official brand-kit mark -->
+          <span class="plogo tv" title="TradingView">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="TradingView">
+              <path d="M15.8654 8.2789c0 1.3541-1.0978 2.4519-2.452 2.4519-1.354 0-2.4519-1.0978-2.4519-2.452 0-1.354 1.0978-2.4518 2.452-2.4518 1.3541 0 2.4519 1.0977 2.4519 2.4519zM9.75 6H0v4.9038h4.8462v7.2692H9.75Zm8.5962 0H24l-5.1058 12.173h-5.6538z"/>
+            </svg>
+            <span class="wm" style="font-size:19px">TradingView</span>
+          </span>
+          <!-- PrimeXM — official logo -->
+          <span class="plogo" title="PrimeXM">
+            <img src="assets/logos/primexm-official.png" alt="PrimeXM" height="30">
+          </span>
+          <!-- Pepperstone — official logo SVG -->
+          <span class="plogo" title="Pepperstone">
+            <img src="assets/logos/pepperstone-official.svg" alt="Pepperstone" height="30">
+          </span>
+          <!-- eightcap — official logo SVG -->
+          <span class="plogo" title="Eightcap">
+            <img src="assets/logos/eightcap-official.svg" alt="Eightcap" height="24">
+          </span>
+          <!-- OANDA — official logo SVG -->
+          <span class="plogo" title="OANDA">
+            <img src="assets/logos/oanda-official.svg" alt="OANDA" height="20">
+          </span>
+          <!-- FOREX.com — official logo SVG -->
+          <span class="plogo" title="FOREX.com">
+            <img src="assets/logos/forexcom-official.svg" alt="FOREX.com" height="26">
+          </span>
+        </div>
+
+        <div class="mgroup" aria-hidden="true">
+          <span class="plogo ct"><span class="wm"><span class="c-red">c</span>TRADER</span></span>
+          <span class="plogo">
+            <img src="assets/logos/metatrader-official.png" alt="" height="28">
+            <span class="wm" style="font-size:18px;font-weight:600">MetaTrader</span>
+            <span style="font-size:19px;font-weight:300;letter-spacing:.05em">4|5</span>
+          </span>
+          <span class="plogo tv">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M15.8654 8.2789c0 1.3541-1.0978 2.4519-2.452 2.4519-1.354 0-2.4519-1.0978-2.4519-2.452 0-1.354 1.0978-2.4518 2.452-2.4518 1.3541 0 2.4519 1.0977 2.4519 2.4519zM9.75 6H0v4.9038h4.8462v7.2692H9.75Zm8.5962 0H24l-5.1058 12.173h-5.6538z"/>
+            </svg>
+            <span class="wm" style="font-size:19px">TradingView</span>
+          </span>
+          <span class="plogo"><img src="assets/logos/primexm-official.png" alt="" height="30"></span>
+          <span class="plogo"><img src="assets/logos/pepperstone-official.svg" alt="" height="30"></span>
+          <span class="plogo"><img src="assets/logos/eightcap-official.svg" alt="" height="24"></span>
+          <span class="plogo"><img src="assets/logos/oanda-official.svg" alt="" height="20"></span>
+          <span class="plogo"><img src="assets/logos/forexcom-official.svg" alt="" height="26"></span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  var svg = document.querySelector('.connectors');
+  var wires = svg.querySelectorAll('.wire.l, .wire.r');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var NS = 'http://www.w3.org/2000/svg';
+
+  // find the point on a path closest to a given x (paths are monotonic in x)
+  function pointAtX(path, x){
+    var len = path.getTotalLength(), lo = 0, hi = len;
+    for (var i = 0; i < 22; i++){
+      var mid = (lo + hi) / 2;
+      if (path.getPointAtLength(mid).x < x) lo = mid; else hi = mid;
+    }
+    return path.getPointAtLength((lo + hi) / 2);
+  }
+
+  var nodes = [];
+  wires.forEach(function(w, i){
+    var isLeft = w.classList.contains('l');
+    // junction dots in two aligned columns per side, exactly on the curve
+    var cols = isLeft ? [350, 470] : [730, 815];
+    cols.forEach(function(x, ci){
+      var p = pointAtX(w, x);
+      var c = document.createElementNS(NS, 'circle');
+      c.setAttribute('cx', p.x); c.setAttribute('cy', p.y);
+      if (!isLeft && ci === 1){          // outer right column: solid orange dot
+        c.setAttribute('r', 3.8);
+        c.setAttribute('fill', '#F0821E');
+      } else {
+        c.setAttribute('r', 4.4);
+        c.setAttribute('fill', '#fff');
+        c.setAttribute('stroke', isLeft ? '#BFB9AD' : '#EF9C50');
+        c.setAttribute('stroke-width', '1.6');
+      }
+      svg.appendChild(c);
+      nodes.push(c);
+    });
+
+    // draw-in animation
+    if (reduce) return;
+    var len = w.getTotalLength();
+    w.style.strokeDasharray = len;
+    w.style.strokeDashoffset = len;
+    w.style.transition = 'stroke-dashoffset 1.25s cubic-bezier(.4,0,.2,1) ' + (0.55 + (i % 4) * 0.09) + 's';
+  });
+
+  if (!reduce){
+    nodes.forEach(function(c, i){
+      c.style.opacity = 0;
+      c.style.transition = 'opacity .5s ease ' + (1.5 + i * 0.03) + 's';
+    });
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      wires.forEach(function(w){ w.style.strokeDashoffset = 0; });
+      nodes.forEach(function(c){ c.style.opacity = 1; });
+    });});
+  }
+})();
+</script>
+<!-- ================= S1: BENTO GALLERY ================= -->
+<section class="sec" id="features">
+  <div class="inner">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow"><span class="edot"></span>Platform</span>
+      <h2>Everything you trade with.</h2>
+      <p>Market intelligence, signals, execution and risk — one workspace built for serious FX traders.</p>
+    </div>
+    <div class="bento">
+      <div class="bento-card lg" data-reveal>
+        <div class="bento-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1FA357" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M15 9a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/><path d="M9 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/></svg>
+        </div>
+        <h3>Real-time market intelligence</h3>
+        <p>Live pricing across 120+ instruments with depth, sentiment and volatility overlays — refreshed tick by tick.</p>
+        <div class="bento-visual">
+          <svg width="100%" height="110" viewBox="0 0 640 110" preserveAspectRatio="none" fill="none">
+            <path d="M0 96 C40 92,60 78,95 80 S150 95,190 84 S250 48,300 56 S360 70,400 52 S460 18,510 26 S580 14,640 6" stroke="#1FA357" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M0 96 C40 92,60 78,95 80 S150 95,190 84 S250 48,300 56 S360 70,400 52 S460 18,510 26 S580 14,640 6 L640 110 L0 110 Z" fill="url(#bgrad)"/>
+            <defs><linearGradient id="bgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1FA357" stop-opacity=".14"/><stop offset="1" stop-color="#1FA357" stop-opacity="0"/></linearGradient></defs>
+          </svg>
+          <div class="bento-chartrow">
+            <div class="mini mini-exec" style="width:auto;gap:14px"><span class="k">EUR/USD&nbsp; 1.08672</span><span class="pill-filled"><span class="dot"></span>+0.42%</span></div>
+            <div class="mini mini-exec" style="width:auto;gap:14px"><span class="k">XAU/USD&nbsp; 2,384.10</span><span class="pill-filled"><span class="dot"></span>+1.08%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="bento-card" data-reveal>
+        <div class="bento-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#F0821E" stroke="#F0821E" stroke-width="1.4" stroke-linejoin="round"><path d="M13 3l0 7l6 0l-8 11l0-7l-6 0l8-11"/></svg>
+        </div>
+        <h3>Smart signals</h3>
+        <p>Entries, targets and stops from vetted strategies — delivered the moment setups confirm.</p>
+        <div class="bento-visual">
+          <div class="mini mini-exec" style="width:100%"><span class="k">GBP/JPY</span><span class="pill-buy">BUY</span></div>
+        </div>
+      </div>
+      <div class="bento-card" data-reveal>
+        <div class="bento-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F0821E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.46 20.846a12 12 0 0 1-7.96-14.846a12 12 0 0 0 8.5-3a12 12 0 0 0 8.5 3a12 12 0 0 1-.09 7.06"/><path d="M15 19l2 2l4-4"/></svg>
+        </div>
+        <h3>Risk controls</h3>
+        <p>Per-trade risk caps, equity guards and auto position sizing on every copied strategy.</p>
+        <div class="bento-visual">
+          <div class="mini mini-risk" style="width:100%"><div class="row"><span class="k">Risk per trade</span><span class="v">1.00%</span></div><div class="slider"><span class="fill"></span><span class="knob"></span></div></div>
+        </div>
+      </div>
+      <div class="bento-card" data-reveal>
+        <div class="bento-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15171A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        </div>
+        <h3>Sub-40ms execution</h3>
+        <p>Institutional liquidity with fills measured in milliseconds, not seconds.</p>
+        <div class="bento-visual">
+          <div class="mini mini-exec" style="width:100%"><span class="k">Market Order</span><span class="pill-filled"><span class="dot"></span>Filled</span></div>
+        </div>
+      </div>
+      <div class="bento-card" data-reveal>
+        <div class="bento-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15171A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M16 3v4M8 3v4M4 11h16"/></svg>
+        </div>
+        <h3>Economic calendar</h3>
+        <p>High-impact events flagged before they move your pairs — with expected ranges.</p>
+        <div class="bento-visual">
+          <div class="mini mini-exec" style="width:100%"><span class="k">FOMC Rate Decision</span><span class="pill-buy" style="background:#FDEFE0;color:#C96A10">HIGH</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= S2: STEP FLOW ================= -->
+<section class="sec" id="how" style="padding-top:40px">
+  <div class="inner">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow"><span class="edot"></span>How it works</span>
+      <h2>Copying a top trader takes minutes.</h2>
+      <p>Three steps between you and automated execution.</p>
+    </div>
+    <div class="steps">
+      <svg class="step-wire" viewBox="0 0 1000 56" preserveAspectRatio="none">
+        <path d="M0 28 C 180 28, 280 6, 500 28 S 820 50, 1000 28"/>
+      </svg>
+      <div class="step" data-reveal>
+        <div class="step-num">01</div>
+        <h3>Connect your broker</h3>
+        <p>Link MetaTrader, cTrader or any of our 12 supported brokers in one click. Your funds never leave your account.</p>
+      </div>
+      <div class="step" data-reveal>
+        <div class="step-num">02</div>
+        <h3>Pick a strategy</h3>
+        <p>Browse verified providers with full track records — drawdown, win rate and monthly returns, nothing hidden.</p>
+      </div>
+      <div class="step" data-reveal>
+        <div class="step-num">03</div>
+        <h3>Trades copy automatically</h3>
+        <p>Every entry, target and stop mirrors to your account in real time, sized to your own risk settings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= S3: STATS ================= -->
+<section class="sec" id="stats" style="padding-top:30px">
+  <div class="inner">
+    <div class="stats" data-reveal>
+      <div class="stats-grid">
+        <div class="stat"><div class="num" data-count="12000" data-suffix="+">12,000+</div><div class="lbl">Traders copying signals</div></div>
+        <div class="stat"><div class="num" data-count="38" data-prefix="" data-suffix="ms">38ms</div><div class="lbl">Average execution speed</div></div>
+        <div class="stat"><div class="num" data-count="120" data-suffix="+">120+</div><div class="lbl">Pairs &amp; instruments</div></div>
+        <div class="stat"><div class="num" data-count="2.4" data-decimals="1" data-prefix="$" data-suffix="B">$2.4B</div><div class="lbl">Volume copied to date</div></div>
+      </div>
+      <div class="tickwrap">
+        <div class="tick-track">
+          <div class="tick-group">
+            <span><span class="pair">EUR/USD</span><span class="px">1.08672</span><span class="up">▲ +0.42%</span></span>
+            <span><span class="pair">GBP/JPY</span><span class="px">195.842</span><span class="up">▲ +0.87%</span></span>
+            <span><span class="pair">XAU/USD</span><span class="px">2,384.10</span><span class="up">▲ +1.08%</span></span>
+            <span><span class="pair">USD/CHF</span><span class="px">0.89741</span><span class="dn">▼ −0.23%</span></span>
+            <span><span class="pair">AUD/USD</span><span class="px">0.66412</span><span class="up">▲ +0.15%</span></span>
+            <span><span class="pair">US30</span><span class="px">39,412.5</span><span class="dn">▼ −0.31%</span></span>
+            <span><span class="pair">USD/JPY</span><span class="px">157.230</span><span class="up">▲ +0.54%</span></span>
+          </div>
+          <div class="tick-group" aria-hidden="true">
+            <span><span class="pair">EUR/USD</span><span class="px">1.08672</span><span class="up">▲ +0.42%</span></span>
+            <span><span class="pair">GBP/JPY</span><span class="px">195.842</span><span class="up">▲ +0.87%</span></span>
+            <span><span class="pair">XAU/USD</span><span class="px">2,384.10</span><span class="up">▲ +1.08%</span></span>
+            <span><span class="pair">USD/CHF</span><span class="px">0.89741</span><span class="dn">▼ −0.23%</span></span>
+            <span><span class="pair">AUD/USD</span><span class="px">0.66412</span><span class="up">▲ +0.15%</span></span>
+            <span><span class="pair">US30</span><span class="px">39,412.5</span><span class="dn">▼ −0.31%</span></span>
+            <span><span class="pair">USD/JPY</span><span class="px">157.230</span><span class="up">▲ +0.54%</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= S4: STACKED CARD CAROUSEL ================= -->
+<section class="sec" id="signals">
+  <div class="inner">
+    <div class="deck-wrap">
+      <div class="deck-copy" data-reveal>
+        <span class="eyebrow"><span class="edot"></span>Live signals</span>
+        <h2>Signals that land in real time.</h2>
+        <p>Every signal ships with an entry, target and stop — and copies to your account before the move is gone.</p>
+        <ul class="deck-list">
+          <li><span class="gdot"></span>Verified provider track records</li>
+          <li><span class="gdot"></span>Instant push, email and in-app alerts</li>
+          <li><span class="gdot"></span>Auto-sized to your risk per trade</li>
+        </ul>
+      </div>
+      <div class="deck" data-reveal>
+        <div class="deck-card">
+          <div class="dhead"><span class="gdot" style="width:6px;height:6px"></span><span class="k">Smart Signal</span><span class="status">Active</span></div>
+          <div class="dpair"><span class="pair">GBP/JPY</span><span class="pill-buy">BUY</span></div>
+          <div class="dlevels"><div><div class="lk">Entry</div><div class="lv">195.842</div></div><div><div class="lk">TP</div><div class="lv">196.850</div></div><div><div class="lk">SL</div><div class="lv">194.820</div></div></div>
+        </div>
+        <div class="deck-card">
+          <div class="dhead"><span class="gdot" style="width:6px;height:6px"></span><span class="k">Smart Signal</span><span class="status">Active</span></div>
+          <div class="dpair"><span class="pair">EUR/USD</span><span class="pill-sell">SELL</span></div>
+          <div class="dlevels"><div><div class="lk">Entry</div><div class="lv">1.08672</div></div><div><div class="lk">TP</div><div class="lv">1.07980</div></div><div><div class="lk">SL</div><div class="lv">1.09140</div></div></div>
+        </div>
+        <div class="deck-card">
+          <div class="dhead"><span class="gdot" style="width:6px;height:6px"></span><span class="k">Smart Signal</span><span class="status">Active</span></div>
+          <div class="dpair"><span class="pair">XAU/USD</span><span class="pill-buy">BUY</span></div>
+          <div class="dlevels"><div><div class="lk">Entry</div><div class="lv">2,384.10</div></div><div><div class="lk">TP</div><div class="lv">2,402.50</div></div><div><div class="lk">SL</div><div class="lv">2,371.00</div></div></div>
+        </div>
+        <div class="deck-card">
+          <div class="dhead"><span class="gdot" style="width:6px;height:6px"></span><span class="k">Smart Signal</span><span class="status">Active</span></div>
+          <div class="dpair"><span class="pair">US30</span><span class="pill-sell">SELL</span></div>
+          <div class="dlevels"><div><div class="lk">Entry</div><div class="lv">39,412.5</div></div><div><div class="lk">TP</div><div class="lv">39,180.0</div></div><div><div class="lk">SL</div><div class="lv">39,560.0</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= S5: PRICING ================= -->
+<section class="sec" id="pricing" style="padding-top:40px">
+  <div class="inner">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow"><span class="edot"></span>Pricing</span>
+      <h2>Simple plans. Serious tools.</h2>
+      <p>Start free for 14 days on any plan. Cancel anytime.</p>
+    </div>
+    <div class="ptoggle" data-reveal>
+      <span class="plabel monthly active">Monthly</span>
+      <div class="switch" role="switch" aria-checked="false" tabindex="0"><span class="knob"></span></div>
+      <span class="plabel annual">Annual</span>
+      <span class="save">Save 20%</span>
+    </div>
+    <div class="plans">
+      <div class="plan" data-reveal>
+        <div class="pname">Starter</div>
+        <div class="pdesc">For traders getting their first edge</div>
+        <div class="price">$<b data-monthly="29" data-annual="23">29</b><small>/mo</small></div>
+        <ul>
+          <li><span class="gdot"></span>10 signals per week</li>
+          <li><span class="gdot"></span>Live market data</li>
+          <li><span class="gdot"></span>Economic calendar</li>
+          <li><span class="gdot"></span>Email alerts</li>
+        </ul>
+        <a class="pcta" href="#cta">Start free trial</a>
+      </div>
+      <div class="plan featured" data-reveal>
+        <span class="badge">Most popular</span>
+        <div class="pname">Pro</div>
+        <div class="pdesc">For traders who copy and scale</div>
+        <div class="price">$<b data-monthly="79" data-annual="63">79</b><small>/mo</small></div>
+        <ul>
+          <li><span class="gdot"></span>Unlimited signals</li>
+          <li><span class="gdot"></span>Copy up to 3 strategies</li>
+          <li><span class="gdot"></span>Auto risk sizing</li>
+          <li><span class="gdot"></span>Sub-40ms execution</li>
+          <li><span class="gdot"></span>Priority support</li>
+        </ul>
+        <a class="pcta" href="#cta">Start free trial</a>
+      </div>
+      <div class="plan" data-reveal>
+        <div class="pname">Elite</div>
+        <div class="pdesc">For funds and full-time professionals</div>
+        <div class="price">$<b data-monthly="199" data-annual="159">199</b><small>/mo</small></div>
+        <ul>
+          <li><span class="gdot"></span>Everything in Pro</li>
+          <li><span class="gdot"></span>Unlimited strategy copying</li>
+          <li><span class="gdot"></span>API + webhook access</li>
+          <li><span class="gdot"></span>Dedicated account manager</li>
+        </ul>
+        <a class="pcta" href="#cta">Start free trial</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= S6: TESTIMONIALS LOOP ================= -->
+<section class="sec" id="testimonials" style="padding-top:40px">
+  <div class="sec-head" data-reveal>
+    <span class="eyebrow"><span class="edot"></span>Traders</span>
+    <h2>Trusted on live accounts.</h2>
+  </div>
+  <div class="marquee tmarq">
+    <div class="marquee-track" style="animation-duration:52s">
+      <div class="mgroup">
+        <div class="tcard"><p class="quote">"Three months in and my copy account is finally consistent. The risk sizing alone is worth the subscription — it stopped me blowing up on news days."</p><div class="who"><img src="https://i.pravatar.cc/80?u=t1" alt=""><div><div class="nm">Daniel Okafor</div><div class="hd">@DanFXLagos</div></div></div></div>
+        <div class="tcard"><p class="quote">"Fills are genuinely fast. I measured 30–45ms against my broker's raw feed. Signals arrive before my old Telegram groups even typed them out."</p><div class="who"><img src="https://i.pravatar.cc/80?u=t2" alt=""><div><div class="nm">Sarah Mitchell</div><div class="hd">@PipQueen</div></div></div></div>
+        <div class="tcard"><p class="quote">"I run Momentum Pro on a funded account. Full track record was visible before I committed — drawdown, win rate, everything. No other platform shows that."</p><div class="who"><img src="https://i.pravatar.cc/80?u=t3" alt=""><div><div class="nm">Marcus Chen</div><div class="hd">@FXShark</div></div></div></div>
+        <div class="tcard"><p class="quote">"Switched from manual trading to copying two providers. Up 11% in my first quarter with a max drawdown under 4%. The equity guard saved me twice."</p><div class="who"><img src="https://i.pravatar.cc/80?u=t4" alt=""><div><div class="nm">Amara Diallo</div><div class="hd">@DeltaKing</div></div></div></div>
+        <div class="tcard"><p class="quote">"The economic calendar flags high-impact events right on my open positions. I stopped getting blindsided by CPI prints. Simple feature, huge difference."</p><div class="who"><img src="https://i.pravatar.cc/80?u=t5" alt=""><div><div class="nm">Tom Van Der Berg</div><div class="hd">@NovaTrades</div></div></div></div>
+      </div>
+      <div class="mgroup" aria-hidden="true">
+        <div class="tcard"><p class="quote">"Three months in and my copy account is finally consistent. The risk sizing alone is worth the subscription — it stopped me blowing up on news days."</p><div class="who"><img src="https://i.pravatar.cc/80?u=t1" alt=""><div><div class="nm">Daniel Okafor</div><div class="hd">@DanFXLagos</div></div></div></div>
+        <div class="tcard"><p class="quote">"Fills are genuinely fast. I measured 30–45ms against my broker's raw feed. Signals arrive before my old Telegram groups even typed them out."</p><div class="who"><img src="https://i.pravatar.cc/80?u=t2" alt=""><div><div class="nm">Sarah Mitchell</div><div class="hd">@PipQueen</div></div></div></div>
+        <div class="tcard"><p class="quote">"I run Momentum Pro on a funded account. Full track record was visible before I committed — drawdown, win rate, everything. No other platform shows that."</p><div class="who"><img src="https://i.pravatar.cc/80?u=t3" alt=""><div><div class="nm">Marcus Chen</div><div class="hd">@FXShark</div></div></div></div>
+        <div class="tcard"><p class="quote">"Switched from manual trading to copying two providers. Up 11% in my first quarter with a max drawdown under 4%. The equity guard saved me twice."</p><div class="who"><img src="https://i.pravatar.cc/80?u=t4" alt=""><div><div class="nm">Amara Diallo</div><div class="hd">@DeltaKing</div></div></div></div>
+        <div class="tcard"><p class="quote">"The economic calendar flags high-impact events right on my open positions. I stopped getting blindsided by CPI prints. Simple feature, huge difference."</p><div class="who"><img src="https://i.pravatar.cc/80?u=t5" alt=""><div><div class="nm">Tom Van Der Berg</div><div class="hd">@NovaTrades</div></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA SECTION ================= -->
+<section class="cta" id="cta">
+  <div class="cta-ring r2"></div>
+  <div class="cta-ring r1"></div>
+  <div class="cta-glow"></div>
+
+  <!-- floating widgets -->
+  <div class="cta-tile" data-depth="22" style="width:110px;height:110px;top:13%;left:11%">
+    <svg width="52" height="52" viewBox="0 0 64 64" fill="none">
+      <path d="M16 13v38" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
+      <rect x="11" y="22" width="10" height="20" rx="2.5" fill="#15171A"/>
+      <path d="M32 7v50" stroke="#F0821E" stroke-width="2.6" stroke-linecap="round"/>
+      <rect x="26.5" y="16" width="11" height="30" rx="2.8" fill="#F0821E"/>
+      <path d="M48 17v34" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
+      <rect x="43" y="26" width="10" height="16" rx="2.5" fill="#15171A"/>
+    </svg>
+  </div>
+  <div class="cta-tile" data-depth="34" style="width:84px;height:84px;top:11%;right:15%">
+    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#15171A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/>
+      <path d="M16 3v4M8 3v4M4 11h16M8 15h2v2H8z"/>
+    </svg>
+  </div>
+  <div class="cta-tile" data-depth="28" style="width:92px;height:92px;bottom:16%;left:7%">
+    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#1FA357" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
+      <path d="M15 9a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/>
+      <path d="M9 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/>
+    </svg>
+  </div>
+  <div class="cta-tile" data-depth="40" style="width:74px;height:74px;top:46%;left:20%">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F0821E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11.46 20.846a12 12 0 0 1-7.96-14.846a12 12 0 0 0 8.5-3a12 12 0 0 0 8.5 3a12 12 0 0 1-.09 7.06"/>
+      <path d="M15 19l2 2l4-4"/>
+    </svg>
+  </div>
+  <div class="cta-tile" data-depth="26" style="width:96px;height:96px;bottom:13%;right:9%">
+    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#F0821E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3v9h9"/>
+      <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/>
+    </svg>
+  </div>
+  <div class="cta-tile" data-depth="38" style="width:70px;height:70px;top:42%;right:6%">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="#F0821E" stroke="#F0821E" stroke-width="1.4" stroke-linejoin="round">
+      <path d="M13 3l0 7l6 0l-8 11l0-7l-6 0l8-11"/>
+    </svg>
+  </div>
+  <!-- floating mini cards -->
+  <div class="cta-chip" data-depth="30" style="top:24%;left:23%">
+    <div style="display:flex;align-items:center;gap:6px">
+      <span class="gdot"></span><span style="font-size:11px;font-weight:700">EUR/USD</span>
+      <span style="font-size:10.5px;font-weight:700;color:var(--green)">+0.42%</span>
+    </div>
+  </div>
+  <div class="cta-chip" data-depth="24" style="bottom:26%;right:20%">
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-size:11px;font-weight:800">GBP/JPY</span>
+      <span class="pill-buy">BUY</span>
+    </div>
+  </div>
+
+  <!-- the card -->
+  <div class="cta-card">
+    <svg width="40" height="40" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <path d="M16 13v38" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
+      <rect x="11" y="22" width="10" height="20" rx="2.5" fill="#15171A"/>
+      <path d="M32 7v50" stroke="#F0821E" stroke-width="2.6" stroke-linecap="round"/>
+      <rect x="26.5" y="16" width="11" height="30" rx="2.8" fill="#F0821E"/>
+      <path d="M48 17v34" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
+      <rect x="43" y="26" width="10" height="16" rx="2.5" fill="#15171A"/>
+    </svg>
+    <h2>Ready to trade smarter?</h2>
+    <div class="cta-buttons">
+      <a class="btn-yes" href="#">Yes</a>
+      <a class="btn-no" href="#">No</a>
+    </div>
+    <div class="cta-sub">
+      <div class="row">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6C7076" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 3l7 3v5.2c0 4.6-3 8.1-7 9.8-4-1.7-7-5.2-7-9.8V6l7-3z"/></svg>
+        <span>Start a <b>14 day free trial</b> today</span>
+      </div>
+      <div class="row">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6C7076" stroke-width="2" stroke-linecap="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>
+        <span><b>No credit card</b> required</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= S8: ANIMATED FOOTER ================= -->
+<footer class="foot" id="foot">
+  <div class="foot-hands" aria-hidden="true">
+    <div class="foot-hand l"><canvas></canvas></div>
+    <div class="foot-hand r"><canvas></canvas></div>
+  </div>
+  <div class="foot-top">
+    <div class="foot-brand">
+      <a class="logo" href="#" style="color:#fff">
+        <svg class="logo-mark" width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+          <rect x="4" y="4" width="26" height="26" rx="8.5" stroke="#fff" stroke-width="3.2"/>
+        </svg>
+        <span class="logo-name">Olixer<br>Forex</span>
+      </a>
+      <p>Smart forex signals, copy trading and institutional-grade execution in one platform.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Product</h4>
+      <a href="#features">Features</a>
+      <a href="#signals">Signals</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#how">How it works</a>
+    </div>
+    <div class="foot-col">
+      <h4>Company</h4>
+      <a href="#">About</a>
+      <a href="#">Careers</a>
+      <a href="#">Contact</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="foot-col">
+      <h4>Legal</h4>
+      <a href="#">Terms of service</a>
+      <a href="#">Privacy policy</a>
+      <a href="#">Risk disclosure</a>
+      <a href="#">Cookie policy</a>
+    </div>
+  </div>
+  <div class="foot-disc">
+    Risk warning: Trading foreign exchange and CFDs on margin carries a high level of risk and may not be suitable for all investors.
+    Past performance of any strategy provider is not indicative of future results. You could lose some or all of your invested capital;
+    do not trade with money you cannot afford to lose. Olixer Forex provides technology and signal routing only and does not provide
+    investment advice. © 2026 Olixer Forex. All rights reserved.
+  </div>
+  <div class="foot-big">
+    <h2 aria-label="Olixer"><span>O</span><span>l</span><span>i</span><span>x</span><span>e</span><span>r</span></h2>
+  </div>
+</footer>
+
+<!-- ================= GLOBAL ANIMATION STACK ================= -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced || typeof gsap === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Lenis smooth scroll synced with ScrollTrigger
+  if (typeof Lenis !== 'undefined'){
+    var lenis = new Lenis({ lerp: 0.1 });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function(t){ lenis.raf(t * 1000); });
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  // CTA reveal on scroll
+  gsap.from('.cta-card', {
+    y: 48, opacity: 0, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.cta', start: 'top 65%' }
+  });
+  gsap.from('.cta-tile, .cta-chip', {
+    scale: 0.6, opacity: 0, duration: 0.9, ease: 'back.out(1.6)', stagger: 0.07,
+    scrollTrigger: { trigger: '.cta', start: 'top 60%' }
+  });
+  gsap.from('.cta-ring', {
+    scale: 0.8, opacity: 0, duration: 1.4, ease: 'power2.out', stagger: 0.15,
+    scrollTrigger: { trigger: '.cta', start: 'top 70%' }
+  });
+
+  var cta = document.querySelector('.cta');
+  var widgets = gsap.utils.toArray('.cta-tile, .cta-chip');
+
+  // Idle float on widgets (killable so the gather animation can take over y)
+  var floatTweens = [];
+  function startFloats(){
+    stopFloats();
+    floatTweens = widgets.map(function(el, i){
+      return gsap.to(el, {
+        y: '+=' + (8 + (i % 3) * 4),
+        duration: 2.4 + (i % 4) * 0.5,
+        yoyo: true, repeat: -1, ease: 'sine.inOut', delay: i * 0.2
+      });
+    });
+  }
+  function stopFloats(){
+    floatTweens.forEach(function(t){ t.kill(); });
+    floatTweens = [];
+  }
+  startFloats();
+
+  // Cursor parallax — widgets drift like the reference
+  var gathered = false;
+  cta.addEventListener('mousemove', function(e){
+    if (gathered) return;
+    var r = cta.getBoundingClientRect();
+    var nx = (e.clientX - r.left) / r.width - 0.5;
+    widgets.forEach(function(el){
+      var d = parseFloat(el.dataset.depth || 24);
+      gsap.to(el, { x: nx * d, duration: 0.9, ease: 'power3.out', overwrite: 'auto' });
+      gsap.to(el, { rotation: nx * (d / 8), duration: 1.1, ease: 'power3.out', overwrite: 'auto' });
+    });
+  });
+
+  // Hover "Yes" — widgets fly in and hide behind the card; hover out — they spring back
+  var card = document.querySelector('.cta-card');
+  var yesBtn = document.querySelector('.btn-yes');
+
+  function gather(){
+    gathered = true;
+    stopFloats();
+    var cr = card.getBoundingClientRect();
+    var cx = cr.left + cr.width / 2;
+    var cy = cr.top + cr.height / 2;
+    widgets.forEach(function(el, i){
+      var r = el.getBoundingClientRect();
+      var curX = gsap.getProperty(el, 'x') || 0;
+      var curY = gsap.getProperty(el, 'y') || 0;
+      var wx = r.left + r.width / 2 - curX;
+      var wy = r.top + r.height / 2 - curY;
+      gsap.to(el, {
+        x: (cx - wx) * 0.94,
+        y: (cy - wy) * 0.94,
+        scale: 0.5,
+        rotation: (i % 2 ? 10 : -10),
+        duration: 0.85,
+        ease: 'power3.inOut',
+        overwrite: 'auto',
+        delay: i * 0.025
+      });
+    });
+  }
+
+  function release(){
+    gathered = false;
+    widgets.forEach(function(el, i){
+      gsap.to(el, {
+        x: 0, y: 0, scale: 1, rotation: 0,
+        duration: 1.1,
+        ease: 'elastic.out(1, 0.65)',
+        overwrite: 'auto',
+        delay: i * 0.035
+      });
+    });
+    gsap.delayedCall(1.3, function(){ if (!gathered) startFloats(); });
+  }
+
+  yesBtn.addEventListener('mouseenter', gather);
+  yesBtn.addEventListener('mouseleave', release);
+
+  // ---------- Shared reveal system ----------
+  gsap.set('[data-reveal]', { opacity: 0, y: 28 });
+  ScrollTrigger.batch('[data-reveal]', {
+    start: 'top 86%',
+    once: true,
+    onEnter: function(batch){
+      gsap.to(batch, { opacity: 1, y: 0, duration: 0.85, ease: 'power3.out', stagger: 0.09 });
+    }
+  });
+
+  // ---------- S2: step wire draws with scroll ----------
+  var stepPath = document.querySelector('.step-wire path');
+  if (stepPath){
+    var plen = stepPath.getTotalLength();
+    gsap.set(stepPath, { strokeDasharray: plen, strokeDashoffset: plen });
+    gsap.to(stepPath, {
+      strokeDashoffset: 0, ease: 'none',
+      scrollTrigger: { trigger: '.steps', start: 'top 82%', end: 'top 30%', scrub: true }
+    });
+  }
+
+  // ---------- S3: counters ----------
+  gsap.utils.toArray('.stat .num').forEach(function(el){
+    var target = parseFloat(el.dataset.count);
+    var dec = parseInt(el.dataset.decimals || '0', 10);
+    var pre = el.dataset.prefix || '';
+    var suf = el.dataset.suffix || '';
+    ScrollTrigger.create({
+      trigger: el, start: 'top 88%', once: true,
+      onEnter: function(){
+        var obj = { v: 0 };
+        gsap.to(obj, {
+          v: target, duration: 1.8, ease: 'power2.out',
+          onUpdate: function(){
+            var val = dec ? obj.v.toFixed(dec) : Math.round(obj.v).toLocaleString('en-US');
+            el.innerHTML = pre + val + '<i>' + suf + '</i>';
+          }
+        });
+      }
+    });
+  });
+
+  // ---------- S4: stacked card auto-carousel ----------
+  var deck = document.querySelector('.deck');
+  if (deck){
+    var dcards = gsap.utils.toArray('.deck-card');
+    function layoutDeck(animate){
+      dcards.forEach(function(c, i){
+        gsap.to(c, {
+          y: i * 24, scale: 1 - i * 0.055,
+          opacity: i < 3 ? 1 : 0,
+          zIndex: dcards.length - i,
+          duration: animate ? 0.6 : 0, ease: 'power3.out'
+        });
+        c.style.zIndex = dcards.length - i;
+      });
+    }
+    layoutDeck(false);
+    setInterval(function(){
+      var first = dcards.shift();
+      gsap.to(first, {
+        y: -70, opacity: 0, scale: 1.02, duration: 0.45, ease: 'power2.in',
+        onComplete: function(){
+          dcards.push(first);
+          gsap.set(first, { y: 3 * 24, scale: 1 - 3 * 0.055 });
+          layoutDeck(true);
+        }
+      });
+    }, 3200);
+  }
+
+  // ---------- S5: pricing toggle ----------
+  var sw = document.querySelector('.switch');
+  if (sw){
+    function flip(){
+      sw.classList.toggle('on');
+      var annual = sw.classList.contains('on');
+      sw.setAttribute('aria-checked', annual);
+      document.querySelector('.plabel.monthly').classList.toggle('active', !annual);
+      document.querySelector('.plabel.annual').classList.toggle('active', annual);
+      document.querySelectorAll('.plan .price b').forEach(function(b){
+        var to = parseFloat(annual ? b.dataset.annual : b.dataset.monthly);
+        var obj = { v: parseFloat(b.textContent) || 0 };
+        gsap.to(obj, {
+          v: to, duration: 0.5, ease: 'power2.out',
+          onUpdate: function(){ b.textContent = Math.round(obj.v); }
+        });
+      });
+    }
+    sw.addEventListener('click', flip);
+    sw.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
+  }
+
+  // ---------- S8: animated ASCII footer (vanilla port) ----------
+  (function(){
+    var foot = document.querySelector('.foot');
+    if (!foot) return;
+    var CH = '........:::=+xX#0369', LIFE = 300, CLUSTER = 10, PEASE = 0.05;
+    var charColor = '#7A4517', hoverColor = '#F0821E', hoverChar = '#0F1216';
+    var cols = 60, cell = 16, fs = 14, radius = 8, strength = 20;
+    var wraps = [foot.querySelector('.foot-hand.l'), foot.querySelector('.foot-hand.r')];
+    var hands = [];
+
+    function rr(x, a, b, w, h, r){
+      x.beginPath(); x.moveTo(a + r, b);
+      x.arcTo(a + w, b, a + w, b + h, r); x.arcTo(a + w, b + h, a, b + h, r);
+      x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath();
+    }
+    // draw candlestick "art" to sample — bullish run on the left, bearish on the right
+    function drawSource(dir){
+      var w = 480, h = 480, c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      var x = c.getContext('2d');
+      x.fillStyle = '#fff'; x.fillRect(0, 0, w, h);
+      x.fillStyle = '#000'; x.strokeStyle = '#000'; x.lineWidth = 16; x.lineCap = 'round';
+      var bodies = dir === 1
+        ? [[60, 270, 84, 140], [200, 175, 84, 190], [340, 70, 84, 240]]
+        : [[60, 70, 84, 240], [200, 160, 84, 200], [340, 265, 84, 145]];
+      bodies.forEach(function(b){
+        x.beginPath(); x.moveTo(b[0] + b[2] / 2, b[1] - 48); x.lineTo(b[0] + b[2] / 2, b[1] + b[3] + 48); x.stroke();
+        rr(x, b[0], b[1], b[2], b[3], 16); x.fill();
+      });
+      return c;
+    }
+    function build(src){
+      var rows = Math.max(1, Math.round(cols / (src.width / src.height)));
+      var s = document.createElement('canvas'); s.width = cols; s.height = rows;
+      var sx = s.getContext('2d'); sx.drawImage(src, 0, 0, cols, rows);
+      var px = sx.getImageData(0, 0, cols, rows).data;
+      var cells = new Map(), bgIdx = CH.lastIndexOf('.');
+      for (var r0 = 0; r0 < rows; r0++) for (var c0 = 0; c0 < cols; c0++){
+        var o = (r0 * cols + c0) * 4;
+        var br = (px[o] * 0.299 + px[o + 1] * 0.587 + px[o + 2] * 0.114) / 255;
+        var ci = Math.min(CH.length - 1, Math.floor((1 - br) * CH.length));
+        if (ci <= bgIdx) continue;
+        cells.set(c0 + ',' + r0, { col: c0, row: r0, ch: CH[ci], hl: 0 });
+      }
+      return { rows: rows, cells: cells };
+    }
+    function setup(wrap, dir){
+      var canvas = wrap.querySelector('canvas');
+      var d = build(drawSource(dir));
+      if (!d.cells.size) return;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = cols * cell * dpr; canvas.height = d.rows * cell * dpr;
+      canvas.style.aspectRatio = cols + '/' + d.rows;
+      var ctx = canvas.getContext('2d');
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.font = fs + 'px monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      hands.push({ canvas: canvas, ctx: ctx, cells: d.cells, list: Array.from(d.cells.values()), rows: d.rows });
+    }
+    setup(wraps[0], 1); setup(wraps[1], -1);
+
+    var pointer = { x: 0, y: 0 }, drift = { x: 0, y: 0 }, curtain = { o: 125 };
+
+    function cluster(cells, start){
+      var now = Date.now(); start.hl = now + LIFE;
+      var steps = (Math.random() * CLUSTER | 0) + 1, lit = [start], cur = start;
+      for (var s = 0; s < steps; s++){
+        var nb = [];
+        for (var dy = -1; dy <= 1; dy++) for (var dx = -1; dx <= 1; dx++){
+          if (!dx && !dy) continue;
+          var n = cells.get((cur.col + dx) + ',' + (cur.row + dy));
+          if (n && lit.indexOf(n) < 0) nb.push(n);
+        }
+        if (!nb.length) break;
+        var nx = nb[(Math.random() * nb.length) | 0];
+        nx.hl = now + LIFE + s * 10; lit.push(nx); cur = nx;
+      }
+    }
+    function hover(h, cx, cy){
+      var r = h.canvas.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      var mc = (cx - r.left) / r.width * cols, mr = (cy - r.top) / r.height * h.rows;
+      var best = null, bd = Infinity;
+      h.list.forEach(function(c){
+        var dx = mc - c.col, dy = mr - c.row, d2 = dx * dx + dy * dy;
+        if (d2 < bd){ bd = d2; best = c; }
+      });
+      if (best && Math.sqrt(bd) <= radius) cluster(h.cells, best);
+    }
+    foot.addEventListener('mousemove', function(e){
+      var r = foot.getBoundingClientRect();
+      pointer.x = ((e.clientX - r.left) / (r.width || 1) - 0.5) * strength * 2;
+      pointer.y = ((e.clientY - r.top) / (r.height || 1) - 0.5) * strength * 2;
+      hands.forEach(function(h){ hover(h, e.clientX, e.clientY); });
+    });
+
+    function render(h, now){
+      var ctx = h.ctx;
+      ctx.clearRect(0, 0, cols * cell, h.rows * cell);
+      h.list.forEach(function(c){
+        var x = c.col * cell, y = c.row * cell, on = c.hl > now;
+        if (on){ ctx.fillStyle = hoverColor; ctx.fillRect(x, y, cell, cell); }
+        ctx.fillStyle = on ? hoverChar : charColor;
+        ctx.fillText(c.ch, x + cell / 2, y + cell / 2);
+      });
+    }
+    (function frame(){
+      var now = Date.now();
+      hands.forEach(function(h){ render(h, now); });
+      drift.x += (pointer.x - drift.x) * PEASE;
+      drift.y += (pointer.y - drift.y) * PEASE;
+      var sc = 1 + strength * 2 / 200;
+      wraps.forEach(function(w, i){
+        var dir = i === 0 ? 1 : -1;
+        var rx = i === 0 ? -curtain.o : curtain.o;
+        w.style.transform = 'translateX(' + rx + '%) translate(' + (drift.x * dir) + 'px,' + (-drift.y) + 'px) scale(' + sc + ')';
+      });
+      requestAnimationFrame(frame);
+    })();
+
+    var fchars = gsap.utils.toArray('.foot-big h2 span');
+    gsap.set(fchars, { yPercent: 125 });
+    ScrollTrigger.create({
+      trigger: foot, start: 'top 60%',
+      onEnter: function(){
+        gsap.to(curtain, { o: 0, duration: 1, ease: 'power3.out', overwrite: true });
+        gsap.to(fchars, { yPercent: 0, duration: 1, ease: 'power3.out', stagger: { each: 0.04, from: 'center' }, overwrite: true });
+      },
+      onLeaveBack: function(){
+        gsap.to(curtain, { o: 125, duration: 0.4, ease: 'power2.in', overwrite: true });
+        gsap.to(fchars, { yPercent: 125, duration: 0.4, ease: 'power2.in', stagger: { each: 0.01, from: 'center' }, overwrite: true });
+      }
+    });
+  })();
+})();
+</script>
+
+</body>
+</html>

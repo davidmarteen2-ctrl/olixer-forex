@@ -1,0 +1,225 @@
+.card-shuffle {
+  --shuffle-card-width: min(74vw, 1080px);
+  --shuffle-card-radius: clamp(22px, 2.5vw, 38px);
+  position: relative;
+  height: 260vh;
+  min-height: 0;
+  margin-inline: calc(50% - 50vw);
+  color: #fff;
+}
+
+.card-shuffle__sticky {
+  position: sticky;
+  top: 0;
+  display: grid;
+  width: 100%;
+  height: 100svh;
+  min-height: min(620px, 100svh);
+  overflow: hidden;
+  place-items: center;
+  /* dark panel on the cream page — Assemble-style high-contrast rounded stage.
+     Top corners only: the step-flow section's curve owns the bottom boundary,
+     and a bottom radius here would let the page leak through at the corners */
+  background: #14171b;
+  border-radius: 50px 50px 0 0;
+}
+
+.card-shuffle__sticky::before {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 72px 72px;
+  content: "";
+  mask-image: radial-gradient(circle at center, #000 20%, transparent 72%);
+  pointer-events: none;
+}
+
+.card-shuffle__deck {
+  position: relative;
+  width: min(var(--shuffle-card-width), calc((100svh - 150px) * 1.5));
+  aspect-ratio: 3 / 2;
+  isolation: isolate;
+}
+
+.card-shuffle__card {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--shuffle-card-radius);
+  background: #15171a;
+  box-shadow:
+    0 26px 70px rgba(21, 23, 26, 0.19),
+    0 3px 12px rgba(21, 23, 26, 0.12);
+  transform-origin: center;
+  will-change: transform;
+}
+
+.card-shuffle__card img,
+.card-shuffle__scrim {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.card-shuffle__card img {
+  object-fit: cover;
+  filter: saturate(0.82) contrast(1.04);
+  transform: scale(1.015);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.card-shuffle__card:hover img {
+  transform: scale(1.055);
+}
+
+.card-shuffle__scrim {
+  background:
+    linear-gradient(180deg, rgba(8, 10, 12, 0.42) 0%, transparent 38%),
+    linear-gradient(0deg, rgba(8, 10, 12, 0.9) 0%, transparent 62%);
+}
+
+.card-shuffle__topline,
+.card-shuffle__copy {
+  position: absolute;
+  z-index: 1;
+  right: clamp(20px, 3vw, 42px);
+  left: clamp(20px, 3vw, 42px);
+}
+
+.card-shuffle__topline {
+  top: clamp(20px, 3vw, 38px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: clamp(10px, 1vw, 13px);
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.card-shuffle__copy {
+  bottom: clamp(22px, 4vw, 52px);
+  max-width: min(640px, 80%);
+}
+
+.card-shuffle__copy p {
+  max-width: 54ch;
+  margin: 0 0 10px;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: clamp(12px, 1.3vw, 17px);
+  line-height: 1.45;
+}
+
+.card-shuffle__copy h3 {
+  margin: 0;
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 4.8vw, 72px);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+
+.card-shuffle__guide,
+.card-shuffle__counter {
+  position: absolute;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.card-shuffle__guide {
+  bottom: 28px;
+  left: 32px;
+  gap: 10px;
+}
+
+.card-shuffle__guide-line {
+  width: 42px;
+  height: 1px;
+  background: #f0821e;
+}
+
+.card-shuffle__counter {
+  right: 32px;
+  bottom: 28px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 900px) {
+  .card-shuffle {
+    --shuffle-card-width: min(84vw, 720px);
+    height: 240vh;
+  }
+
+  .card-shuffle__sticky {
+    min-height: min(560px, 100svh);
+    border-radius: 28px 28px 0 0;
+  }
+
+  .card-shuffle__card {
+    border-radius: clamp(18px, 4vw, 30px);
+  }
+}
+
+@media (max-width: 600px) {
+  .card-shuffle {
+    --shuffle-card-width: 88vw;
+    height: 220vh;
+    min-height: 0;
+  }
+
+  .card-shuffle__sticky {
+    min-height: min(520px, 100svh);
+  }
+
+  .card-shuffle__deck {
+    aspect-ratio: 4 / 5;
+  }
+
+  .card-shuffle__copy {
+    max-width: 90%;
+  }
+
+  .card-shuffle__copy p {
+    max-width: 34ch;
+  }
+
+  .card-shuffle__guide,
+  .card-shuffle__counter {
+    bottom: 18px;
+  }
+
+  .card-shuffle__guide {
+    left: 18px;
+  }
+
+  .card-shuffle__counter {
+    right: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-shuffle {
+    height: 100svh;
+    min-height: 760px;
+  }
+
+  .card-shuffle__card {
+    will-change: auto;
+  }
+
+  .card-shuffle__card img {
+    transition: none;
+  }
+}

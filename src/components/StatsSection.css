@@ -1,0 +1,210 @@
+.stats-section {
+  position: relative;
+  /* z-index 1 + later DOM position: paints above step-flow (also z-index 1),
+     so its curve shows while overlapping into step-flow's bottom padding —
+     the notches then reveal step-flow's #f7f5f1 exactly */
+  z-index: 1;
+  margin-top: -50px;
+  overflow: hidden;
+  padding: 112px 24px 118px;
+  color: #fff;
+  background: #14171b;
+  /* rounded top only — the signals section's curve owns the bottom boundary */
+  border-radius: 50px 50px 0 0;
+}
+
+.stats-section::before {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 72px 72px, 72px 72px;
+  content: "";
+  mask-image: linear-gradient(to bottom, #000, transparent 82%);
+  pointer-events: none;
+}
+
+.stats-section__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.stats-section__head {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(300px, 0.65fr);
+  gap: clamp(40px, 8vw, 112px);
+  align-items: end;
+}
+
+.stats-section__eyebrow {
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+  margin-bottom: 22px;
+  color: #a5abb2;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stats-section__eyebrow::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f0821e;
+  content: "";
+}
+
+.stats-section__head h2 {
+  max-width: 740px;
+  margin: 0;
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(42px, 5vw, 68px);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+
+.stats-section__head p {
+  max-width: 470px;
+  margin: 0 0 5px;
+  color: #9299a1;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+#stats-section-root {
+  margin-top: 72px;
+}
+
+.stats-band {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: 100%;
+  margin: 0;
+  padding: 38px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+  list-style: none;
+}
+
+.stats-band__item {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  padding: 12px clamp(16px, 2.5vw, 34px);
+  text-align: center;
+}
+
+.stats-band__item + .stats-band__item {
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.stats-band__value {
+  color: #fff;
+  font-family: Inter, sans-serif;
+  font-size: clamp(46px, 5.4vw, 74px);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  white-space: nowrap;
+}
+
+.stats-band__label {
+  color: #8f969e;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .stats-section {
+    padding: 92px 24px 96px;
+    border-radius: 28px 28px 0 0;
+  }
+
+  .stats-section__head {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .stats-section__head p {
+    max-width: 610px;
+  }
+
+  #stats-section-root {
+    margin-top: 54px;
+  }
+
+  .stats-band {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 0;
+  }
+
+  .stats-band__item {
+    min-height: 174px;
+  }
+
+  .stats-band__item + .stats-band__item {
+    border-left: 0;
+  }
+
+  .stats-band__item:nth-child(even) {
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .stats-band__item:nth-child(n + 3) {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+}
+
+@media (max-width: 560px) {
+  .stats-section {
+    padding: 78px 18px 82px;
+  }
+
+  .stats-section__head h2 {
+    font-size: clamp(40px, 12vw, 52px);
+  }
+
+  #stats-section-root {
+    margin-top: 44px;
+  }
+
+  .stats-band {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-band__item {
+    min-height: 142px;
+  }
+
+  .stats-band__item:nth-child(even) {
+    border-left: 0;
+  }
+
+  .stats-band__item:nth-child(n + 2) {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .stats-band__value {
+    font-size: 56px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stats-band__value {
+    scroll-behavior: auto;
+  }
+}
