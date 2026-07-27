@@ -326,16 +326,25 @@
     .diagram-outer{height:calc(400px*.42 + 18px)}
   }
 
-  /* ---------- CTA SECTION (Assemble-style card + widgets) ---------- */
-  .cta{
-    position:relative;
-    z-index:2; /* same as testimonials, later in DOM — keeps its overlap painting on top */
-    background:#FBFAF7;
-    border-radius:50px 50px 0 0;
-    min-height:92vh;
-    display:flex;align-items:center;justify-content:center;
-    overflow:hidden;
-    margin-top:-50px; /* overlap the dark section above so the rounded top corners read against it */
+  /* ---------- CTA SECTION (Assemble-style pre-footer surface) ---------- */
+  .footerTransition {
+    position: relative;
+    background: #14171b;
+    isolation: isolate;
+  }
+  .cta, .preFooterSurface {
+    position: relative;
+    z-index: 2;
+    background: #FBFAF7;
+    border-radius: 50px 50px clamp(40px, 4vw, 72px) clamp(40px, 4vw, 72px);
+    border-bottom-left-radius: clamp(40px, 4vw, 72px);
+    border-bottom-right-radius: clamp(40px, 4vw, 72px);
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: -50px;
   }
   .cta::before{
     content:"";position:absolute;inset:0;
@@ -433,11 +442,19 @@
   }
   @media (max-width:900px){
     .cta-tile,.cta-chip{display:none}
-    .cta{min-height:80vh;border-radius:28px 28px 0 0}
-    .page{border-radius:0 0 clamp(28px, 4vw, 48px) clamp(28px, 4vw, 48px)}
+    .cta, .preFooterSurface{
+      min-height:75vh;
+      border-radius:28px 28px clamp(28px, 4vw, 48px) clamp(28px, 4vw, 48px);
+      border-bottom-left-radius:clamp(28px, 4vw, 48px);
+      border-bottom-right-radius:clamp(28px, 4vw, 48px);
+    }
   }
   @media (max-width:560px){
-    .page{border-radius:0 0 clamp(20px, 6vw, 32px) clamp(20px, 6vw, 32px)}
+    .cta, .preFooterSurface{
+      border-radius:24px 24px clamp(20px, 6vw, 32px) clamp(20px, 6vw, 32px);
+      border-bottom-left-radius:clamp(20px, 6vw, 32px);
+      border-bottom-right-radius:clamp(20px, 6vw, 32px);
+    }
   }
   @media (prefers-reduced-motion:reduce){
     .cta-card,.cta-card::before,.btn-yes,.btn-no{transition:none}
@@ -460,15 +477,20 @@
   }
   .bgal-head p{max-width:600px;margin:14px auto 0;color:var(--gray);font-size:16.5px;line-height:1.6}
 
-  /* ---------- FOOTER (Assemble fixed-reveal port) ---------- */
-  /* all page content lives in one opaque full-bleed block above the fixed
-     footer, so scrolling past the end "uncovers" it (Assemble pattern) */
-  /* overflow:clip (not hidden) so the card-shuffle sticky stage keeps working */
-  .page{position:relative;z-index:1;background:var(--bg);border-radius:0 0 clamp(40px, 4vw, 72px) clamp(40px, 4vw, 72px);overflow:clip}  .foot-spacer{height:85vh}
-  .foot{
-    position:fixed;bottom:0;left:0;width:100%;height:85vh;z-index:0;
-    background:#14171b;color:#fff;overflow:hidden;
-    display:flex;flex-direction:column;justify-content:space-between;
+  /* ---------- FOOTER (Relative layout with preFooterSurface overlap) ---------- */
+  .page{position:relative;z-index:1;background:var(--bg)}
+  .foot-spacer{display:none}
+  .foot, .siteFooter{
+    position:relative;
+    z-index:1;
+    margin-top:0;
+    background:#14171b;
+    color:#fff;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding-top:clamp(60px, 8vh, 100px);
   }
   .foot::before{
     content:"";position:absolute;inset:0;
@@ -1060,144 +1082,148 @@
 </section>
 <script type="module" src="/src/testimonials-main.jsx"></script>
 
-<!-- ================= CTA SECTION ================= -->
-<section class="cta" id="cta">
-  <div class="cta-ring r2"></div>
-  <div class="cta-ring r1"></div>
-  <div class="cta-glow"></div>
-
-  <!-- floating widgets -->
-  <div class="cta-tile" data-depth="22" style="width:148px;height:148px;top:11%;left:10%">
-    <svg width="72" height="72" viewBox="0 0 64 64" fill="none">
-      <path d="M16 13v38" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
-      <rect x="11" y="22" width="10" height="20" rx="2.5" fill="#15171A"/>
-      <path d="M32 7v50" stroke="#F0821E" stroke-width="2.6" stroke-linecap="round"/>
-      <rect x="26.5" y="16" width="11" height="30" rx="2.8" fill="#F0821E"/>
-      <path d="M48 17v34" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
-      <rect x="43" y="26" width="10" height="16" rx="2.5" fill="#15171A"/>
-    </svg>
-  </div>
-  <div class="cta-tile" data-depth="34" style="width:84px;height:84px;top:11%;right:15%">
-    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#15171A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/>
-      <path d="M16 3v4M8 3v4M4 11h16M8 15h2v2H8z"/>
-    </svg>
-  </div>
-  <div class="cta-tile" data-depth="28" style="width:92px;height:92px;bottom:16%;left:7%">
-    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#1FA357" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
-      <path d="M15 9a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/>
-      <path d="M9 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/>
-    </svg>
-  </div>
-  <div class="cta-tile" data-depth="40" style="width:74px;height:74px;top:46%;left:20%">
-    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F0821E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M11.46 20.846a12 12 0 0 1-7.96-14.846a12 12 0 0 0 8.5-3a12 12 0 0 0 8.5 3a12 12 0 0 1-.09 7.06"/>
-      <path d="M15 19l2 2l4-4"/>
-    </svg>
-  </div>
-  <div class="cta-tile" data-depth="26" style="width:96px;height:96px;bottom:13%;right:9%">
-    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#F0821E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 3v9h9"/>
-      <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/>
-    </svg>
-  </div>
-  <div class="cta-tile" data-depth="38" style="width:70px;height:70px;top:42%;right:6%">
-    <svg width="32" height="32" viewBox="0 0 24 24" fill="#F0821E" stroke="#F0821E" stroke-width="1.4" stroke-linejoin="round">
-      <path d="M13 3l0 7l6 0l-8 11l0-7l-6 0l8-11"/>
-    </svg>
-  </div>
-  <!-- floating mini cards -->
-  <div class="cta-chip" data-depth="30" style="top:24%;left:23%">
-    <div style="display:flex;align-items:center;gap:6px">
-      <span class="gdot"></span><span style="font-size:11px;font-weight:700">EUR/USD</span>
-      <span style="font-size:10.5px;font-weight:700;color:var(--green)">+0.42%</span>
-    </div>
-  </div>
-  <div class="cta-chip" data-depth="24" style="bottom:26%;right:20%">
-    <div style="display:flex;align-items:center;gap:8px">
-      <span style="font-size:11px;font-weight:800">GBP/JPY</span>
-      <span class="pill-buy">BUY</span>
-    </div>
-  </div>
-
-  <!-- the card -->
-  <div class="cta-card">
-    <svg width="52" height="52" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-      <path d="M16 13v38" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
-      <rect x="11" y="22" width="10" height="20" rx="2.5" fill="#15171A"/>
-      <path d="M32 7v50" stroke="#F0821E" stroke-width="2.6" stroke-linecap="round"/>
-      <rect x="26.5" y="16" width="11" height="30" rx="2.8" fill="#F0821E"/>
-      <path d="M48 17v34" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
-      <rect x="43" y="26" width="10" height="16" rx="2.5" fill="#15171A"/>
-    </svg>
-    <h2>Ready to trade smarter?</h2>
-    <div class="cta-buttons">
-      <button class="btn-yes" type="button" aria-pressed="false">Yes</button>
-      <button class="btn-no" type="button" aria-pressed="false">No</button>
-    </div>
-    <div class="cta-sub">
-      <div class="row">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6C7076" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 3l7 3v5.2c0 4.6-3 8.1-7 9.8-4-1.7-7-5.2-7-9.8V6l7-3z"/></svg>
-        <span>Start a <b>14 day free trial</b> today</span>
-      </div>
-      <div class="row">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6C7076" stroke-width="2" stroke-linecap="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>
-        <span><b>No credit card</b> required</span>
-      </div>
-    </div>
-  </div>
-</section>
-
 </main>
 </div><!-- /.page -->
 
-<!-- ================= FOOTER (Assemble fixed-reveal port) ================= -->
-<div class="foot-spacer" aria-hidden="true"></div>
-<footer class="foot" id="footer">
-  <div class="foot-inner">
-    <div class="foot-row">
-      <div class="foot-social">
-        <p class="foot-big-line">Follow the markets</p>
-        <div class="foot-line2">
-          <p class="foot-big-line">and copy top traders</p>
-          <a class="foot-x" href="#" aria-label="Olixer on X">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
-          </a>
-        </div>
-      </div>
-      <div class="foot-links">
-        <div class="foot-divider"></div>
-        <div class="foot-cols">
-          <div class="foot-col">
-            <a href="#pricing">Pricing</a>
-            <a href="#signals">Signals</a>
-            <a href="#platform">Platform</a>
-          </div>
-          <div class="foot-col">
-            <a href="#brokers">Brokers</a>
-            <a href="#tutorials">Tutorials</a>
-            <a href="#help">Help Center</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- ================= FOOTER TRANSITION ================= -->
+<div class="footerTransition">
 
-  <!-- bottom section: legal + wordmark -->
-  <div class="foot-bottom">
-    <div class="foot-legal">
-      <p>&copy; 2025 Olixer Forex. All rights reserved.</p>
-      <div class="foot-legal-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
+  <!-- ================= CTA SECTION ================= -->
+  <section class="cta preFooterSurface" id="cta">
+    <div class="cta-ring r2"></div>
+    <div class="cta-ring r1"></div>
+    <div class="cta-glow"></div>
+
+    <!-- floating widgets -->
+    <div class="cta-tile" data-depth="22" style="width:148px;height:148px;top:11%;left:10%">
+      <svg width="72" height="72" viewBox="0 0 64 64" fill="none">
+        <path d="M16 13v38" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
+        <rect x="11" y="22" width="10" height="20" rx="2.5" fill="#15171A"/>
+        <path d="M32 7v50" stroke="#F0821E" stroke-width="2.6" stroke-linecap="round"/>
+        <rect x="26.5" y="16" width="11" height="30" rx="2.8" fill="#F0821E"/>
+        <path d="M48 17v34" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
+        <rect x="43" y="26" width="10" height="16" rx="2.5" fill="#15171A"/>
+      </svg>
+    </div>
+    <div class="cta-tile" data-depth="34" style="width:84px;height:84px;top:11%;right:15%">
+      <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#15171A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/>
+        <path d="M16 3v4M8 3v4M4 11h16M8 15h2v2H8z"/>
+      </svg>
+    </div>
+    <div class="cta-tile" data-depth="28" style="width:92px;height:92px;bottom:16%;left:7%">
+      <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#1FA357" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
+        <path d="M15 9a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/>
+        <path d="M9 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/>
+      </svg>
+    </div>
+    <div class="cta-tile" data-depth="40" style="width:74px;height:74px;top:46%;left:20%">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F0821E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11.46 20.846a12 12 0 0 1-7.96-14.846a12 12 0 0 0 8.5-3a12 12 0 0 0 8.5 3a12 12 0 0 1-.09 7.06"/>
+        <path d="M15 19l2 2l4-4"/>
+      </svg>
+    </div>
+    <div class="cta-tile" data-depth="26" style="width:96px;height:96px;bottom:13%;right:9%">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#F0821E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3v9h9"/>
+        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/>
+      </svg>
+    </div>
+    <div class="cta-tile" data-depth="38" style="width:70px;height:70px;top:42%;right:6%">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="#F0821E" stroke="#F0821E" stroke-width="1.4" stroke-linejoin="round">
+        <path d="M13 3l0 7l6 0l-8 11l0-7l-6 0l8-11"/>
+      </svg>
+    </div>
+    <!-- floating mini cards -->
+    <div class="cta-chip" data-depth="30" style="top:24%;left:23%">
+      <div style="display:flex;align-items:center;gap:6px">
+        <span class="gdot"></span><span style="font-size:11px;font-weight:700">EUR/USD</span>
+        <span style="font-size:10.5px;font-weight:700;color:var(--green)">+0.42%</span>
       </div>
     </div>
-    <div class="foot-mark-mask">
-      <div class="foot-mark" aria-hidden="true">Olixer</div>
+    <div class="cta-chip" data-depth="24" style="bottom:26%;right:20%">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:11px;font-weight:800">GBP/JPY</span>
+        <span class="pill-buy">BUY</span>
+      </div>
     </div>
-  </div>
-</footer>
+
+    <!-- the card -->
+    <div class="cta-card">
+      <svg width="52" height="52" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <path d="M16 13v38" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
+        <rect x="11" y="22" width="10" height="20" rx="2.5" fill="#15171A"/>
+        <path d="M32 7v50" stroke="#F0821E" stroke-width="2.6" stroke-linecap="round"/>
+        <rect x="26.5" y="16" width="11" height="30" rx="2.8" fill="#F0821E"/>
+        <path d="M48 17v34" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
+        <rect x="43" y="26" width="10" height="16" rx="2.5" fill="#15171A"/>
+      </svg>
+      <h2>Ready to trade smarter?</h2>
+      <div class="cta-buttons">
+        <button class="btn-yes" type="button" aria-pressed="false">Yes</button>
+        <button class="btn-no" type="button" aria-pressed="false">No</button>
+      </div>
+      <div class="cta-sub">
+        <div class="row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6C7076" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 3l7 3v5.2c0 4.6-3 8.1-7 9.8-4-1.7-7-5.2-7-9.8V6l7-3z"/></svg>
+          <span>Start a <b>14 day free trial</b> today</span>
+        </div>
+        <div class="row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6C7076" stroke-width="2" stroke-linecap="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>
+          <span><b>No credit card</b> required</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="foot siteFooter" id="footer">
+    <div class="foot-inner">
+      <div class="foot-row">
+        <div class="foot-social">
+          <p class="foot-big-line">Follow the markets</p>
+          <div class="foot-line2">
+            <p class="foot-big-line">and copy top traders</p>
+            <a class="foot-x" href="#" aria-label="Olixer on X">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="foot-links">
+          <div class="foot-divider"></div>
+          <div class="foot-cols">
+            <div class="foot-col">
+              <a href="#pricing">Pricing</a>
+              <a href="#signals">Signals</a>
+              <a href="#platform">Platform</a>
+            </div>
+            <div class="foot-col">
+              <a href="#brokers">Brokers</a>
+              <a href="#tutorials">Tutorials</a>
+              <a href="#help">Help Center</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- wordmark bottom section -->
+    <div class="foot-bottom">
+      <div class="foot-legal">
+        <span>© 2025 Olixer Forex. All rights reserved.</span>
+        <div class="foot-legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+      <div class="foot-mark-mask">
+        <div class="foot-mark">Olixer</div>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /.footerTransition -->
 
 <!-- ================= GLOBAL ANIMATION STACK ================= -->
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
