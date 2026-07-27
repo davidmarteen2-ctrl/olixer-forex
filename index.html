@@ -366,12 +366,19 @@
   .cta-ring{
     position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
     border-radius:50%;
-    border:1.5px solid rgba(21,23,26,0.22);
     pointer-events:none;
     box-sizing:border-box;
   }
-  .cta-ring.r1{width:780px;height:780px}
-  .cta-ring.r2{width:1080px;height:1080px}
+  .cta-ring.r1{
+    width:780px;height:780px;
+    background:rgba(0,0,0,0.028);
+    border:1.5px solid rgba(0,0,0,0.055);
+  }
+  .cta-ring.r2{
+    width:1080px;height:1080px;
+    background:rgba(0,0,0,0.018);
+    border:1.5px solid rgba(0,0,0,0.04);
+  }
   .cta-glow{
     position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
     width:900px;height:520px;border-radius:50%;
