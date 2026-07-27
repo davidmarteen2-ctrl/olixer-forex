@@ -363,7 +363,9 @@ export default function StatsSection() {
             <span className="stats-band__label" aria-hidden="true">
               {stat.label}
             </span>
-            <StatChart stat={stat} started={started} reducedMotion={reducedMotion} />
+            <div className="stats-chart-slot">
+              <StatChart stat={stat} started={started} reducedMotion={reducedMotion} />
+            </div>
           </li>
         );
       })}
