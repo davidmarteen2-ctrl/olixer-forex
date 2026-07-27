@@ -1,5 +1,5 @@
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useRef, useState } from "react";
+import { AnimatePresence, animate, motion, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 import "./StepFlow.css";
 
@@ -30,13 +30,107 @@ export const stepFlowItems = [
   },
 ];
 
-function AccountVisual() {
+const SCENE_EASE = [0.22, 1, 0.36, 1];
+const POP_SPRING = { type: "spring", stiffness: 420, damping: 30 };
+
+const fadeUp = (delay = 0, duration = 0.45) => ({
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0, transition: { delay, duration, ease: SCENE_EASE } },
+});
+
+const staggerGroup = (delayChildren = 0, staggerChildren = 0.12) => ({
+  hidden: {},
+  show: { transition: { delayChildren, staggerChildren } },
+});
+
+const iconPop = {
+  hidden: { scale: 0.4, opacity: 0 },
+  show: { scale: 1, opacity: 1, transition: { ...POP_SPRING, delay: 0.1 } },
+};
+
+const scaleIconPop = {
+  hidden: { scale: 0.4, opacity: 0, rotate: -14 },
+  show: { scale: 1, opacity: 1, rotate: 0, transition: { ...POP_SPRING, delay: 0.1 } },
+};
+
+const checkDraw = {
+  hidden: { pathLength: 0, opacity: 0 },
+  show: { pathLength: 1, opacity: 1, transition: { delay: 0.38, duration: 0.3, ease: "easeOut" } },
+};
+
+function useSceneStarted(ref, reduceMotion) {
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    if (started) return undefined;
+
+    if (reduceMotion || !("IntersectionObserver" in window) || !ref.current) {
+      setStarted(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [ref, reduceMotion, started]);
+
+  return started;
+}
+
+function useCountUp(target, { play, reduceMotion, delay = 0, duration = 0.8, formatter }) {
+  const formatterRef = useRef(formatter);
+  formatterRef.current = formatter;
+
+  const [text, setText] = useState(() => formatterRef.current(reduceMotion ? target : 0));
+
+  useEffect(() => {
+    if (reduceMotion) {
+      setText(formatterRef.current(target));
+      return undefined;
+    }
+    if (!play) return undefined;
+
+    const controls = animate(0, target, {
+      delay,
+      duration,
+      ease: SCENE_EASE,
+      onUpdate: (value) => setText(formatterRef.current(value)),
+    });
+
+    return () => controls.stop();
+  }, [target, play, reduceMotion, delay, duration]);
+
+  return text;
+}
+
+function AccountVisual({ play, reduceMotion }) {
+  const setupPercent = useCountUp(100, {
+    play,
+    reduceMotion,
+    delay: 0.35,
+    duration: 0.7,
+    formatter: (value) => `${Math.round(value)}%`,
+  });
+
   return (
-    <div className="step-ui step-ui--account">
-      <div className="step-ui__bar">
+    <motion.div
+      className="step-ui step-ui--account"
+      initial={reduceMotion ? false : "hidden"}
+      animate={reduceMotion || play ? "show" : "hidden"}
+    >
+      <motion.div className="step-ui__bar" variants={fadeUp(0, 0.35)}>
         <span className="step-ui__brand"><i />Olixer</span>
-      </div>
-      <div className="account-card">
+      </motion.div>
+      <motion.div className="account-card" variants={fadeUp(0.05)}>
         <div className="account-card__avatar">OA</div>
         <div className="account-card__info">
           <span className="step-ui__kicker">Trading profile</span>
@@ -46,50 +140,67 @@ function AccountVisual() {
             Verified copy-trading account
           </p>
         </div>
-      </div>
-      <div className="setup-progress">
-        <div className="setup-progress__top"><span>Account setup</span><strong>100%</strong></div>
-        <div className="setup-progress__track"><span /></div>
-      </div>
-      <div className="account-features">
-        <div className="feature-card">
-          <div className="feature-card__icon feature-card__icon--green">
+      </motion.div>
+      <motion.div className="setup-progress" variants={fadeUp(0.2, 0.4)}>
+        <div className="setup-progress__top">
+          <span>Account setup</span>
+          <strong aria-label="100%"><span aria-hidden="true">{setupPercent}</span></strong>
+        </div>
+        <div className="setup-progress__track">
+          <motion.span
+            variants={{
+              hidden: { scaleX: 0 },
+              show: { scaleX: 1, transition: { delay: 0.35, duration: 0.7, ease: SCENE_EASE } },
+            }}
+          />
+        </div>
+      </motion.div>
+      <motion.div className="account-features" variants={staggerGroup(0.65, 0.12)}>
+        <motion.div className="feature-card" variants={fadeUp()}>
+          <motion.div className="feature-card__icon feature-card__icon--green" variants={iconPop}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="20 6 9 17 4 12" />
+              <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+              <motion.path d="m9 12 2 2 4-4" variants={checkDraw} />
             </svg>
-          </div>
+          </motion.div>
           <span>Identity</span>
           <strong>Verified</strong>
-        </div>
-        <div className="feature-card">
-          <div className="feature-card__icon feature-card__icon--orange">
+        </motion.div>
+        <motion.div className="feature-card" variants={fadeUp()}>
+          <motion.div className="feature-card__icon feature-card__icon--orange" variants={scaleIconPop}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M16 16c0-3-3-3-3-3H11s-3 0-3 3" />
               <path d="M12 3v18" />
-              <path d="M3 7h18" />
-              <path d="M6 7l-3 9h6Z" />
-              <path d="M18 7l-3 9h6Z" />
+              <path d="m19 8 3 8a5 5 0 0 1-6 0zV7" />
+              <path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1" />
+              <path d="m5 8 3 8a5 5 0 0 1-6 0zV7" />
+              <path d="M7 21h10" />
             </svg>
-          </div>
+          </motion.div>
           <span>Risk profile</span>
           <strong>Balanced</strong>
-        </div>
-        <div className="feature-card">
-          <div className="feature-card__icon feature-card__icon--green">
+        </motion.div>
+        <motion.div className="feature-card" variants={fadeUp()}>
+          <motion.div className="feature-card__icon feature-card__icon--green" variants={iconPop}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+              <motion.path d="m9 12 2 2 4-4" variants={checkDraw} />
             </svg>
-          </div>
+          </motion.div>
           <span>2FA security</span>
           <strong>Enabled</strong>
-        </div>
-      </div>
-      <div className="profile-ready-bar">
+        </motion.div>
+      </motion.div>
+      <motion.div
+        className="profile-ready-bar"
+        variants={{
+          hidden: { opacity: 0, y: 12, scale: 0.97 },
+          show: { opacity: 1, y: 0, scale: 1, transition: { ...POP_SPRING, delay: 1.15 } },
+        }}
+      >
         <span className="profile-ready-bar__check">✓</span>
         <span className="profile-ready-bar__text">Profile Ready</span>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -100,90 +211,322 @@ const brokerLogos = [
   ["OANDA", "/assets/logos/oanda-official.svg"],
 ];
 
-function BrokerVisual() {
+function BrokerVisual({ play, reduceMotion }) {
   return (
-    <div className="step-ui step-ui--broker">
-      <div className="step-ui__bar">
+    <motion.div
+      className="step-ui step-ui--broker"
+      initial={reduceMotion ? false : "hidden"}
+      animate={reduceMotion || play ? "show" : "hidden"}
+    >
+      <motion.div className="step-ui__bar" variants={fadeUp(0, 0.35)}>
         <span className="step-ui__brand"><i />Broker network</span>
         <span className="step-ui__status step-ui__status--success">Broker connected</span>
-      </div>
-      <div className="broker-grid">
-        {brokerLogos.map(([name, src], index) => (
-          <div className={`broker-option${index === 0 ? " broker-option--active" : ""}`} key={name}>
-            <img src={src} alt={`${name} logo`} />
-            {index === 0 ? <span>Connected</span> : null}
-          </div>
-        ))}
-      </div>
-      <div className="broker-link">
+      </motion.div>
+      <motion.div className="broker-grid" variants={staggerGroup(0.1, 0.1)}>
+        {brokerLogos.map(([name, src], index) => {
+          const isConnected = index === 0;
+          return (
+            <motion.div
+              className="broker-option"
+              key={name}
+              variants={{
+                hidden: { opacity: 0, y: 14, scale: 0.97 },
+                show: {
+                  opacity: isConnected ? 1 : 0.6,
+                  y: 0,
+                  scale: 1,
+                  transition: { duration: 0.4, ease: SCENE_EASE },
+                },
+              }}
+            >
+              <img src={src} alt={`${name} logo`} />
+              {isConnected ? (
+                <>
+                  <motion.span
+                    className="broker-option__connected-ring"
+                    aria-hidden="true"
+                    variants={{
+                      hidden: { opacity: 0 },
+                      show: { opacity: 1, transition: { delay: 0.7, duration: 0.35 } },
+                    }}
+                  />
+                  <motion.span
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.7 },
+                      show: { opacity: 1, scale: 1, transition: { ...POP_SPRING, delay: 0.8 } },
+                    }}
+                  >
+                    Connected
+                  </motion.span>
+                </>
+              ) : null}
+            </motion.div>
+          );
+        })}
+      </motion.div>
+      <motion.div
+        className="broker-link"
+        variants={{
+          hidden: { opacity: 0, y: 18 },
+          show: { opacity: 1, y: 0, transition: { delay: 0.95, duration: 0.45, ease: SCENE_EASE } },
+        }}
+      >
         <span className="broker-link__icon">↗</span>
         <div><span>Live account</span><strong>Eightcap ···· 2841</strong></div>
-        <span className="broker-link__pulse" />
-      </div>
-      <p className="step-ui__note">Encrypted connection · Read-only API permissions</p>
-    </div>
+        <motion.span
+          className="broker-link__pulse"
+          variants={{
+            hidden: { scale: 1 },
+            show: {
+              scale: [1, 1.45, 1],
+              boxShadow: [
+                "0 0 0 0 rgba(55, 191, 113, 0)",
+                "0 0 0 8px rgba(55, 191, 113, 0.25)",
+                "0 0 0 0 rgba(55, 191, 113, 0)",
+              ],
+              transition: { delay: 1.25, duration: 0.55, times: [0, 0.5, 1] },
+            },
+          }}
+        />
+      </motion.div>
+      <motion.p className="step-ui__note" variants={fadeUp(1.1, 0.4)}>
+        Encrypted connection · Read-only API permissions
+      </motion.p>
+    </motion.div>
   );
 }
 
-function TraderVisual() {
+function TraderVisual({ play, reduceMotion }) {
+  const returnPercent = useCountUp(28.4, {
+    play,
+    reduceMotion,
+    delay: 0.35,
+    duration: 0.8,
+    formatter: (value) => `+${value.toFixed(1)}%`,
+  });
+
   return (
-    <div className="step-ui step-ui--trader">
-      <div className="step-ui__bar">
+    <motion.div
+      className="step-ui step-ui--trader"
+      initial={reduceMotion ? false : "hidden"}
+      animate={reduceMotion || play ? "show" : "hidden"}
+    >
+      <motion.div className="step-ui__bar" variants={fadeUp(0, 0.35)}>
         <span className="step-ui__brand"><i />Trader marketplace</span>
         <span className="step-ui__status">Live rankings</span>
-      </div>
-      <div className="trader-card trader-card--featured">
-        <div className="trader-card__rank">01</div>
-        <div className="trader-card__person"><span className="trader-card__avatar">MP</span><div><strong>Momentum Pro</strong><span>42 months verified</span></div></div>
-        <div className="trader-card__return"><span>12M return</span><strong>+28.4%</strong></div>
+      </motion.div>
+      <motion.div className="trader-card trader-card--featured" variants={fadeUp(0.04, 0.4)}>
+        <motion.span
+          className="trader-card__spotlight"
+          aria-hidden="true"
+          variants={{
+            hidden: { opacity: 0, scale: 0.85 },
+            show: { opacity: 1, scale: 1, transition: { delay: 0.08, duration: 0.55, ease: SCENE_EASE } },
+          }}
+        />
+        <motion.div
+          className="trader-card__rank"
+          variants={{
+            hidden: { opacity: 0, scale: 0.6, y: -4 },
+            show: { opacity: 1, scale: 1, y: 0, transition: { ...POP_SPRING, delay: 0.2 } },
+          }}
+        >
+          01
+        </motion.div>
+        <div className="trader-card__person">
+          <motion.span
+            className="trader-card__avatar"
+            variants={{
+              hidden: { opacity: 0, scale: 0.5 },
+              show: { opacity: 1, scale: 1, transition: { ...POP_SPRING, delay: 0.3 } },
+            }}
+          >
+            MP
+            <motion.span
+              className="trader-card__avatar-ring"
+              aria-hidden="true"
+              variants={{
+                hidden: { opacity: 0, scale: 0.7 },
+                show: { opacity: 1, scale: 1, transition: { delay: 0.4, duration: 0.4, ease: SCENE_EASE } },
+              }}
+            />
+          </motion.span>
+          <motion.div variants={fadeUp(0.38, 0.35)}>
+            <strong>Momentum Pro</strong>
+            <span>42 months verified</span>
+          </motion.div>
+        </div>
+        <motion.div className="trader-card__return" variants={fadeUp(0.5, 0.3)}>
+          <span>12M return</span>
+          <strong aria-label="+28.4%"><span aria-hidden="true">{returnPercent}</span></strong>
+        </motion.div>
         <svg className="trader-card__chart" viewBox="0 0 130 48" aria-hidden="true">
-          <path d="M2 42 C18 37 22 39 34 30 S54 34 64 22 S82 28 93 15 S111 19 128 5" />
+          <motion.path
+            d="M2 42 C18 37 22 39 34 30 S54 34 64 22 S82 28 93 15 S111 19 128 5"
+            variants={{
+              hidden: { pathLength: 0, opacity: 0 },
+              show: {
+                pathLength: 1,
+                opacity: 1,
+                transition: {
+                  pathLength: { delay: 0.55, duration: 0.75, ease: "easeOut" },
+                  opacity: { delay: 0.55, duration: 0.01 },
+                },
+              },
+            }}
+          />
         </svg>
-      </div>
-      <div className="risk-row">
-        <span>Risk score</span><div className="risk-dots"><i /><i /><i /><i className="off" /><i className="off" /></div><strong>3 / 10</strong>
-      </div>
-      <div className="trader-list">
-        <div><span>02</span><strong>Atlas FX</strong><em>+21.8%</em></div>
-        <div><span>03</span><strong>London Session</strong><em>+17.3%</em></div>
-      </div>
-    </div>
+      </motion.div>
+      <motion.div className="risk-row" variants={fadeUp(1.35, 0.35)}>
+        <span>Risk score</span>
+        <motion.div className="risk-dots" variants={staggerGroup(1.45, 0.12)}>
+          <motion.i variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 0.25, ease: SCENE_EASE } } }} />
+          <motion.i variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 0.25, ease: SCENE_EASE } } }} />
+          <motion.i variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 0.25, ease: SCENE_EASE } } }} />
+          <i className="off" />
+          <i className="off" />
+        </motion.div>
+        <strong>3 / 10</strong>
+      </motion.div>
+      <motion.div className="trader-list" variants={staggerGroup(1.7, 0.12)}>
+        <motion.div variants={fadeUp()}><span>02</span><strong>Atlas FX</strong><em>+21.8%</em></motion.div>
+        <motion.div variants={fadeUp()}><span>03</span><strong>London Session</strong><em>+17.3%</em></motion.div>
+      </motion.div>
+    </motion.div>
   );
 }
 
-function CopyVisual() {
+const copyPositions = [
+  { pair: "EUR / USD", icon: "euro", side: "Buy · 0.40 lots", pnl: 184.2, label: "+$184.20" },
+  { pair: "GBP / JPY", icon: "pound", side: "Sell · 0.25 lots", pnl: 92.4, label: "+$92.40" },
+  { pair: "XAU / USD", icon: "gold", side: "Buy · 0.10 lots", pnl: 61.8, label: "+$61.80" },
+];
+
+function PairIcon({ type }) {
+  if (type === "pound") {
+    return (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M18 7c0-5.333-8-5.333-8 0" />
+        <path d="M10 7v14" />
+        <path d="M6 21h12" />
+        <path d="M6 13h10" />
+      </svg>
+    );
+  }
+  if (type === "gold") {
+    return (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M13.744 17.736a6 6 0 1 1-7.48-7.48" />
+        <path d="M15 6h1v4" />
+        <path d="m6.134 14.768.866-.5 2 3.464" />
+        <circle cx="16" cy="8" r="6" />
+      </svg>
+    );
+  }
   return (
-    <div className="step-ui step-ui--copy">
-      <div className="step-ui__bar">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4 10h12" />
+      <path d="M4 14h9" />
+      <path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2" />
+    </svg>
+  );
+}
+
+const pairIconPop = {
+  hidden: { opacity: 0, scale: 0.5, rotate: -14 },
+  show: { opacity: 1, scale: 1, rotate: 0, transition: POP_SPRING },
+};
+
+function PositionRow({ position, index, play, reduceMotion }) {
+  const pnlText = useCountUp(position.pnl, {
+    play,
+    reduceMotion,
+    delay: 0.65 + index * 0.12,
+    duration: 0.5,
+    formatter: (value) => `+$${value.toFixed(2)}`,
+  });
+
+  return (
+    <motion.div variants={fadeUp()}>
+      <motion.span className="pair-icon" variants={pairIconPop}>
+        <PairIcon type={position.icon} />
+      </motion.span>
+      <p><strong>{position.pair}</strong><span>{position.side}</span></p>
+      <em aria-label={position.label}><span aria-hidden="true">{pnlText}</span></em>
+    </motion.div>
+  );
+}
+
+function CopyVisual({ play, reduceMotion }) {
+  const equityText = useCountUp(24860.2, {
+    play,
+    reduceMotion,
+    delay: 0.15,
+    duration: 0.9,
+    formatter: (value) =>
+      `$${value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+  });
+
+  return (
+    <motion.div
+      className="step-ui step-ui--copy"
+      initial={reduceMotion ? false : "hidden"}
+      animate={reduceMotion || play ? "show" : "hidden"}
+    >
+      <motion.div className="step-ui__bar" variants={fadeUp(0, 0.35)}>
         <span className="step-ui__brand"><i />Copy engine</span>
         <span className="step-ui__status step-ui__status--live"><b />Copying live</span>
-      </div>
-      <div className="equity-card">
-        <div><span>Account equity</span><strong>$24,860.20</strong></div>
-        <span className="equity-card__gain">+4.8%</span>
-      </div>
-      <div className="position-head"><span>Open positions</span><span>3 active</span></div>
-      <div className="position-list">
-        <div><span className="pair-icon">€</span><p><strong>EUR / USD</strong><span>Buy · 0.40 lots</span></p><em>+$184.20</em></div>
-        <div><span className="pair-icon">£</span><p><strong>GBP / JPY</strong><span>Sell · 0.25 lots</span></p><em>+$92.40</em></div>
-        <div><span className="pair-icon">$</span><p><strong>XAU / USD</strong><span>Buy · 0.10 lots</span></p><em>+$61.80</em></div>
-      </div>
-      <div className="copy-footer"><span>Master</span><strong>Momentum Pro</strong><span>Risk sync on</span></div>
-    </div>
+      </motion.div>
+      <motion.div className="equity-card" variants={fadeUp(0.05, 0.4)}>
+        <div>
+          <span>Account equity</span>
+          <strong aria-label="$24,860.20"><span aria-hidden="true">{equityText}</span></strong>
+        </div>
+        <motion.span
+          className="equity-card__gain"
+          variants={{
+            hidden: { opacity: 0, scale: 0.6 },
+            show: { opacity: 1, scale: 1, transition: { ...POP_SPRING, delay: 0.75 } },
+          }}
+        >
+          +4.8%
+        </motion.span>
+      </motion.div>
+      <motion.div className="position-head" variants={fadeUp(0.45, 0.35)}>
+        <span>Open positions</span><span>3 active</span>
+      </motion.div>
+      <motion.div className="position-list" variants={staggerGroup(0.55, 0.12)}>
+        {copyPositions.map((position, index) => (
+          <PositionRow
+            key={position.pair}
+            position={position}
+            index={index}
+            play={play}
+            reduceMotion={reduceMotion}
+          />
+        ))}
+      </motion.div>
+      <motion.div className="copy-footer" variants={fadeUp(1.25, 0.4)}>
+        <span>Master</span><strong>Momentum Pro</strong>
+        <span className="copy-footer__sync"><i />Risk sync on</span>
+      </motion.div>
+    </motion.div>
   );
 }
 
-function StepVisual({ stepId }) {
-  if (stepId === "broker") return <BrokerVisual />;
-  if (stepId === "trader") return <TraderVisual />;
-  if (stepId === "copy") return <CopyVisual />;
-  return <AccountVisual />;
+function StepVisual({ stepId, play, reduceMotion }) {
+  if (stepId === "broker") return <BrokerVisual play={play} reduceMotion={reduceMotion} />;
+  if (stepId === "trader") return <TraderVisual play={play} reduceMotion={reduceMotion} />;
+  if (stepId === "copy") return <CopyVisual play={play} reduceMotion={reduceMotion} />;
+  return <AccountVisual play={play} reduceMotion={reduceMotion} />;
 }
 
 export default function StepFlow() {
   const [activeIndex, setActiveIndex] = useState(0);
   const tabRefs = useRef([]);
+  const shellRef = useRef(null);
   const reduceMotion = useReducedMotion();
+  const sceneStarted = useSceneStarted(shellRef, reduceMotion);
   const activeStep = stepFlowItems[activeIndex];
 
   const handleKeyDown = (event, index) => {
@@ -256,7 +599,7 @@ export default function StepFlow() {
         })}
       </div>
 
-      <div className="step-flow__visual-shell">
+      <div className="step-flow__visual-shell" ref={shellRef}>
         <AnimatePresence initial={false} mode="sync">
           <motion.div
             key={activeStep.id}
@@ -266,7 +609,7 @@ export default function StepFlow() {
             aria-labelledby={`step-flow-tab-${activeStep.id}`}
             {...panelMotion}
           >
-            <StepVisual stepId={activeStep.id} />
+            <StepVisual stepId={activeStep.id} play={sceneStarted} reduceMotion={reduceMotion} />
           </motion.div>
         </AnimatePresence>
       </div>

@@ -166,46 +166,8 @@
   content: "";
 }
 
-.signal-chart {
-  width: 100%;
-  min-height: 0;
-  flex: 1;
-  margin: 6px 0;
-}
-
-.signal-chart__grid line {
-  stroke: rgba(255, 255, 255, 0.075);
-  stroke-width: 1;
-}
-
-.signal-chart__level {
-  stroke-width: 1;
-  stroke-dasharray: 5 7;
-}
-
-.signal-chart__level--target { stroke: rgba(54, 201, 120, 0.48); }
-.signal-chart__level--entry { stroke: rgba(255, 255, 255, 0.32); }
-.signal-chart__level--stop { stroke: rgba(240, 100, 100, 0.45); }
-
-.signal-chart__line {
-  fill: none;
-  stroke-width: 4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.signal-chart__point-halo {
-  opacity: 0.2;
-}
-
-.signal-chart__labels {
-  fill: #717982;
-  font-family: Inter, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
+/* Chart-internal styles (.signal-chart*) now live in
+   ./signal-chart/SignalChart.css, colocated with the chart component. */
 
 .signal-card__visual-bottom > span:first-child {
   color: #fff;

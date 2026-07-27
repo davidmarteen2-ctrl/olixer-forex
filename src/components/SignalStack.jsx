@@ -1,9 +1,14 @@
 import { animate, motion, useMotionValue, useReducedMotion } from "framer-motion";
 import { startTransition, useEffect, useState } from "react";
 
-import SignalChart from "./SignalChart.jsx";
+import SignalChart from "./signal-chart/SignalChart.jsx";
 import "./SignalStack.css";
 
+// entry/stop/target below stay as display strings (rendered verbatim in the
+// <dl> further down) — entryPrice/targetPrice/stopPrice/currentPrice and
+// chart are the real numeric values the chart's scales are built from. All
+// figures are illustrative demo data, matching this card's own "Example
+// data" / "Illustrative signal" copy.
 export const signalCards = [
   {
     id: "eurusd",
@@ -17,7 +22,11 @@ export const signalCards = [
     risk: "1.0%",
     category: "Major FX",
     accent: "#36c978",
-    chart: [302, 286, 296, 254, 268, 224, 238, 194, 210, 166, 178, 132],
+    entryPrice: 1.0842,
+    stopPrice: 1.079,
+    targetPrice: 1.092,
+    currentPrice: 1.0894,
+    chart: [1.0821, 1.0812, 1.0828, 1.0838, 1.0833, 1.0847, 1.0858, 1.0852, 1.0867, 1.0879, 1.0886, 1.0894],
   },
   {
     id: "xauusd",
@@ -31,7 +40,11 @@ export const signalCards = [
     risk: "0.8%",
     category: "Metals",
     accent: "#f0a33a",
-    chart: [286, 268, 276, 258, 264, 232, 242, 218, 224, 176, 148, 112],
+    entryPrice: 2336.8,
+    stopPrice: 2318.0,
+    targetPrice: 2372.0,
+    currentPrice: 2358.6,
+    chart: [2331.5, 2326.0, 2337.2, 2344.0, 2339.5, 2348.6, 2353.0, 2349.4, 2356.2, 2361.0, 2355.8, 2358.6],
   },
   {
     id: "gbpjpy",
@@ -45,7 +58,11 @@ export const signalCards = [
     risk: "0.7%",
     category: "Cross FX",
     accent: "#f06464",
-    chart: [128, 142, 120, 156, 148, 186, 174, 218, 206, 252, 238, 290],
+    entryPrice: 198.42,
+    stopPrice: 199.18,
+    targetPrice: 196.9,
+    currentPrice: 197.44,
+    chart: [198.9, 199.02, 198.78, 198.58, 198.7, 198.46, 198.3, 198.4, 198.12, 197.86, 197.6, 197.44],
   },
   {
     id: "nas100",
@@ -59,7 +76,11 @@ export const signalCards = [
     risk: "0.6%",
     category: "Indices",
     accent: "#7698ff",
-    chart: [310, 292, 274, 288, 254, 236, 246, 206, 184, 196, 152, 118],
+    entryPrice: 19842,
+    stopPrice: 19690,
+    targetPrice: 20180,
+    currentPrice: 19825,
+    chart: [19652, 19708, 19676, 19734, 19701, 19758, 19722, 19775, 19748, 19802, 19770, 19825],
   },
 ];
 
@@ -235,7 +256,7 @@ export default function SignalStack({ reducedMotion }) {
                   <span>Olixer / Signal desk</span>
                   <span>Example data</span>
                 </div>
-                <SignalChart signal={signal} />
+                <SignalChart signal={signal} reduceMotion={reduceMotion} />
                 <div className="signal-card__visual-bottom">
                   <span>{signal.pair}</span>
                   <span className={`signal-card__bias signal-card__bias--${signal.side.toLowerCase()}`}>

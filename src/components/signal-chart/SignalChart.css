@@ -1,0 +1,58 @@
+.signal-chart {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  flex: 1;
+  overflow: visible;
+}
+
+/* Reference levels — thin precise horizontal lines (never color blocks).
+   Entry is the strongest, the pivot; Target/Stop are faint semantic
+   hairlines. Numbers live in the card's metrics readout, so no labels. */
+.signal-chart__level {
+  stroke-width: 1;
+}
+
+.signal-chart__level--entry {
+  stroke: rgba(255, 255, 255, 0.52);
+  stroke-width: 1.25;
+  stroke-dasharray: 2 3;
+}
+
+.signal-chart__level--target {
+  stroke: rgba(70, 210, 135, 0.45);
+  stroke-dasharray: 4 5;
+}
+
+.signal-chart__level--stop {
+  stroke: rgba(240, 110, 110, 0.42);
+  stroke-dasharray: 4 5;
+}
+
+/* Price path — neutral warm-white hero line over a soft gradient fill */
+.signal-chart__area {
+  pointer-events: none;
+}
+
+.signal-chart__line {
+  fill: none;
+  stroke: #edece8;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Minimal x-axis ticks — no fabricated dates on illustrative data */
+.signal-chart__axis-tick {
+  stroke: rgba(255, 255, 255, 0.14);
+  stroke-width: 1;
+}
+
+/* Current price marker — a quiet white dot with one thin accent ring: the
+   chart's only point of brand color. Lands once, no pulse. */
+.signal-chart__marker-ring {
+  fill: none;
+  stroke-width: 1.5;
+  pointer-events: none;
+}

@@ -28,4 +28,22 @@ describe("Olixer Stats Section", () => {
     expect(screen.getByLabelText("12,000+ Traders connected")).toBeTruthy();
     expect(screen.getByLabelText("24/5 Market coverage")).toBeTruthy();
   });
+
+  it("renders one decorative chart accent per stat, matched to its metric", () => {
+    const { container } = render(<StatsSection />);
+
+    expect(container.querySelectorAll(".stats-chart")).toHaveLength(4);
+    expect(container.querySelector(".stats-chart--area")).toBeTruthy();
+    expect(container.querySelector(".stats-chart--gauge")).toBeTruthy();
+    expect(container.querySelector(".stats-chart--funnel")).toBeTruthy();
+    expect(container.querySelector(".stats-chart--ring")).toBeTruthy();
+  });
+
+  it("keeps every chart accent decorative so it never duplicates the accessible stat name", () => {
+    const { container } = render(<StatsSection />);
+
+    container.querySelectorAll(".stats-chart").forEach((chart) => {
+      expect(chart.getAttribute("aria-hidden")).toBe("true");
+    });
+  });
 });

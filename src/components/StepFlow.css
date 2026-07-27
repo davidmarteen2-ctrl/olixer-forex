@@ -319,6 +319,7 @@
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(90deg, #f0821e, #ffae63);
+  transform-origin: left center;
 }
 
 .account-features {
@@ -412,7 +413,7 @@
 
 .broker-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 .broker-option { position: relative; display: grid; min-height: 96px; padding: 18px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 18px; place-items: center; background: rgba(255, 255, 255, 0.045); }
-.broker-option--active { border-color: rgba(240, 130, 30, 0.6); background: rgba(240, 130, 30, 0.09); }
+.broker-option .broker-option__connected-ring { position: absolute; inset: -1px; border: 1px solid rgba(240, 130, 30, 0.6); border-radius: inherit; background: rgba(240, 130, 30, 0.09); pointer-events: none; }
 .broker-option img { width: min(125px, 80%); max-height: 34px; filter: brightness(0) invert(1); object-fit: contain; }
 .broker-option span { position: absolute; right: 10px; bottom: 8px; color: #65df95; font-size: 9px; font-weight: 700; text-transform: uppercase; }
 .broker-link { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; margin-top: 20px; padding: 18px; border-radius: 18px; background: #f2f0eb; color: #17191c; }
@@ -423,20 +424,22 @@
 .broker-link__pulse { width: 10px; height: 10px; border-radius: 50%; background: #37bf71; border: 2px solid rgba(55, 191, 113, 0.3); }
 
 .trader-card { display: grid; align-items: center; }
-.trader-card--featured { grid-template-columns: 34px 1fr auto; gap: 15px; padding: 22px; border: 1px solid rgba(240, 130, 30, 0.38); border-radius: 20px; background: rgba(240, 130, 30, 0.08); }
-.trader-card__rank { color: #f0821e; font-size: 12px; font-weight: 800; }
+.trader-card--featured { position: relative; overflow: hidden; grid-template-columns: 40px 1fr auto; gap: 15px; padding: 22px; border: 1px solid rgba(240, 130, 30, 0.38); border-radius: 20px; background: rgba(240, 130, 30, 0.08); }
+.trader-card__spotlight { position: absolute; inset: -20% -10%; z-index: 0; background: radial-gradient(120% 100% at 18% 0%, rgba(240, 130, 30, 0.32), transparent 65%); pointer-events: none; }
+.trader-card__rank { display: inline-flex; align-items: center; justify-content: center; padding: 5px 8px; border: 1px solid rgba(240, 130, 30, 0.35); border-radius: 8px; background: rgba(240, 130, 30, 0.12); color: #f0821e; font-size: 11px; font-weight: 800; letter-spacing: 0.02em; }
 .trader-card__person { display: flex; gap: 12px; align-items: center; }
-.trader-card__avatar { width: 46px; height: 46px; font-size: 13px; }
-.trader-card__person strong, .trader-card__person span, .trader-card__return span, .trader-card__return strong { display: block; }
-.trader-card__person strong { margin-bottom: 4px; font-size: 14px; }
-.trader-card__person span, .trader-card__return span { color: #838a92; font-size: 10px; }
+.trader-card__avatar { position: relative; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, #f5943a, #d9700f); color: #1c1204; font-size: 14px; font-weight: 800; letter-spacing: -0.01em; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 6px 16px rgba(240, 130, 30, 0.3); }
+.trader-card__avatar-ring { position: absolute; inset: -5px; border: 1.5px solid rgba(240, 130, 30, 0.5); border-radius: 50%; pointer-events: none; }
+.trader-card__person div strong, .trader-card__person div span, .trader-card__return > span, .trader-card__return strong { display: block; }
+.trader-card__person div strong { margin-bottom: 4px; font-size: 14px; }
+.trader-card__person div span, .trader-card__return > span { color: #838a92; font-size: 10px; }
 .trader-card__return { text-align: right; }
 .trader-card__return strong { margin-top: 4px; color: #68e39b; font-size: 18px; }
 .trader-card__chart { grid-column: 2 / -1; width: 100%; height: 74px; margin-top: 18px; overflow: visible; }
 .trader-card__chart path { fill: none; stroke: #f0821e; stroke-width: 2.5; stroke-linecap: round; }
 .risk-row { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; margin: 16px 0; padding: 14px 18px; border-radius: 14px; background: rgba(255, 255, 255, 0.04); color: #939aa1; font-size: 11px; }
 .risk-dots { display: flex; gap: 5px; }
-.risk-dots i { flex: 1; height: 5px; border-radius: 99px; background: #f0821e; }
+.risk-dots i { flex: 1; height: 5px; border-radius: 99px; background: #f0821e; transform-origin: left center; }
 .risk-dots i.off { background: rgba(255, 255, 255, 0.12); }
 .risk-row strong { color: #fff; }
 .trader-list { display: flex; flex-direction: column; gap: 10px; }
@@ -452,7 +455,7 @@
 .position-head { display: flex; justify-content: space-between; margin: 23px 2px 10px; color: #8a9199; font-size: 10px; font-weight: 700; text-transform: uppercase; }
 .position-list { display: flex; flex-direction: column; gap: 8px; }
 .position-list > div { display: grid; grid-template-columns: 38px 1fr auto; gap: 12px; align-items: center; padding: 13px 15px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 13px; background: rgba(255, 255, 255, 0.035); }
-.pair-icon { display: grid; width: 36px; height: 36px; border-radius: 11px; place-items: center; color: #f0821e; background: rgba(240, 130, 30, 0.12); font-weight: 800; }
+.pair-icon { display: grid; width: 36px; height: 36px; border-radius: 11px; place-items: center; color: #f0821e; background: rgba(240, 130, 30, 0.12); }
 .position-list p { margin: 0; }
 .position-list p strong, .position-list p span { display: block; }
 .position-list p strong { margin-bottom: 3px; font-size: 12px; }
@@ -460,6 +463,8 @@
 .position-list em { color: #65df96; font-size: 12px; font-style: normal; font-weight: 700; }
 .copy-footer { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; margin-top: auto; padding: 14px 16px; border-radius: 12px; color: #7e868f; background: rgba(0, 0, 0, 0.22); font-size: 10px; }
 .copy-footer strong { color: #fff; }
+.copy-footer__sync { display: inline-flex; align-items: center; gap: 6px; }
+.copy-footer__sync i { width: 6px; height: 6px; border-radius: 50%; background: #5ee58e; box-shadow: 0 0 0 4px rgba(94, 229, 142, 0.12); }
 
 @media (max-width: 900px) {
   .step-flow-section { padding: 90px 22px 110px; border-radius: 28px 28px 0 0; }
