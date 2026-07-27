@@ -329,14 +329,16 @@
   /* ---------- CTA SECTION (Assemble-style pre-footer surface) ---------- */
   .footerTransition {
     position: relative;
-    background: #14171b;
+    background: #0f151b;
     isolation: isolate;
   }
   .cta, .preFooterSurface {
     position: relative;
-    z-index: 2;
+    z-index: 10;
     background: #FBFAF7;
-    border-radius: 50px 50px clamp(40px, 4vw, 72px) clamp(40px, 4vw, 72px);
+    border-radius: clamp(40px, 4vw, 72px);
+    border-top-left-radius: clamp(40px, 4vw, 72px);
+    border-top-right-radius: clamp(40px, 4vw, 72px);
     border-bottom-left-radius: clamp(40px, 4vw, 72px);
     border-bottom-right-radius: clamp(40px, 4vw, 72px);
     min-height: 85vh;
@@ -344,7 +346,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    margin-top: -50px;
+    margin-top: -72px;
   }
   .cta::before{
     content:"";position:absolute;inset:0;
@@ -359,6 +361,27 @@
   }
   .cta-ring.r1{width:820px;height:820px}
   .cta-ring.r2{width:1080px;height:1080px;border-color:rgba(124,138,163,.12)}
+
+  .cta-orbit-track {
+    position: absolute;top: 50%;left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 50%;pointer-events: none;
+    will-change: transform;
+  }
+  .cta-orbit-track.r1 { width: 820px; height: 820px; z-index: 2; }
+  .cta-orbit-track.r2 { width: 1080px; height: 1080px; z-index: 2; }
+  .cta-orbit-slot {
+    position: absolute;top: 50%;left: 50%;
+    width: 0;height: 0;
+    pointer-events: none;
+  }
+  .cta-orbit-inner {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+    will-change: transform;
+  }
+
   .cta-glow{
     position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
     width:900px;height:520px;border-radius:50%;
@@ -425,7 +448,6 @@
   .cta-sub .row{display:flex;align-items:center;gap:8px;font-size:16.5px;color:var(--gray)}
   .cta-sub .row b{color:var(--ink);font-weight:600}
   .cta-tile{
-    position:absolute;z-index:2;
     border-radius:24%;
     background:linear-gradient(150deg,#FFFFFF 10%,#E8E4DC 100%);
     border:1px solid rgba(255,255,255,.35);
@@ -435,18 +457,19 @@
   }
   .cta-tile:hover{cursor:pointer}
   .cta-chip{
-    position:absolute;z-index:2;will-change:transform;
+    will-change:transform;
     background:var(--card);border:1px solid var(--line-soft);border-radius:10px;
     box-shadow:0 20px 40px -12px rgba(0,0,0,.5);
     padding:9px 12px;
   }
   @media (max-width:900px){
-    .cta-tile,.cta-chip{display:none}
+    .cta-orbit-track,.cta-tile,.cta-chip{display:none}
     .cta, .preFooterSurface{
       min-height:75vh;
       border-radius:28px 28px clamp(28px, 4vw, 48px) clamp(28px, 4vw, 48px);
       border-bottom-left-radius:clamp(28px, 4vw, 48px);
       border-bottom-right-radius:clamp(28px, 4vw, 48px);
+      margin-top:-48px;
     }
   }
   @media (max-width:560px){
@@ -1101,58 +1124,95 @@
     <div class="cta-ring r1"></div>
     <div class="cta-glow"></div>
 
-    <!-- floating widgets -->
-    <div class="cta-tile" data-depth="22" style="width:148px;height:148px;top:11%;left:10%">
-      <svg width="72" height="72" viewBox="0 0 64 64" fill="none">
-        <path d="M16 13v38" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
-        <rect x="11" y="22" width="10" height="20" rx="2.5" fill="#15171A"/>
-        <path d="M32 7v50" stroke="#F0821E" stroke-width="2.6" stroke-linecap="round"/>
-        <rect x="26.5" y="16" width="11" height="30" rx="2.8" fill="#F0821E"/>
-        <path d="M48 17v34" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
-        <rect x="43" y="26" width="10" height="16" rx="2.5" fill="#15171A"/>
-      </svg>
-    </div>
-    <div class="cta-tile" data-depth="34" style="width:84px;height:84px;top:11%;right:15%">
-      <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#15171A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/>
-        <path d="M16 3v4M8 3v4M4 11h16M8 15h2v2H8z"/>
-      </svg>
-    </div>
-    <div class="cta-tile" data-depth="28" style="width:92px;height:92px;bottom:16%;left:7%">
-      <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#1FA357" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
-        <path d="M15 9a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/>
-        <path d="M9 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/>
-      </svg>
-    </div>
-    <div class="cta-tile" data-depth="40" style="width:74px;height:74px;top:46%;left:20%">
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F0821E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M11.46 20.846a12 12 0 0 1-7.96-14.846a12 12 0 0 0 8.5-3a12 12 0 0 0 8.5 3a12 12 0 0 1-.09 7.06"/>
-        <path d="M15 19l2 2l4-4"/>
-      </svg>
-    </div>
-    <div class="cta-tile" data-depth="26" style="width:96px;height:96px;bottom:13%;right:9%">
-      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#F0821E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 3v9h9"/>
-        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/>
-      </svg>
-    </div>
-    <div class="cta-tile" data-depth="38" style="width:70px;height:70px;top:42%;right:6%">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="#F0821E" stroke="#F0821E" stroke-width="1.4" stroke-linejoin="round">
-        <path d="M13 3l0 7l6 0l-8 11l0-7l-6 0l8-11"/>
-      </svg>
-    </div>
-    <!-- floating mini cards -->
-    <div class="cta-chip" data-depth="30" style="top:24%;left:23%">
-      <div style="display:flex;align-items:center;gap:6px">
-        <span class="gdot"></span><span style="font-size:11px;font-weight:700">EUR/USD</span>
-        <span style="font-size:10.5px;font-weight:700;color:var(--green)">+0.42%</span>
+    <!-- Orbiting Floating Widgets Track Ring 1 (Radius 410px) -->
+    <div class="cta-orbit-track r1">
+      <div class="cta-orbit-slot" style="transform: rotate(-135deg) translate(410px) rotate(135deg);">
+        <div class="cta-orbit-inner">
+          <div class="cta-tile" style="width:148px;height:148px;">
+            <svg width="72" height="72" viewBox="0 0 64 64" fill="none">
+              <path d="M16 13v38" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
+              <rect x="11" y="22" width="10" height="20" rx="2.5" fill="#15171A"/>
+              <path d="M32 7v50" stroke="#F0821E" stroke-width="2.6" stroke-linecap="round"/>
+              <rect x="26.5" y="16" width="11" height="30" rx="2.8" fill="#F0821E"/>
+              <path d="M48 17v34" stroke="#15171A" stroke-width="2.4" stroke-linecap="round"/>
+              <rect x="43" y="26" width="10" height="16" rx="2.5" fill="#15171A"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="cta-orbit-slot" style="transform: rotate(-40deg) translate(410px) rotate(40deg);">
+        <div class="cta-orbit-inner">
+          <div class="cta-chip">
+            <div style="display:flex;align-items:center;gap:6px">
+              <span class="gdot"></span><span style="font-size:11px;font-weight:700">EUR/USD</span>
+              <span style="font-size:10.5px;font-weight:700;color:var(--green)">+0.42%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cta-orbit-slot" style="transform: rotate(35deg) translate(410px) rotate(-35deg);">
+        <div class="cta-orbit-inner">
+          <div class="cta-tile" style="width:84px;height:84px;">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#15171A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/>
+              <path d="M16 3v4M8 3v4M4 11h16M8 15h2v2H8z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="cta-orbit-slot" style="transform: rotate(125deg) translate(410px) rotate(-125deg);">
+        <div class="cta-orbit-inner">
+          <div class="cta-tile" style="width:96px;height:96px;">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#F0821E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3v9h9"/>
+              <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/>
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="cta-chip" data-depth="24" style="bottom:26%;right:20%">
-      <div style="display:flex;align-items:center;gap:8px">
-        <span style="font-size:11px;font-weight:800">GBP/JPY</span>
-        <span class="pill-buy">BUY</span>
+
+    <!-- Orbiting Floating Widgets Track Ring 2 (Radius 540px) -->
+    <div class="cta-orbit-track r2">
+      <div class="cta-orbit-slot" style="transform: rotate(-145deg) translate(540px) rotate(145deg);">
+        <div class="cta-orbit-inner">
+          <div class="cta-tile" style="width:92px;height:92px;">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#1FA357" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
+              <path d="M15 9a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/>
+              <path d="M9 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="cta-orbit-slot" style="transform: rotate(-175deg) translate(540px) rotate(175deg);">
+        <div class="cta-orbit-inner">
+          <div class="cta-tile" style="width:74px;height:74px;">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F0821E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11.46 20.846a12 12 0 0 1-7.96-14.846a12 12 0 0 0 8.5-3a12 12 0 0 0 8.5 3a12 12 0 0 1-.09 7.06"/>
+              <path d="M15 19l2 2l4-4"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="cta-orbit-slot" style="transform: rotate(15deg) translate(540px) rotate(-15deg);">
+        <div class="cta-orbit-inner">
+          <div class="cta-tile" style="width:70px;height:70px;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="#F0821E" stroke="#F0821E" stroke-width="1.4" stroke-linejoin="round">
+              <path d="M13 3l0 7l6 0l-8 11l0-7l-6 0l8-11"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="cta-orbit-slot" style="transform: rotate(145deg) translate(540px) rotate(-145deg);">
+        <div class="cta-orbit-inner">
+          <div class="cta-chip">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:11px;font-weight:800">GBP/JPY</span>
+              <span class="pill-buy">BUY</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1271,6 +1331,13 @@
     scrollTrigger: { trigger: '.cta', start: 'top 70%' }
   });
 
+  // Orbit rotation animations (Ring 1 clockwise 55s, Ring 2 counter-clockwise 70s)
+  var orbit1 = gsap.to('.cta-orbit-track.r1', { rotation: 360, duration: 55, ease: 'none', repeat: -1 });
+  var counter1 = gsap.to('.cta-orbit-track.r1 .cta-orbit-inner', { rotation: -360, duration: 55, ease: 'none', repeat: -1 });
+
+  var orbit2 = gsap.to('.cta-orbit-track.r2', { rotation: -360, duration: 70, ease: 'none', repeat: -1 });
+  var counter2 = gsap.to('.cta-orbit-track.r2 .cta-orbit-inner', { rotation: 360, duration: 70, ease: 'none', repeat: -1 });
+
   var cta = document.querySelector('.cta');
   var widgets = gsap.utils.toArray('.cta-tile, .cta-chip');
 
@@ -1301,6 +1368,8 @@
   }
 
   function gather(){
+    orbit1.pause(); counter1.pause();
+    orbit2.pause(); counter2.pause();
     animateRings('yes');
     var cr = card.getBoundingClientRect();
     var cx = cr.left + cr.width / 2;
@@ -1332,7 +1401,13 @@
         duration: 0.8,
         ease: 'power3.inOut',
         overwrite: 'auto',
-        delay: i * 0.035
+        delay: i * 0.035,
+        onComplete: function(){
+          if (i === widgets.length - 1 && !reduced) {
+            orbit1.play(); counter1.play();
+            orbit2.play(); counter2.play();
+          }
+        }
       });
     });
   }
