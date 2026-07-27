@@ -37,6 +37,15 @@
     overflow-x:clip;
   }
   .wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+  .skip-link{
+    position:absolute;top:-100px;left:24px;z-index:9999;
+    background:var(--navy);color:#fff;
+    padding:10px 18px;border-radius:8px;
+    font-size:13.5px;font-weight:600;text-decoration:none;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    transition:top .2s ease;
+  }
+  .skip-link:focus{top:16px;outline:3px solid var(--orange);outline-offset:2px}
 
   /* ---------- NAV ---------- */
   nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
@@ -544,30 +553,36 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 <div class="page">
 
 <div class="wrap">
   <!-- ================= NAV ================= -->
-  <nav>
-    <a class="logo" href="#">
+  <nav aria-label="Primary navigation">
+    <a class="logo" href="#" aria-label="Olixer Forex Homepage">
       <svg class="logo-mark" width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
         <rect x="4" y="4" width="26" height="26" rx="8.5" stroke="#15171A" stroke-width="3.2"/>
       </svg>
       <span class="logo-name">Olixer<br>Forex</span>
     </a>
     <ul class="nav-links">
-      <li><a href="#">Product <svg width="9" height="6" viewBox="0 0 9 6" fill="none"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li>
-      <li><a href="#">Features</a></li>
-      <li><a href="#">Pricing</a></li>
-      <li><a href="#">Resources <svg width="9" height="6" viewBox="0 0 9 6" fill="none"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li>
-      <li><a href="#">Company <svg width="9" height="6" viewBox="0 0 9 6" fill="none"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li>
+      <li><a href="#gallery">Product <svg width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li>
+      <li><a href="#how-it-works">Features</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#signals">Resources <svg width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li>
+      <li><a href="#stats">Company <svg width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li>
     </ul>
     <div class="nav-right">
       <a class="login" href="#">Log in</a>
-      <a class="btn-dark" href="#">Start free trial</a>
+      <a class="btn-dark" href="#pricing">Start free trial</a>
     </div>
   </nav>
+</div>
 
+<main id="main-content" tabindex="-1">
+
+<div class="wrap">
   <!-- ================= HERO ================= -->
   <header class="hero">
     <div class="badge rise" style="animation-delay:.05s">
@@ -1131,6 +1146,7 @@
   </div>
 </section>
 
+</main>
 </div><!-- /.page -->
 
 <!-- ================= FOOTER (Assemble fixed-reveal port) ================= -->
