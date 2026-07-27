@@ -1,6 +1,11 @@
 import { AnimatePresence, animate, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
+import eightcapLogo from "../../assets/logos/eightcap-official.svg";
+import pepperstoneLogo from "../../assets/logos/pepperstone-official.svg";
+import forexcomLogo from "../../assets/logos/forexcom-official.svg";
+import oandaLogo from "../../assets/logos/oanda-official.svg";
+
 import "./StepFlow.css";
 
 export const stepFlowItems = [
@@ -205,10 +210,10 @@ function AccountVisual({ play, reduceMotion }) {
 }
 
 const brokerLogos = [
-  ["Eightcap", "/assets/logos/eightcap-official.svg"],
-  ["Pepperstone", "/assets/logos/pepperstone-official.svg"],
-  ["FOREX.com", "/assets/logos/forexcom-official.svg"],
-  ["OANDA", "/assets/logos/oanda-official.svg"],
+  ["Eightcap", eightcapLogo],
+  ["Pepperstone", pepperstoneLogo],
+  ["FOREX.com", forexcomLogo],
+  ["OANDA", oandaLogo],
 ];
 
 function BrokerVisual({ play, reduceMotion }) {
