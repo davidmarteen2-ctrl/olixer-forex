@@ -1,8 +1,8 @@
 .testimonials-section {
   position: relative;
   overflow: hidden;
-  /* no top curve: pricing above shares the same #0f151b — one continuous block */
-  padding: 118px 0 132px;
+  /* generous bottom clearance for the CTA panel overlap */
+  padding: 118px 0 clamp(132px, 14vw, 170px);
   color: #fff;
   background: #0f151b;
 }
