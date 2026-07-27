@@ -2,7 +2,7 @@
   position: relative;
   overflow: hidden;
   /* generous bottom clearance for the CTA panel overlap */
-  padding: 118px 0 clamp(132px, 14vw, 170px);
+  padding: 118px 0 clamp(160px, 16vw, 210px);
   color: #fff;
   background: #0f151b;
 }

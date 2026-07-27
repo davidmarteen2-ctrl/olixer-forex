@@ -329,6 +329,7 @@
   /* ---------- CTA SECTION (Assemble-style pre-footer surface) ---------- */
   .footerTransition {
     position: relative;
+    z-index: 2;
     background: #0f151b;
     isolation: isolate;
   }
@@ -337,24 +338,23 @@
     z-index: 2;
     background: #FBFAF7;
     border-radius: clamp(40px, 4vw, 72px);
-    box-shadow: 0 -16px 40px rgba(0, 0, 0, 0.16);
     min-height: 85vh;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    margin-top: -64px;
+    margin-top: -120px;
   }
   @media (max-width: 1024px) {
     .cta, .preFooterSurface {
       border-radius: clamp(32px, 3.5vw, 56px);
-      margin-top: -48px;
+      margin-top: -96px;
     }
   }
   @media (max-width: 640px) {
     .cta, .preFooterSurface {
       border-radius: clamp(24px, 3vw, 40px);
-      margin-top: -32px;
+      margin-top: -72px;
     }
   }
   .cta::before{
