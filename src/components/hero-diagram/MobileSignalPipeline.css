@@ -1,0 +1,356 @@
+/* MobileSignalPipeline.css — Dedicated Mobile Narrative Hero Diagram */
+
+.mobile-signal-pipeline {
+  position: relative;
+  width: min(380px, calc(100vw - 32px));
+  margin-inline: auto;
+  margin-top: 34px;
+  padding: 20px 16px 22px;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(21, 23, 26, 0.08);
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(240, 130, 30, 0.09),
+      transparent 38%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(247, 244, 238, 0.88)
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 22px 60px rgba(21, 23, 26, 0.09);
+  box-sizing: border-box;
+}
+
+/* Faint dot grid & center guide line */
+.mobile-signal-pipeline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(21, 23, 26, 0.06) 1px, transparent 1px);
+  background-size: 14px 14px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.mobile-pipeline-center-guide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(240, 130, 30, 0.12) 20%,
+    rgba(240, 130, 30, 0.12) 80%,
+    transparent 100%
+  );
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* Section Labels */
+.mobile-pipeline-section-label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(21, 23, 26, 0.45);
+  margin-bottom: 10px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Input Chip Grid (2x2) */
+.mobile-input-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  position: relative;
+  z-index: 2;
+}
+
+.mobile-input-chip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  min-height: 42px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(21, 23, 26, 0.07);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-sizing: border-box;
+}
+
+.mobile-chip-icon {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #F0821E;
+}
+
+.mobile-chip-text {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #15171A;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Connector Stage */
+.mobile-connector-stage {
+  position: relative;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.mobile-signal-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(240, 130, 30, 0.18),
+    #F0821E,
+    rgba(240, 130, 30, 0.18)
+  );
+  transform: translateX(-50%);
+}
+
+.mobile-signal-packet {
+  position: absolute;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #F0821E;
+  transform: translate(-50%, -50%);
+  box-shadow:
+    0 0 0 4px rgba(240, 130, 30, 0.14),
+    0 0 16px rgba(240, 130, 30, 0.4);
+}
+
+/* Signal Engine Card */
+.mobile-signal-engine {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-height: 86px;
+  border-radius: 18px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(21, 23, 26, 0.09);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 8px 24px rgba(21, 23, 26, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.mobile-engine-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobile-engine-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(240, 130, 30, 0.1);
+  border: 1px solid rgba(240, 130, 30, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #F0821E;
+}
+
+.mobile-engine-title {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #15171A;
+}
+
+.mobile-engine-sub {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  color: rgba(21, 23, 26, 0.6);
+  margin-top: 2px;
+}
+
+.mobile-engine-status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #F0821E;
+}
+
+.mobile-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #F0821E;
+  animation: mobileStatusPulse 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes mobileStatusPulse {
+  0% { opacity: 0.3; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Smart Signal Card */
+.mobile-smart-signal {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 16px;
+  border-radius: 18px;
+  background: #15171A;
+  color: #FFFFFF;
+  box-shadow: 0 16px 36px rgba(21, 23, 26, 0.18);
+  box-sizing: border-box;
+}
+
+.mobile-signal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-signal-pair {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+}
+
+.mobile-signal-direction {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #F0821E;
+  color: #FFFFFF;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.mobile-signal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.mobile-signal-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mobile-metric-label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+
+.mobile-metric-val {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #FFFFFF;
+}
+
+.mobile-metric-val.sl {
+  color: #F87171;
+}
+
+.mobile-metric-val.tp {
+  color: #4ADE80;
+}
+
+/* Outcome Row */
+.mobile-outcome-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  position: relative;
+  z-index: 2;
+  margin-top: 16px;
+}
+
+.mobile-outcome-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 54px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(21, 23, 26, 0.07);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  box-sizing: border-box;
+  text-align: center;
+  padding: 6px 4px;
+}
+
+.mobile-outcome-icon {
+  color: #15171A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-outcome-label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #15171A;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-status-dot {
+    animation: none !important;
+  }
+}

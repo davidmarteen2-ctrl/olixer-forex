@@ -447,6 +447,61 @@
       font-size: 14px
     }
 
+    @media (max-width: 767px) {
+      .hero {
+        padding-top: 94px;
+        padding-inline: 16px;
+      }
+
+      .hero h1 {
+        width: 100%;
+        max-width: 360px;
+        margin-inline: auto;
+        margin-top: 12px;
+        font-size: clamp(31px, 8.5vw, 35px);
+        line-height: 0.98;
+        letter-spacing: -0.055em;
+        text-wrap: balance;
+      }
+
+      .sub {
+        width: 100%;
+        max-width: 330px;
+        margin-inline: auto;
+        margin-top: 16px;
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      .cta-row {
+        width: 100%;
+        max-width: 360px;
+        margin-inline: auto;
+        margin-top: 22px;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .cta-row .btn-dark,
+      .cta-row .btn-ghost {
+        min-height: 46px;
+        white-space: nowrap;
+        justify-content: center;
+        box-sizing: border-box;
+      }
+    }
+
+    @media (max-width: 389px) {
+      .cta-row {
+        flex-direction: column;
+      }
+
+      .cta-row .btn-dark,
+      .cta-row .btn-ghost {
+        width: 100%;
+      }
+    }
+
     /* ---------- SOCIAL PROOF AVATARS (MaskedAvatars, vanilla port) ---------- */
     .social-proof {
       display: flex;
