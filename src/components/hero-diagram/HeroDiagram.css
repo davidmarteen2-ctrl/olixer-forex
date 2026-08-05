@@ -1,0 +1,26 @@
+.hero-diagram [data-motion="source"],
+.hero-diagram [data-motion="engine"],
+.hero-diagram [data-motion="market-card"],
+.hero-diagram [data-motion="signal-card"],
+.hero-diagram [data-motion^="outcome-"] {
+  will-change: transform, opacity;
+}
+
+.hero-diagram .signal-packet {
+  pointer-events: none;
+}
+
+.hero-diagram .connectors .wire {
+  stroke-linecap: round;
+}
+
+.hero-diagram .source-rail {
+  position: absolute;
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-diagram .signal-packet {
+    display: none;
+  }
+}

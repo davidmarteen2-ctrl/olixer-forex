@@ -1,3 +1,8 @@
+#card-shuffle-root {
+  display: block;
+  min-height: 260vh;
+}
+
 .card-shuffle {
   --shuffle-card-width: min(74vw, 1080px);
   --shuffle-card-radius: clamp(22px, 2.5vw, 38px);

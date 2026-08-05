@@ -1,9 +1,9 @@
-export function initCtaChoice(root = document, onChoice = () => {}) {
+export function initCtaChoice(root = document, onChoice = () => { }) {
   const cta = root.querySelector(".cta");
   const yesButton = root.querySelector(".btn-yes");
   const noButton = root.querySelector(".btn-no");
 
-  if (!cta || !yesButton || !noButton) return () => {};
+  if (!cta || !yesButton || !noButton) return () => { };
 
   const choose = (choice) => {
     if (cta.dataset.choice === choice) return;

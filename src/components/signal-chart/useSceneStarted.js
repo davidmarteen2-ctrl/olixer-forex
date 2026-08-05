@@ -1,15 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 
-// Mirrors the viewport-gate hook already used in StepFlow.jsx / StatsSection.jsx
-// in this project: one-time IntersectionObserver reveal with a jsdom-safe
-// fallback so every test in this codebase keeps rendering synchronously.
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
 export function useSceneStarted(ref, reduceMotion) {
   const [started, setStarted] = useState(false);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (started) return undefined;
 
     if (reduceMotion || !("IntersectionObserver" in window) || !ref.current) {
+      setStarted(true);
+      return undefined;
+    }
+
+    const rect = ref.current.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
       setStarted(true);
       return undefined;
     }

@@ -5,9 +5,12 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 import "./CardShuffle.css";
+
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 export const cardShuffleItems = [
   {
@@ -127,6 +130,10 @@ export default function CardShuffle({ reducedMotion }) {
     damping: 60,
     mass: 1,
   });
+
+  useIsomorphicLayoutEffect(() => {
+    smoothProgress.set(scrollYProgress.get());
+  }, [scrollYProgress, smoothProgress]);
 
   return (
     <section

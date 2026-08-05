@@ -1,5 +1,7 @@
 import { AnimatePresence, animate, motion, useReducedMotion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 import eightcapLogo from "../../assets/logos/eightcap-official.svg";
 import pepperstoneLogo from "../../assets/logos/pepperstone-official.svg";
@@ -66,10 +68,17 @@ const checkDraw = {
 function useSceneStarted(ref, reduceMotion) {
   const [started, setStarted] = useState(false);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (started) return undefined;
 
     if (reduceMotion || !("IntersectionObserver" in window) || !ref.current) {
+      setStarted(true);
+      return undefined;
+    }
+
+    const rect = ref.current.getBoundingClientRect();
+    const isJsdom = !window.innerHeight || (rect.top === 0 && rect.bottom === 0 && rect.width === 0 && rect.height === 0);
+    if (isJsdom || (rect.top < window.innerHeight && rect.bottom > 0)) {
       setStarted(true);
       return undefined;
     }

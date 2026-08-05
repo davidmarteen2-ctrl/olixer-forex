@@ -14,6 +14,11 @@
   margin: 0 auto;
 }
 
+#step-flow-root {
+  display: block;
+  min-height: 580px;
+}
+
 .step-flow-section__head {
   /* split header: serif heading left, supporting copy right, baseline-aligned
      to the same grid as the stats / signals / pricing heads */
@@ -467,6 +472,7 @@
 .copy-footer__sync i { width: 6px; height: 6px; border-radius: 50%; background: #5ee58e; box-shadow: 0 0 0 4px rgba(94, 229, 142, 0.12); }
 
 @media (max-width: 900px) {
+  #step-flow-root { min-height: 520px; }
   .step-flow-section { padding: 90px 22px 110px; border-radius: 28px 28px 0 0; }
   .step-flow-section__head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 42px; }
   .step-flow { grid-template-columns: 1fr; gap: 28px; }
@@ -476,6 +482,7 @@
 }
 
 @media (max-width: 560px) {
+  #step-flow-root { min-height: 490px; }
   .step-flow-section { padding: 74px 16px 88px; }
   .step-flow-section__head { margin-bottom: 38px; }
   .step-flow-section__head h2 { font-size: 42px; }
