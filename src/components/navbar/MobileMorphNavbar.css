@@ -36,22 +36,8 @@
   min-height: 58px;
   box-sizing: border-box;
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.88),
-      rgba(247, 244, 238, 0.78)
-    );
-
-  border: 1px solid rgba(255, 255, 255, 0.75);
-
-  backdrop-filter:
-    blur(20px)
-    saturate(130%);
-
-  -webkit-backdrop-filter:
-    blur(20px)
-    saturate(130%);
+  background: transparent;
+  border: 1px solid rgba(21, 23, 26, 0.08);
 
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.88),
@@ -59,14 +45,113 @@
     0 14px 38px rgba(21, 23, 26, 0.11);
 }
 
+/* The mobile capsule uses the same layered glass composition as desktop.
+   The collapsed state stays translucent; the open menu gains a stronger
+   scrim so links remain readable over busy page content. */
+.mobile-nav-backdrop-layer,
+.mobile-nav-tint-layer,
+.mobile-nav-scrim-layer,
+.mobile-nav-edge-highlight {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.mobile-nav-backdrop-layer {
+  z-index: 0;
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(18px) saturate(132%);
+  -webkit-backdrop-filter: blur(18px) saturate(132%);
+  transform: translateZ(0);
+  transition: backdrop-filter 0.3s ease, -webkit-backdrop-filter 0.3s ease;
+}
+
+.mobile-nav-tint-layer {
+  z-index: 1;
+  opacity: 0.42;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.88) 0%,
+    rgba(249, 247, 242, 0.72) 55%,
+    rgba(240, 236, 228, 0.62) 100%
+  );
+  transition: opacity 0.3s ease;
+}
+
+.mobile-nav-scrim-layer {
+  z-index: 2;
+  opacity: 0.18;
+  background: rgba(251, 250, 247, 0.72);
+  transition: opacity 0.3s ease;
+}
+
+.mobile-nav-edge-highlight {
+  inset: 1px;
+  z-index: 3;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.88),
+    inset 0 -1px 0 rgba(21, 23, 26, 0.045);
+}
+
+.mobile-nav-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: inherit;
+  background: radial-gradient(
+    180px circle at 18% 0%,
+    rgba(255, 255, 255, 0.2),
+    transparent 66%
+  );
+  pointer-events: none;
+}
+
+.mobile-nav-shell[data-open="true"] .mobile-nav-backdrop-layer {
+  backdrop-filter: blur(24px) saturate(138%);
+  -webkit-backdrop-filter: blur(24px) saturate(138%);
+}
+
+.mobile-nav-shell[data-open="true"] .mobile-nav-tint-layer {
+  opacity: 0.78;
+}
+
+.mobile-nav-shell[data-open="true"] .mobile-nav-scrim-layer {
+  opacity: 0.58;
+}
+
 /* Mobile Nav Header Bar */
 .mobile-nav-header {
+  position: relative;
+  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: space-between;
   min-height: 58px;
   padding: 10px 10px 10px 16px;
   box-sizing: border-box;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .mobile-nav-shell {
+    background: rgba(251, 250, 247, 0.96);
+  }
+
+  .mobile-nav-backdrop-layer,
+  .mobile-nav-tint-layer,
+  .mobile-nav-scrim-layer {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav-backdrop-layer,
+  .mobile-nav-tint-layer,
+  .mobile-nav-scrim-layer {
+    transition: none;
+  }
 }
 
 /* Capsule Menu Trigger Button */
