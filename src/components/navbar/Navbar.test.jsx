@@ -7,7 +7,7 @@ describe("Navbar Morphing Glass Architecture & Interaction Integrity", () => {
     document.body.innerHTML = "";
   });
 
-  it("renders floating navigation header with semantic nav aria-label", () => {
+  it("renders desktop floating navigation header with 3-zone grid and NO mobile trigger on desktop", () => {
     render(<NavbarShell shouldAnimate={false} />);
 
     const header = screen.getByRole("banner");
@@ -16,10 +16,6 @@ describe("Navbar Morphing Glass Architecture & Interaction Integrity", () => {
 
     const nav = screen.getByRole("navigation", { name: /primary navigation/i });
     expect(nav).toBeTruthy();
-  });
-
-  it("renders 3-zone grid components: brand lockup, desktop links, actions, and mobile trigger", () => {
-    render(<NavbarShell shouldAnimate={false} />);
 
     // Brand lockup
     const brandLink = screen.getByRole("link", { name: /olixer forex homepage/i });
@@ -36,35 +32,24 @@ describe("Navbar Morphing Glass Architecture & Interaction Integrity", () => {
     expect(screen.getByRole("link", { name: /log in/i })).toBeTruthy();
     expect(screen.getByRole("link", { name: /start free trial/i })).toBeTruthy();
 
-    // Mobile menu trigger button
+    // Mobile trigger MUST NOT exist on desktop
+    expect(screen.queryByRole("button", { name: /open navigation menu/i })).toBeNull();
+  });
+
+  it("switches to MobileMorphNavbar under 1024px viewport width", () => {
+    // Set viewport width to mobile
+    window.innerWidth = 390;
+    render(<NavbarShell shouldAnimate={false} />);
+
     const trigger = screen.getByRole("button", { name: /open navigation menu/i });
     expect(trigger).toBeTruthy();
     expect(trigger.getAttribute("aria-expanded")).toBe("false");
-  });
-
-  it("toggles mobile menu panel when trigger button is clicked", () => {
-    render(<NavbarShell shouldAnimate={false} />);
-
-    const trigger = screen.getByRole("button", { name: /open navigation menu/i });
-    expect(document.getElementById("mobile-menu-panel")).toBeNull();
 
     fireEvent.click(trigger);
     expect(trigger.getAttribute("aria-expanded")).toBe("true");
-    const panel = document.getElementById("mobile-menu-panel");
-    expect(panel).toBeTruthy();
+    expect(screen.getByText("Close")).toBeTruthy();
 
-    fireEvent.click(trigger);
-    expect(trigger.getAttribute("aria-expanded")).toBe("false");
-  });
-
-  it("closes mobile menu panel when Escape key is pressed", () => {
-    render(<NavbarShell shouldAnimate={false} />);
-
-    const trigger = screen.getByRole("button", { name: /open navigation menu/i });
-    fireEvent.click(trigger);
-    expect(document.getElementById("mobile-menu-panel")).toBeTruthy();
-
-    fireEvent.keyDown(window, { key: "Escape" });
-    expect(trigger.getAttribute("aria-expanded")).toBe("false");
+    // Reset window.innerWidth
+    window.innerWidth = 1024;
   });
 });

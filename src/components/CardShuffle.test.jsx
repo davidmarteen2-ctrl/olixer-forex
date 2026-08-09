@@ -56,4 +56,19 @@ describe("Olixer card shuffle", () => {
     expect(page).toContain("overflow-x:clip");
   });
 
+  it("keeps the reserved root height synchronized with each responsive shuffle height", () => {
+    const css = readFileSync("src/components/CardShuffle.css", "utf8");
+    const page = readFileSync("index.html", "utf8");
+
+    expect(css).toMatch(
+      /@media \(max-width:\s*900px\)[\s\S]*?#card-shuffle-root\s*\{[^}]*min-height:\s*240vh/s,
+    );
+    expect(css).toMatch(
+      /@media \(max-width:\s*600px\)[\s\S]*?#card-shuffle-root\s*\{[^}]*min-height:\s*220vh/s,
+    );
+    expect(page).toMatch(
+      /@media \(max-width:\s*600px\)[\s\S]*?#card-shuffle-root\s*\{[^}]*min-height:\s*220vh/s,
+    );
+  });
+
 });

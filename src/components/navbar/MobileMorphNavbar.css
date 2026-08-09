@@ -248,3 +248,20 @@
 .mobile-primary-cta:hover .mobile-cta-arrow {
   transform: translateX(3px);
 }
+
+/* Defensive CSS Isolation — Mobile components must NEVER render on Desktop */
+@media (min-width: 1024px) {
+  .mobile-navbar-root,
+  .mobile-nav-positioner,
+  .mobile-nav-shell,
+  .mobile-nav-header,
+  .mobile-menu-trigger,
+  .mobile-nav-content,
+  .mobile-menu-veil,
+  .mobile-menu-symbol,
+  .mobile-nav-link,
+  .mobile-primary-cta,
+  .mobile-login-action {
+    display: none !important;
+  }
+}

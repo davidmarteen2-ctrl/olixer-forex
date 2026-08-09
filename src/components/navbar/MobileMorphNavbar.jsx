@@ -85,7 +85,7 @@ export default function MobileMorphNavbar({ onCloseExternal }) {
         )}
       </AnimatePresence>
 
-      <div className="mobile-nav-positioner">
+      <div className="mobile-nav-positioner mobile-navbar-root">
         <motion.header
           ref={shellRef}
           layout={!shouldReduceMotion}

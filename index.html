@@ -84,8 +84,18 @@
     }
 
     @media (max-width: 900px) {
+      #card-shuffle-root {
+        min-height: 240vh;
+      }
+
       #step-flow-root {
         min-height: 520px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #card-shuffle-root {
+        min-height: 220vh;
       }
     }
 
@@ -159,8 +169,18 @@
     }
 
     @media (max-width: 900px) {
+      #card-shuffle-root {
+        min-height: 240vh;
+      }
+
       #step-flow-root {
         min-height: 520px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #card-shuffle-root {
+        min-height: 220vh;
       }
     }
 
@@ -489,6 +509,10 @@
         justify-content: center;
         box-sizing: border-box;
       }
+
+      .social-proof {
+        margin-top: 16px;
+      }
     }
 
     @media (max-width: 389px) {
@@ -591,13 +615,26 @@
     }
 
     .social-proof .cap {
+      color: var(--gray);
       font-size: 12.5px;
-      color: var(--gray)
+      white-space: nowrap
     }
 
     .social-proof .cap b {
       color: var(--ink);
       font-weight: 700
+    }
+
+    @media (max-width: 389px) {
+      #masked-avatars-root {
+        display: flex;
+        width: 100%;
+      }
+
+      .social-proof {
+        flex-direction: column;
+        gap: 8px;
+      }
     }
 
     /* ---------- DIAGRAM ---------- */
@@ -1065,6 +1102,44 @@
       }
     }
 
+    /* ── TABLET / MOBILE: neutralize legacy desktop scaling ───────────────
+       The React router renders TabletSignalDiagram (<768–1023px) and
+       MobileHeroDiagram (<768px) — both use native geometry and must not
+       inherit any transform: scale() from the legacy wrapper.
+       The base .diagram-outer desktop rules (height:400px, margin-top:-34px)
+       are preserved above; these media queries override them at smaller sizes.
+    ───────────────────────────────────────────────────────────────────── */
+
+    @media (max-width: 1023px) {
+      .diagram-outer {
+        height: auto;
+        margin-top: 16px;
+        overflow: visible;
+      }
+
+      .diagram-scale {
+        position: relative;
+        left: auto;
+        width: 100%;
+        height: auto;
+        transform: none !important;
+        transform-origin: initial;
+        margin: 0;
+      }
+
+      #hero-diagram-root {
+        width: 100%;
+        min-height: 0;
+        height: auto;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .diagram-outer {
+        margin-top: 20px;
+      }
+    }
+
     /* price card */
     .price-card {
       width: 170px;
@@ -1349,6 +1424,10 @@
 
     @media (prefers-reduced-motion:reduce) {
 
+      #card-shuffle-root {
+        min-height: 760px;
+      }
+
       .rise,
       .pop {
         opacity: 1;
@@ -1392,6 +1471,16 @@
       .partners {
         margin-top: 0;
         padding: 28px 0 32px
+      }
+
+      .marquee::before,
+      .marquee::after {
+        width: 32px;
+      }
+
+      .mgroup {
+        gap: 44px;
+        padding-right: 44px;
       }
     }
 

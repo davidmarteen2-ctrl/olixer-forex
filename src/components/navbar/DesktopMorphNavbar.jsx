@@ -7,13 +7,11 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import MobileMenuPanel from "./MobileMenuPanel.jsx";
 import NavbarContainer from "./NavbarContainer.jsx";
 import "./Navbar.css";
 
 export default function DesktopMorphNavbar({ shouldAnimate = true }) {
   const shellRef = useRef(null);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 1200
   );
@@ -23,13 +21,10 @@ export default function DesktopMorphNavbar({ shouldAnimate = true }) {
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
-      if (window.innerWidth >= 1120 && isMobileMenuOpen) {
-        setIsMobileMenuOpen(false);
-      }
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [isMobileMenuOpen]);
+  }, []);
 
   const { scrollY } = useScroll();
   const rawProgress = useTransform(scrollY, [0, 220], [0, 1], {
@@ -41,9 +36,6 @@ export default function DesktopMorphNavbar({ shouldAnimate = true }) {
     damping: 30,
     mass: 0.9,
   });
-
-  const usesDesktopNavigation = windowWidth >= 1120;
-  const isDesktopShell = windowWidth >= 1024;
 
   const desktopWidthTop = Math.min(1220, Math.max(320, windowWidth - 32));
   const desktopWidthScrolled = Math.min(
@@ -88,82 +80,28 @@ export default function DesktopMorphNavbar({ shouldAnimate = true }) {
     shellRef.current.style.setProperty("--mouse-y", `${y}px`);
   };
 
-  useEffect(() => {
-    if (!isMobileMenuOpen) return;
-    const handleOutsideClick = (e) => {
-      if (shellRef.current && !shellRef.current.contains(e.target)) {
-        setIsMobileMenuOpen(false);
-      }
-    };
-    document.addEventListener("pointerdown", handleOutsideClick);
-    return () => document.removeEventListener("pointerdown", handleOutsideClick);
-  }, [isMobileMenuOpen]);
-
-  const isDesktop = isDesktopShell;
-  const isTablet = windowWidth >= 768 && windowWidth < 1024;
-
   const getShellStyle = () => {
     if (shouldReduceMotion) {
-      if (isDesktop) {
-        return {
-          width: "1220px",
-          height: "70px",
-          borderRadius: "18px",
-          paddingLeft: "24px",
-          paddingRight: "24px",
-        };
-      }
-      if (isTablet) {
-        return {
-          width: "calc(100% - 32px)",
-          maxWidth: "720px",
-          height: "60px",
-          borderRadius: "18px",
-          paddingLeft: "18px",
-          paddingRight: "18px",
-        };
-      }
       return {
-        width: "calc(100% - 24px)",
-        height: "58px",
-        borderRadius: "16px",
-        paddingLeft: "16px",
-        paddingRight: "16px",
-      };
-    }
-
-    if (isDesktop) {
-      return {
-        width: navWidth,
-        height: navHeight,
-        borderRadius: navRadius,
-        paddingLeft: horizontalPadding,
-        paddingRight: horizontalPadding,
-      };
-    }
-
-    if (isTablet) {
-      return {
-        width: "calc(100% - 32px)",
-        maxWidth: "720px",
-        height: isMobileMenuOpen ? "auto" : "60px",
+        width: "1220px",
+        height: "70px",
         borderRadius: "18px",
-        paddingLeft: "18px",
-        paddingRight: "18px",
+        paddingLeft: "24px",
+        paddingRight: "24px",
       };
     }
 
     return {
-      width: "calc(100% - 24px)",
-      height: isMobileMenuOpen ? "auto" : "58px",
-      borderRadius: "16px",
-      paddingLeft: "16px",
-      paddingRight: "16px",
+      width: navWidth,
+      height: navHeight,
+      borderRadius: navRadius,
+      paddingLeft: horizontalPadding,
+      paddingRight: horizontalPadding,
     };
   };
 
   return (
-    <div className="navbar-positioner">
+    <div className="navbar-positioner desktop-navbar-root">
       <motion.div
         className="navbar-entrance-wrapper"
         initial={
@@ -210,9 +148,6 @@ export default function DesktopMorphNavbar({ shouldAnimate = true }) {
           <div className="navbar-edge-highlight" aria-hidden="true" />
           <nav className="navbar-content" aria-label="Primary navigation">
             <NavbarContainer
-              isMobileMenuOpen={isMobileMenuOpen}
-              onToggleMobileMenu={() => setIsMobileMenuOpen((prev) => !prev)}
-              usesDesktopNavigation={usesDesktopNavigation}
               navGap={navGap}
               actionGap={actionGap}
               brandGap={brandGap}
@@ -220,10 +155,6 @@ export default function DesktopMorphNavbar({ shouldAnimate = true }) {
               ctaHeight={ctaHeight}
               ctaRadius={ctaRadius}
               logoScale={logoScale}
-            />
-            <MobileMenuPanel
-              isOpen={isMobileMenuOpen}
-              onClose={() => setIsMobileMenuOpen(false)}
             />
           </nav>
         </motion.header>
