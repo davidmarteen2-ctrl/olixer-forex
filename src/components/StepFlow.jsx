@@ -100,6 +100,28 @@ function useSceneStarted(ref, reduceMotion) {
   return started;
 }
 
+function useMobileStepFlow() {
+  const getMatches = () =>
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(max-width: 900px)").matches;
+  const [isMobile, setIsMobile] = useState(getMatches);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+      return undefined;
+    }
+
+    const query = window.matchMedia("(max-width: 900px)");
+    const update = (event) => setIsMobile(event.matches);
+    setIsMobile(query.matches);
+    query.addEventListener?.("change", update);
+    return () => query.removeEventListener?.("change", update);
+  }, []);
+
+  return isMobile;
+}
+
 function useCountUp(target, { play, reduceMotion, delay = 0, duration = 0.8, formatter }) {
   const formatterRef = useRef(formatter);
   formatterRef.current = formatter;
@@ -539,9 +561,26 @@ export default function StepFlow() {
   const [activeIndex, setActiveIndex] = useState(0);
   const tabRefs = useRef([]);
   const shellRef = useRef(null);
+  const pendingMobileScroll = useRef(false);
   const reduceMotion = useReducedMotion();
+  const isMobileFlow = useMobileStepFlow();
   const sceneStarted = useSceneStarted(shellRef, reduceMotion);
   const activeStep = stepFlowItems[activeIndex];
+
+  const selectStep = (index, anchorOnMobile = false) => {
+    pendingMobileScroll.current = anchorOnMobile && index !== activeIndex;
+    setActiveIndex(index);
+  };
+
+  useIsomorphicLayoutEffect(() => {
+    if (!isMobileFlow || !pendingMobileScroll.current) return;
+
+    pendingMobileScroll.current = false;
+    tabRefs.current[activeIndex]?.scrollIntoView?.({
+      behavior: reduceMotion ? "auto" : "smooth",
+      block: "start",
+    });
+  }, [activeIndex, isMobileFlow, reduceMotion]);
 
   const handleKeyDown = (event, index) => {
     const lastIndex = stepFlowItems.length - 1;
@@ -560,7 +599,7 @@ export default function StepFlow() {
     }
 
     event.preventDefault();
-    setActiveIndex(nextIndex);
+    selectStep(nextIndex, isMobileFlow);
     tabRefs.current[nextIndex]?.focus();
   };
 
@@ -572,6 +611,65 @@ export default function StepFlow() {
         exit: { opacity: 0, y: -10, scale: 0.99 },
         transition: { duration: 0.42, ease: [0.22, 1, 0.36, 1] },
       };
+
+  if (isMobileFlow) {
+    return (
+      <div className="step-flow step-flow--mobile">
+        <div className="step-flow__mobile-steps" aria-label="How Olixer works">
+          {stepFlowItems.map((step, index) => {
+            const isActive = index === activeIndex;
+
+            return (
+              <div className="step-flow__mobile-item" key={step.id}>
+                <button
+                  ref={(node) => { tabRefs.current[index] = node; }}
+                  id={`step-flow-mobile-trigger-${step.id}`}
+                  type="button"
+                  aria-expanded={isActive}
+                  aria-controls={`step-flow-mobile-panel-${step.id}`}
+                  className={`step-flow__step${isActive ? " step-flow__step--active" : ""}`}
+                  onClick={() => selectStep(index, true)}
+                  onKeyDown={(event) => handleKeyDown(event, index)}
+                >
+                  {isActive ? (
+                    <motion.span
+                      className="step-flow__active"
+                      layoutId="step-flow-mobile-active"
+                      transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 38 }}
+                      aria-hidden="true"
+                    />
+                  ) : null}
+                  <span className="step-flow__number">{step.number}</span>
+                  <span className="step-flow__step-copy">
+                    <span className="step-flow__title">{step.title}</span>
+                    <span className="step-flow__description">{step.description}</span>
+                  </span>
+                </button>
+
+                {isActive ? (
+                  <motion.div
+                    id={`step-flow-mobile-panel-${step.id}`}
+                    className="step-flow__mobile-panel"
+                    role="region"
+                    aria-labelledby={`step-flow-mobile-trigger-${step.id}`}
+                    initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={reduceMotion ? { duration: 0 } : { duration: 0.34, ease: SCENE_EASE }}
+                  >
+                    <div className="step-flow__visual-shell" ref={shellRef}>
+                      <div className="step-flow__visual">
+                        <StepVisual stepId={step.id} play={sceneStarted} reduceMotion={reduceMotion} />
+                      </div>
+                    </div>
+                  </motion.div>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="step-flow">

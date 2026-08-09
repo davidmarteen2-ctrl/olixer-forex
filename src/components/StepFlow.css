@@ -475,9 +475,18 @@
   #step-flow-root { min-height: 520px; }
   .step-flow-section { padding: 90px 22px 110px; border-radius: 28px 28px 0 0; }
   .step-flow-section__head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 42px; }
-  .step-flow { grid-template-columns: 1fr; gap: 28px; }
-  .step-flow__visual-shell { order: -1; min-height: 520px; }
-  .step-flow__steps { min-height: 0; }
+  .step-flow { display: block; }
+  .step-flow__mobile-steps { display: flex; flex-direction: column; gap: 10px; }
+  .step-flow__mobile-item { min-width: 0; }
+  .step-flow--mobile .step-flow__step { scroll-margin-top: 96px; }
+  .step-flow__mobile-panel { margin: 10px 0 14px; }
+  .step-flow__mobile-panel .step-flow__visual-shell { min-height: 0; overflow: hidden; }
+  .step-flow__mobile-panel .step-flow__visual { position: relative; inset: auto; }
+  .step-flow__mobile-panel .step-ui {
+    position: relative;
+    inset: auto;
+    min-height: min(520px, calc(100svh - 148px));
+  }
   .step-flow__step { padding: 22px; }
 }
 
@@ -487,7 +496,7 @@
   .step-flow-section__head { margin-bottom: 38px; }
   .step-flow-section__head h2 { font-size: 42px; }
   .step-flow-section__head p { font-size: 15px; }
-  .step-flow__visual-shell { min-height: 490px; border-radius: 24px; }
+  .step-flow__mobile-panel .step-flow__visual-shell { min-height: 0; border-radius: 24px; }
   .step-ui { padding: 22px; }
   .step-ui__bar { margin-bottom: 24px; }
   .step-flow__step { grid-template-columns: 34px 1fr; gap: 10px; padding: 19px 16px; border-radius: 18px; }
@@ -499,6 +508,7 @@
   .feature-card { flex-direction: row; align-items: center; justify-content: space-between; padding: 10px 14px; }
   .feature-card__icon { margin-bottom: 0; margin-right: 12px; width: 28px; height: 28px; }
   .feature-card span { margin: 0; margin-right: auto; }
+  .profile-ready-bar { margin-top: 18px; }
   .broker-option { min-height: 78px; padding: 12px; }
   .trader-card__chart { height: 54px; }
 }
