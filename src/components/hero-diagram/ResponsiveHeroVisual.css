@@ -1,0 +1,91 @@
+/*
+ * ResponsiveHeroVisual — scrollable scale-track frame
+ *
+ * Layer model (outermost → innermost):
+ *
+ *  .diagram-scale-frame        full container width, establishes measurement point
+ *    .diagram-scale-scroll     horizontally scrollable, height = scaledHeight
+ *      .diagram-scale-track    width = scaledWidth, height = scaledHeight (layout anchor)
+ *        .diagram-scale-inner  width = 1360px, transform: scale(s) from top-left
+ *          <HeroDiagram />
+ *
+ * Why this works:
+ *   - The TRACK is sized to the visual (scaled) dimensions, so the scroll
+ *     container knows the real scrollable width.
+ *   - transform-origin: top left ensures the inner's visual left edge aligns
+ *     with the track's left edge. No gaps, no overflow artifacts.
+ *   - On desktop (scale = 1), track = inner = 1360px, no scrolling.
+ *   - On mobile (scale ≈ 0.46), track ≈ 626px, scroll starts centred on engine.
+ */
+
+/* ─── Frame ──────────────────────────────────────────────────────────────── */
+
+.diagram-scale-frame {
+  width: 100%;
+  /* Frame height collapses to zero by default; scroll div provides the height */
+  overflow: hidden;
+}
+
+/* ─── Scroll shell ────────────────────────────────────────────────────────── */
+
+.diagram-scale-scroll {
+  /* Allow horizontal scrolling when track > viewport */
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* Hide the scrollbar on mobile — swiping still works */
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* IE / Edge */
+}
+
+.diagram-scale-scroll::-webkit-scrollbar {
+  display: none;               /* Chrome / Safari / Brave */
+}
+
+/* ─── Track ───────────────────────────────────────────────────────────────── */
+
+.diagram-scale-track {
+  /* Exact scaled pixel size set inline via JS — gives the scroll container
+     its measurable extent without being affected by the transform on inner. */
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* ─── Inner (diagram at natural width, scaled down) ──────────────────────── */
+
+.diagram-scale-inner {
+  /* transform and width set inline. transform-origin: top left in JS. */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* ─── Desktop: no scroll indicator, centered if narrower than viewport ────── */
+
+@media (min-width: 1360px) {
+  .diagram-scale-scroll {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* ─── Mobile / tablet: subtle scroll-hint fade on right edge ─────────────── */
+
+@media (max-width: 1023px) {
+  .diagram-scale-frame {
+    /* Soft right-edge fade to hint at horizontal scroll */
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 4%,
+      black 92%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 4%,
+      black 92%,
+      transparent 100%
+    );
+  }
+}

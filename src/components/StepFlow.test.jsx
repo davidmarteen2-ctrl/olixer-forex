@@ -3,7 +3,11 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import StepFlow from "./StepFlow.jsx";
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  setReducedMotion(false);
+  setMobileFlow(false);
+});
 
 // framer-motion's useReducedMotion() lazily calls window.matchMedia() exactly
 // once for the whole process and only ever updates via a "change" event fired
@@ -31,9 +35,32 @@ const reducedMotionQuery = {
   },
 };
 
+const mobileFlowQuery = {
+  matches: false,
+  media: "(max-width: 900px)",
+  listeners: new Set(),
+  addEventListener(type, listener) {
+    if (type === "change") this.listeners.add(listener);
+  },
+  removeEventListener(type, listener) {
+    this.listeners.delete(listener);
+  },
+  addListener(listener) {
+    this.listeners.add(listener);
+  },
+  removeListener(listener) {
+    this.listeners.delete(listener);
+  },
+  dispatchEvent() {
+    return true;
+  },
+};
+
 window.matchMedia = (query) =>
   query.includes("prefers-reduced-motion")
     ? reducedMotionQuery
+    : query.includes("max-width: 900px")
+      ? mobileFlowQuery
     : {
         matches: false,
         media: query,
@@ -49,6 +76,11 @@ window.matchMedia = (query) =>
 function setReducedMotion(matches) {
   reducedMotionQuery.matches = matches;
   reducedMotionQuery.listeners.forEach((listener) => listener({ matches }));
+}
+
+function setMobileFlow(matches) {
+  mobileFlowQuery.matches = matches;
+  mobileFlowQuery.listeners.forEach((listener) => listener({ matches }));
 }
 
 describe("Olixer Step Flow", () => {
@@ -73,6 +105,54 @@ describe("Olixer Step Flow", () => {
     expect(
       screen.getByRole("tabpanel", { name: /connect your broker/i }),
     ).toBeTruthy();
+  });
+
+  it("expands the selected mobile visual directly below its touch trigger", () => {
+    setMobileFlow(true);
+    render(<StepFlow />);
+
+    const brokerTrigger = screen.getByRole("button", {
+      name: /connect your broker/i,
+    });
+    fireEvent.click(brokerTrigger);
+
+    const brokerPanel = screen.getByRole("region", {
+      name: /connect your broker/i,
+    });
+    expect(brokerTrigger.getAttribute("aria-expanded")).toBe("true");
+    expect(brokerTrigger.nextElementSibling).toBe(brokerPanel);
+    expect(screen.getByText("Broker connected")).toBeTruthy();
+  });
+
+  it("anchors a newly selected mobile step below the sticky navigation", () => {
+    const originalScrollIntoView = window.HTMLElement.prototype.scrollIntoView;
+    const scrollCalls = [];
+    window.HTMLElement.prototype.scrollIntoView = function scrollIntoView(options) {
+      scrollCalls.push({ element: this, options });
+    };
+
+    try {
+      setMobileFlow(true);
+      render(<StepFlow />);
+
+      const brokerTrigger = screen.getByRole("button", {
+        name: /connect your broker/i,
+      });
+      fireEvent.click(brokerTrigger);
+
+      expect(scrollCalls).toEqual([
+        {
+          element: brokerTrigger,
+          options: { behavior: "smooth", block: "start" },
+        },
+      ]);
+    } finally {
+      if (originalScrollIntoView) {
+        window.HTMLElement.prototype.scrollIntoView = originalScrollIntoView;
+      } else {
+        delete window.HTMLElement.prototype.scrollIntoView;
+      }
+    }
   });
 
   it("supports keyboard navigation through the complete flow", () => {

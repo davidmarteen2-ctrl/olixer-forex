@@ -1,0 +1,597 @@
+/*
+ * MobileFocusTopology.css
+ *
+ * A phone-native signal instrument: source feeds converge into a visible
+ * engine, hand off to one execution ticket, then resolve into one action rail.
+ * Layout anchors remain separate from Motion-owned transform surfaces.
+ */
+
+.mobile-focus-topology {
+  --mft-ink: var(--ink, #15171a);
+  --mft-ink-soft: var(--ink-soft, #3d4147);
+  --mft-accent: var(--orange, #f0821e);
+  --mft-positive: #1fa357;
+  --mft-surface: #f7f7f5;
+  --mft-line: rgba(21, 23, 26, 0.1);
+
+  position: relative;
+  width: min(366px, 100%);
+  height: 410px;
+  container: mobile-focus / inline-size;
+  margin: 24px auto 0;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid var(--mft-line);
+  border-radius: 16px;
+  background:
+    linear-gradient(90deg, transparent 0 49.8%, rgba(21, 23, 26, 0.035) 50%, transparent 50.2%),
+    radial-gradient(var(--pattern-ink-light) 0.8px, transparent 0.8px),
+    var(--mft-surface);
+  background-size:
+    100% 100%,
+    var(--pattern-step-compact) var(--pattern-step-compact),
+    auto;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 4px 8px rgba(21, 23, 26, 0.06);
+  font-family: 'Inter', system-ui, sans-serif;
+  user-select: none;
+}
+
+.mobile-focus-topology::before,
+.mobile-focus-topology::after {
+  content: '';
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background: var(--mft-line);
+  z-index: 0;
+}
+
+.mobile-focus-topology::before {
+  top: 68px;
+}
+
+.mobile-focus-topology::after {
+  bottom: 82px;
+}
+
+.mobile-focus-bg-glow {
+  position: absolute;
+  top: -94px;
+  left: 50%;
+  width: 290px;
+  height: 210px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgba(240, 130, 30, 0.12);
+  filter: blur(36px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.mobile-focus-connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Source feeds */
+.mobile-focus-inputs {
+  position: absolute;
+  top: 14px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  gap: 10px;
+  z-index: 2;
+}
+
+.mobile-focus-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: calc(50% - 5px);
+  min-width: 0;
+  height: 46px;
+  padding: 0 9px;
+  box-sizing: border-box;
+  border: 1px solid rgba(21, 23, 26, 0.09);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 5px rgba(21, 23, 26, 0.045);
+}
+
+.chip-icon {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  flex: 0 0 27px;
+  border-radius: 8px;
+  background: rgba(240, 130, 30, 0.1);
+  color: var(--mft-accent);
+}
+
+.chip-label-wrap {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.chip-title {
+  overflow: hidden;
+  color: var(--mft-ink);
+  font-size: 10.5px;
+  font-weight: 780;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chip-title-short {
+  display: none;
+}
+
+.chip-sub {
+  overflow: hidden;
+  color: rgba(21, 23, 26, 0.58);
+  font-size: 8.5px;
+  font-weight: 540;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Engine */
+.mobile-focus-engine {
+  position: absolute;
+  top: 84px;
+  left: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  z-index: 3;
+}
+
+.mobile-focus-engine-motion {
+  width: fit-content;
+}
+
+.engine-card {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 9px;
+  width: 194px;
+  height: 62px;
+  padding: 9px 10px;
+  box-sizing: border-box;
+  border: 1px solid rgba(21, 23, 26, 0.11);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(21, 23, 26, 0.08);
+}
+
+.engine-mark {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--mft-ink);
+}
+
+.engine-candlestick-icon {
+  width: 19px;
+  height: 19px;
+}
+
+.engine-candlestick-icon path:first-child,
+.engine-candlestick-icon rect:nth-child(2) {
+  stroke: #ffffff;
+  fill: #ffffff;
+}
+
+.engine-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.engine-title-row {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.engine-title {
+  color: var(--mft-ink);
+  font-size: 9.5px;
+  font-weight: 820;
+  letter-spacing: 0.035em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.engine-desc {
+  overflow: hidden;
+  color: rgba(21, 23, 26, 0.58);
+  font-size: 8.5px;
+  font-weight: 560;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.engine-live-badge {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  border-radius: 999px;
+  background: rgba(31, 163, 87, 0.1);
+  color: #127840;
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.engine-live-badge i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--mft-positive);
+}
+
+/* Live engine-to-signal handoff */
+.mobile-focus-signal-link {
+  position: absolute;
+  top: 146px;
+  left: calc(50% - 1px);
+  width: 2px;
+  height: 22px;
+  overflow: hidden;
+  transform-origin: top;
+  background: rgba(240, 130, 30, 0.28);
+  z-index: 2;
+}
+
+.mobile-focus-signal-link span {
+  position: absolute;
+  top: -7px;
+  left: 0;
+  width: 2px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--mft-accent);
+  animation: mobileSignalPacket 1.35s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes mobileSignalPacket {
+  0% { transform: translateY(0); opacity: 0; }
+  18% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { transform: translateY(29px); opacity: 0; }
+}
+
+/* Signal ticket */
+.mobile-focus-signal-wrap {
+  position: absolute;
+  top: 168px;
+  left: 12px;
+  right: 12px;
+  z-index: 4;
+}
+
+.mobile-focus-signal-motion {
+  width: 100%;
+  max-width: 342px;
+  margin-inline: auto;
+}
+
+.smart-signal-card {
+  min-height: 142px;
+  padding: 13px 14px 11px;
+  box-sizing: border-box;
+  border-radius: 14px;
+  background: var(--mft-ink);
+  box-shadow: 0 8px 14px rgba(21, 23, 26, 0.2);
+  color: #ffffff;
+}
+
+.smart-signal-header,
+.smart-signal-instrument-row,
+.smart-signal-price-row,
+.smart-signal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.smart-signal-header {
+  margin-bottom: 8px;
+}
+
+.smart-signal-tag {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 10.5px;
+  font-weight: 670;
+}
+
+.smart-signal-confidence {
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: rgba(31, 163, 87, 0.16);
+  color: #4edb8c;
+  font-size: 8px;
+  font-weight: 820;
+  letter-spacing: 0.035em;
+}
+
+.smart-signal-instrument-row {
+  margin-bottom: 6px;
+}
+
+.pair-symbol {
+  color: #ffffff;
+  font-size: 19px;
+  font-weight: 820;
+  letter-spacing: -0.018em;
+  line-height: 1;
+}
+
+.buy-badge {
+  min-width: 40px;
+  padding: 4px 9px;
+  box-sizing: border-box;
+  border-radius: 7px;
+  background: var(--mft-positive);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 820;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-align: center;
+}
+
+.smart-signal-price-row {
+  align-items: flex-end;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.price-label-col,
+.target-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-entry-label,
+.target-lbl {
+  margin-bottom: 2px;
+  font-size: 7.5px;
+  font-weight: 760;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.price-entry-label {
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.price-value {
+  color: #ffffff;
+  font-size: 29px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 820;
+  letter-spacing: -0.025em;
+  line-height: 0.94;
+}
+
+.price-targets-col {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.target-item {
+  align-items: flex-end;
+}
+
+.target-item.sl .target-lbl {
+  color: #ff7272;
+}
+
+.target-item.tp .target-lbl {
+  color: #4edb8c;
+}
+
+.target-val {
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 720;
+}
+
+.footer-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 8.5px;
+  font-weight: 580;
+}
+
+.footer-status i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--mft-positive);
+}
+
+/* Unified action rail */
+.mobile-focus-outcomes {
+  position: absolute;
+  right: 12px;
+  bottom: 13px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 3;
+}
+
+.outcome-action-rail {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  min-height: 48px;
+  overflow: hidden;
+  border: 1px solid rgba(21, 23, 26, 0.1);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 3px 6px rgba(21, 23, 26, 0.055);
+}
+
+.outcome-action {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--mft-ink);
+  font-size: 11px;
+  font-weight: 760;
+}
+
+.outcome-action + .outcome-action::before {
+  content: '';
+  position: absolute;
+  top: 11px;
+  bottom: 11px;
+  left: 0;
+  width: 1px;
+  background: rgba(21, 23, 26, 0.1);
+}
+
+.pill-icon {
+  color: var(--mft-accent);
+}
+
+.progressive-disclosure-label {
+  color: rgba(21, 23, 26, 0.54);
+  font-size: 9px;
+  font-weight: 620;
+  letter-spacing: 0.015em;
+  line-height: 1;
+  text-align: center;
+}
+
+/* Narrow parent: adapt to the component's actual stack width, not the viewport. */
+@container mobile-focus (max-width: 340px) {
+  .mobile-focus-inputs {
+    left: 8px;
+    right: 8px;
+    gap: 8px;
+  }
+
+  .mobile-focus-chip {
+    width: calc(50% - 4px);
+    padding-inline: 7px;
+    gap: 6px;
+  }
+
+  .chip-icon {
+    width: 24px;
+    height: 24px;
+    flex-basis: 24px;
+  }
+
+  .chip-title {
+    font-size: 9.5px;
+  }
+
+  .chip-sub {
+    font-size: 8px;
+  }
+
+  .engine-card {
+    width: 184px;
+  }
+
+  .mobile-focus-signal-wrap {
+    left: 8px;
+    right: 8px;
+  }
+
+  .smart-signal-card {
+    padding-inline: 12px;
+  }
+
+  .pair-symbol {
+    font-size: 17px;
+  }
+
+  .price-value {
+    font-size: 26px;
+  }
+
+  .price-targets-col {
+    gap: 7px;
+  }
+
+  .target-val {
+    font-size: 10px;
+  }
+
+  .mobile-focus-outcomes {
+    right: 8px;
+    bottom: 10px;
+    left: 8px;
+  }
+
+  .outcome-action {
+    gap: 4px;
+    font-size: 10px;
+  }
+}
+
+@container mobile-focus (max-width: 310px) {
+  .chip-calendar .chip-title-full {
+    display: none;
+  }
+
+  .chip-calendar .chip-title-short {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-focus-chip,
+  .mobile-focus-engine-motion,
+  .mobile-focus-signal-link,
+  .mobile-focus-signal-motion,
+  .mobile-focus-outcomes,
+  .mobile-focus-connectors path {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .mobile-focus-signal-link span {
+    animation: none !important;
+    transform: translateY(12px);
+    opacity: 1;
+  }
+}

@@ -17,6 +17,16 @@ describe("MobileMorphNavbar Component", () => {
     expect(screen.getByText("+")).toBeTruthy();
   });
 
+  it("composes the mobile shell from the same glass layers as desktop", () => {
+    render(<MobileMorphNavbar />);
+
+    const shell = screen.getByRole("banner");
+    expect(shell.querySelector(":scope > .mobile-nav-backdrop-layer")).toBeTruthy();
+    expect(shell.querySelector(":scope > .mobile-nav-tint-layer")).toBeTruthy();
+    expect(shell.querySelector(":scope > .mobile-nav-scrim-layer")).toBeTruthy();
+    expect(shell.querySelector(":scope > .mobile-nav-edge-highlight")).toBeTruthy();
+  });
+
   it("toggles to open state and displays integrated unfolding nav content & page veil", () => {
     render(<MobileMorphNavbar />);
 

@@ -1,189 +1,159 @@
-/* MobileSignalPipeline.css — Dedicated Mobile Narrative Hero Diagram */
+/* MobileSignalPipeline.css — Framer-Style Mobile Signal Product Stage */
 
-.mobile-signal-pipeline {
+.mobile-signal-stage {
   position: relative;
-  width: min(380px, calc(100vw - 32px));
+  width: min(366px, calc(100vw - 24px));
+  height: clamp(390px, 108vw, 430px);
   margin-inline: auto;
-  margin-top: 34px;
-  padding: 20px 16px 22px;
+  margin-top: 24px;
   overflow: hidden;
-  border-radius: 24px;
+  isolation: isolate;
+
+  border-radius: 26px;
   border: 1px solid rgba(21, 23, 26, 0.08);
 
   background:
     radial-gradient(
-      circle at 50% 0%,
-      rgba(240, 130, 30, 0.09),
-      transparent 38%
+      circle at 50% 22%,
+      rgba(240, 130, 30, 0.10),
+      transparent 42%
     ),
     linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.92),
-      rgba(247, 244, 238, 0.88)
+      rgba(255, 255, 255, 0.96),
+      rgba(247, 244, 238, 0.90)
     );
 
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 22px 60px rgba(21, 23, 26, 0.09);
+    0 22px 50px rgba(21, 23, 26, 0.09);
   box-sizing: border-box;
 }
 
-/* Faint dot grid & center guide line */
-.mobile-signal-pipeline::before {
-  content: "";
+/* 1. Background Technical Grid & Ambient Glow */
+.mobile-stage-bg {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(21, 23, 26, 0.06) 1px, transparent 1px);
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(21, 23, 26, 0.055) 1px, transparent 1px);
   background-size: 14px 14px;
-  pointer-events: none;
-  opacity: 0.6;
+  opacity: 0.65;
 }
 
-.mobile-pipeline-center-guide {
+/* 2. System Traces SVG Layer */
+.mobile-stage-traces {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 1px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(240, 130, 30, 0.12) 20%,
-    rgba(240, 130, 30, 0.12) 80%,
-    transparent 100%
-  );
-  transform: translateX(-50%);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* 3. Input Modules — Cropped Edge Objects (Partial-Offscreen UI Framing) */
+.mobile-stage-inputs {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   pointer-events: none;
 }
 
-/* Section Labels */
-.mobile-pipeline-section-label {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(21, 23, 26, 0.45);
-  margin-bottom: 10px;
-  text-align: center;
-  position: relative;
-  z-index: 2;
-}
-
-/* Input Chip Grid (2x2) */
-.mobile-input-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-  position: relative;
-  z-index: 2;
-}
-
-.mobile-input-chip {
+.mobile-input-module {
+  position: absolute;
   display: flex;
   align-items: center;
   gap: 7px;
-  min-width: 0;
   min-height: 42px;
-  padding: 8px 10px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.65);
+  padding: 8px 12px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.76);
   border: 1px solid rgba(21, 23, 26, 0.07);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.88),
+    0 6px 18px rgba(21, 23, 26, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-sizing: border-box;
+  pointer-events: auto;
 }
 
-.mobile-chip-icon {
+.mod-icon {
   flex: 0 0 auto;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #F0821E;
 }
 
-.mobile-chip-text {
+.mod-label {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 12px;
   font-weight: 600;
   color: #15171A;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-/* Connector Stage */
-.mobile-connector-stage {
-  position: relative;
-  height: 38px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
+/* Cropped Positioning Offsets */
+.mod-tv {
+  top: 56px;
+  left: -18px;
+  width: 124px;
 }
 
-.mobile-signal-line {
+.mod-data {
+  top: 38px;
+  right: -24px;
+  width: 128px;
+}
+
+.mod-cal {
+  top: 108px;
+  left: -28px;
+  width: 118px;
+}
+
+.mod-liq {
+  top: 100px;
+  right: -30px;
+  width: 122px;
+}
+
+/* 4. Signal Engine Midground Puck */
+.mobile-stage-engine {
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: 104px;
   left: 50%;
-  width: 1px;
-  background: linear-gradient(
-    180deg,
-    rgba(240, 130, 30, 0.18),
-    #F0821E,
-    rgba(240, 130, 30, 0.18)
-  );
   transform: translateX(-50%);
-}
+  z-index: 3;
 
-.mobile-signal-packet {
-  position: absolute;
-  left: 50%;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #F0821E;
-  transform: translate(-50%, -50%);
-  box-shadow:
-    0 0 0 4px rgba(240, 130, 30, 0.14),
-    0 0 16px rgba(240, 130, 30, 0.4);
-}
-
-/* Signal Engine Card */
-.mobile-signal-engine {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  min-height: 86px;
+  width: 136px;
+  min-height: 84px;
+  padding: 10px 14px;
   border-radius: 18px;
-  padding: 14px 16px;
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(21, 23, 26, 0.09);
+
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(21, 23, 26, 0.08);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    0 8px 24px rgba(21, 23, 26, 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+    0 14px 30px rgba(21, 23, 26, 0.08);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
 }
 
-.mobile-engine-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.mobile-engine-icon-wrap {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+.engine-puck-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
   background: rgba(240, 130, 30, 0.1);
   border: 1px solid rgba(240, 130, 30, 0.2);
   display: flex;
@@ -192,77 +162,128 @@
   color: #F0821E;
 }
 
-.mobile-engine-title {
+.engine-puck-info {
+  margin-top: 4px;
+}
+
+.engine-puck-title {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
   color: #15171A;
+  text-transform: uppercase;
 }
 
-.mobile-engine-sub {
+.engine-puck-sub {
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  color: rgba(21, 23, 26, 0.6);
-  margin-top: 2px;
+  font-size: 11px;
+  color: rgba(21, 23, 26, 0.55);
 }
 
-.mobile-engine-status {
+.engine-puck-status {
+  position: absolute;
+  top: 10px;
+  right: 12px;
   display: flex;
   align-items: center;
   gap: 4px;
-
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 700;
   color: #F0821E;
 }
 
-.mobile-status-dot {
+.engine-status-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: #F0821E;
-  animation: mobileStatusPulse 1.4s ease-in-out infinite alternate;
+  animation: engineStatusPulse 1.6s ease-in-out infinite alternate;
 }
 
-@keyframes mobileStatusPulse {
-  0% { opacity: 0.3; transform: scale(0.8); }
-  100% { opacity: 1; transform: scale(1.2); }
+@keyframes engineStatusPulse {
+  0% { opacity: 0.4; transform: scale(0.85); }
+  100% { opacity: 1; transform: scale(1.15); }
 }
 
-/* Smart Signal Card */
-.mobile-smart-signal {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  padding: 16px;
-  border-radius: 18px;
+/* 5. Foreground Hero Object: Dark Smart Signal Card */
+.mobile-stage-signal-card {
+  position: absolute;
+  left: 50%;
+  bottom: 74px;
+  transform: translateX(-50%);
+  z-index: 4;
+
+  width: calc(100% - 28px);
+  max-width: 338px;
+  min-height: 162px;
+  padding: 16px 18px 14px;
+  border-radius: 20px;
+
   background: #15171A;
   color: #FFFFFF;
-  box-shadow: 0 16px 36px rgba(21, 23, 26, 0.18);
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    0 22px 46px rgba(21, 23, 26, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
   box-sizing: border-box;
 }
 
-.mobile-signal-header {
+.signal-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
 }
 
-.mobile-signal-pair {
+.signal-card-tag {
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.signal-confidence-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.03em;
+  color: #4ADE80;
+}
+
+.conf-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #4ADE80;
+}
+
+.signal-card-body {
+  margin-top: 12px;
+}
+
+.signal-pair-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.signal-pair-name {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
   color: #FFFFFF;
 }
 
-.mobile-signal-direction {
-  padding: 4px 10px;
+.signal-direction-badge {
+  padding: 4px 11px;
   border-radius: 999px;
   background: #F0821E;
   color: #FFFFFF;
@@ -272,85 +293,142 @@
   letter-spacing: 0.04em;
 }
 
-.mobile-signal-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.mobile-signal-metric {
+.signal-price-hero {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 8px;
 }
 
-.mobile-metric-label {
+.price-primary {
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 10px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+.price-label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 11px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
 }
 
-.mobile-metric-val {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  color: #FFFFFF;
+.signal-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
 }
 
-.mobile-metric-val.sl {
+.signal-stat-col {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat-label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.stat-val {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-val.sl {
   color: #F87171;
 }
 
-.mobile-metric-val.tp {
+.stat-val.tp {
   color: #4ADE80;
 }
 
-/* Outcome Row */
-.mobile-outcome-row {
+.signal-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.footer-live-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #F0821E;
+}
+
+/* 6. Action Layer: Bottom Output Pills */
+.mobile-stage-actions {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 5;
+
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 7px;
-  position: relative;
-  z-index: 2;
-  margin-top: 16px;
 }
 
-.mobile-outcome-card {
+.mobile-action-pill {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  min-height: 54px;
+  gap: 6px;
+  height: 44px;
   border-radius: 13px;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.76);
   border: 1px solid rgba(21, 23, 26, 0.07);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88);
   box-sizing: border-box;
-  text-align: center;
-  padding: 6px 4px;
-}
 
-.mobile-outcome-icon {
-  color: #15171A;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mobile-outcome-label {
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
   color: #15171A;
+}
+
+/* Responsive Scaling for Extra Small Viewports (320px–360px) */
+@media (max-width: 359px) {
+  .mobile-signal-stage {
+    width: calc(100vw - 20px);
+    height: 400px;
+  }
+
+  .mod-tv { left: -26px; }
+  .mod-data { right: -30px; }
+  .mod-cal { left: -32px; }
+  .mod-liq { right: -36px; }
+
+  .mobile-stage-signal-card {
+    width: calc(100% - 20px);
+    padding: 14px;
+  }
+
+  .price-primary {
+    font-size: 28px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mobile-status-dot {
+  .engine-status-dot {
     animation: none !important;
   }
 }

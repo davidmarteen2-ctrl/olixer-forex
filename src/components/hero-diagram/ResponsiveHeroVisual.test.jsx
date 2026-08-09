@@ -1,49 +1,41 @@
 import { render, screen } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, afterEach } from "vitest";
 import ResponsiveHeroVisual from "./ResponsiveHeroVisual.jsx";
 
+const originalInnerWidth = window.innerWidth;
+
+afterEach(() => {
+  Object.defineProperty(window, "innerWidth", {
+    writable: true, configurable: true, value: originalInnerWidth,
+  });
+});
+
 describe("ResponsiveHeroVisual Component", () => {
-  const originalInnerWidth = window.innerWidth;
-
-  afterEach(() => {
-    Object.defineProperty(window, "innerWidth", {
-      writable: true,
-      configurable: true,
-      value: originalInnerWidth,
-    });
-  });
-
-  it("renders MobileSignalPipeline when viewport is mobile (<768px)", () => {
-    Object.defineProperty(window, "innerWidth", {
-      writable: true,
-      configurable: true,
-      value: 375,
-    });
-
+  it("renders MobileFocusTopology on mobile (<768px)", () => {
+    Object.defineProperty(window, "innerWidth", { writable: true, configurable: true, value: 390 });
     render(<ResponsiveHeroVisual />);
-    expect(screen.getByText(/market inputs/i)).toBeTruthy();
-    expect(screen.getByText(/gbp \/ jpy/i)).toBeTruthy();
+
+    // MobileFocusTopology specific elements
+    expect(screen.getByText("Smart Signal")).toBeTruthy();
+    expect(screen.getByText("HIGH CONFIDENCE")).toBeTruthy();
+    expect(screen.getByText("GBP / JPY")).toBeTruthy();
+    expect(screen.getByText("195.842")).toBeTruthy();
+    expect(screen.getByText("Copy")).toBeTruthy();
+    expect(screen.getByText("Risk")).toBeTruthy();
+    expect(screen.getByText("Execute")).toBeTruthy();
+    expect(screen.getByText("+ 2 more capabilities")).toBeTruthy();
   });
 
-  it("renders TabletSignalDiagram when viewport is tablet (768px - 1023px)", () => {
-    Object.defineProperty(window, "innerWidth", {
-      writable: true,
-      configurable: true,
-      value: 800,
-    });
-
+  it("renders TabletSignalDiagram on tablet (768–1023px)", () => {
+    Object.defineProperty(window, "innerWidth", { writable: true, configurable: true, value: 800 });
     render(<ResponsiveHeroVisual />);
     expect(screen.getByText(/institutional execution/i)).toBeTruthy();
   });
 
-  it("renders DesktopHeroDiagram when viewport is desktop (>=1024px)", () => {
-    Object.defineProperty(window, "innerWidth", {
-      writable: true,
-      configurable: true,
-      value: 1200,
-    });
-
+  it("renders DesktopHeroDiagram on desktop (≥1024px)", () => {
+    Object.defineProperty(window, "innerWidth", { writable: true, configurable: true, value: 1280 });
     render(<ResponsiveHeroVisual />);
-    expect(screen.getByText(/economic calendar/i)).toBeTruthy();
+    expect(screen.getAllByText(/economic calendar/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText("SIGNAL ENGINE").length).toBeGreaterThan(0);
   });
 });

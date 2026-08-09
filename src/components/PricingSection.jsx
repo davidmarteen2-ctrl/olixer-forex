@@ -108,7 +108,7 @@ export default function PricingSection({ reducedMotion }) {
       </div>
 
       <div className="pricing-calculator__body">
-        <div className="pricing-selector">
+        <div className="pricing-selector" data-surface-pattern="plain">
           <div className="pricing-selector__intro">
             <span>Choose your workspace</span>
             <p>Move the slider or select a plan. Every tier includes a 14-day free trial.</p>

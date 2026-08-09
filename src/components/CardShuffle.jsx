@@ -7,6 +7,10 @@ import {
 } from "framer-motion";
 import { useEffect, useLayoutEffect, useRef } from "react";
 
+import copyTradingImage from "../assets/card-shuffle/copy-trading-network.jpg";
+import marketIntelligenceImage from "../assets/card-shuffle/market-intelligence.jpg";
+import mobileExecutionImage from "../assets/card-shuffle/mobile-execution.jpg";
+import performanceAnalyticsImage from "../assets/card-shuffle/performance-analytics.jpg";
 import "./CardShuffle.css";
 
 const useIsomorphicLayoutEffect =
@@ -19,9 +23,9 @@ export const cardShuffleItems = [
     heading: "Live Market Intelligence",
     supportingText:
       "Read institutional-grade signals and real-time charts before the market moves.",
-    image:
-      "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1800&q=88",
-    alt: "Live candlestick market charts",
+    image: marketIntelligenceImage,
+    imagePosition: "58% center",
+    alt: "Institutional market data across a precision trading workstation",
   },
   {
     id: "copy",
@@ -29,9 +33,9 @@ export const cardShuffleItems = [
     heading: "Copy Trading Network",
     supportingText:
       "Follow proven traders and mirror their strategies automatically in your own account.",
-    image:
-      "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1800&q=88",
-    alt: "Trader working from a laptop",
+    image: copyTradingImage,
+    imagePosition: "62% center",
+    alt: "Two synchronized trading terminals connected by an orange signal line",
   },
   {
     id: "mobile",
@@ -39,9 +43,9 @@ export const cardShuffleItems = [
     heading: "Mobile Execution",
     supportingText:
       "Monitor signals, manage risk, and control open positions wherever the day takes you.",
-    image:
-      "https://images.unsplash.com/photo-1611926653458-09294b3142bf?auto=format&fit=crop&w=1800&q=88",
-    alt: "Trading and social apps on a mobile phone",
+    image: mobileExecutionImage,
+    imagePosition: "68% center",
+    alt: "Mobile trading interface on a matte black phone",
   },
   {
     id: "analytics",
@@ -49,9 +53,9 @@ export const cardShuffleItems = [
     heading: "Performance Analytics",
     supportingText:
       "See account growth, drawdown, and risk in one clear performance workspace.",
-    image:
-      "https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&w=1800&q=88",
-    alt: "Performance chart and analytics workspace",
+    image: performanceAnalyticsImage,
+    imagePosition: "56% center",
+    alt: "Layered glass panels displaying performance analytics",
   },
 ];
 
@@ -102,15 +106,19 @@ function ShuffleCard({ card, index, progress, reduceMotion }) {
         src={card.image}
         alt={card.alt}
         loading={index === 0 ? "eager" : "lazy"}
+        fetchPriority={index === 0 ? "high" : "auto"}
+        width="1536"
+        height="1024"
+        style={{ objectPosition: card.imagePosition }}
         draggable="false"
       />
       <span className="card-shuffle__scrim" aria-hidden="true" />
-      <div className="card-shuffle__topline">
+      <div className="card-shuffle__topline" style={{ fontWeight: 700 }}>
         <span>Olixer / Platform</span>
         <span>{card.number}</span>
       </div>
       <div className="card-shuffle__copy">
-        <p>{card.supportingText}</p>
+        <p style={{ fontWeight: 700 }}>{card.supportingText}</p>
         <h3 id={`shuffle-title-${card.id}`}>{card.heading}</h3>
       </div>
     </motion.article>
@@ -139,6 +147,7 @@ export default function CardShuffle({ reducedMotion }) {
     <section
       ref={sectionRef}
       className={`card-shuffle${reduceMotion ? " card-shuffle--reduced" : ""}`}
+      data-surface-pattern="grid"
       role="region"
       aria-label="Olixer platform capabilities"
     >

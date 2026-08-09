@@ -75,11 +75,12 @@
 .signal-stack::before {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(21, 23, 26, 0.1) 0.8px, transparent 0.8px);
-  background-size: 24px 24px;
+  background-image: radial-gradient(var(--pattern-ink-light) 0.8px, transparent 0.8px);
+  background-size: var(--pattern-step-dot) var(--pattern-step-dot);
   content: "";
+  -webkit-mask-image: radial-gradient(circle at center, #000, transparent 74%);
   mask-image: radial-gradient(circle at center, #000, transparent 74%);
-  opacity: 0.32;
+  opacity: var(--pattern-opacity-quiet);
   pointer-events: none;
 }
 

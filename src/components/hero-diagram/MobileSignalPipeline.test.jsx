@@ -3,32 +3,29 @@ import { describe, expect, it } from "vitest";
 import MobileSignalPipeline from "./MobileSignalPipeline.jsx";
 
 describe("MobileSignalPipeline Component", () => {
-  it("renders mobile signal pipeline narrative elements", () => {
+  it("renders Mobile Signal Product Stage narrative elements", () => {
     render(<MobileSignalPipeline />);
 
-    // Section label
-    expect(screen.getByText(/market inputs/i)).toBeTruthy();
-
-    // Input chips
+    // Cropped input modules
+    expect(screen.getByText(/tradingview/i)).toBeTruthy();
     expect(screen.getByText(/market data/i)).toBeTruthy();
     expect(screen.getByText(/calendar/i)).toBeTruthy();
-    expect(screen.getByText(/tradingview/i)).toBeTruthy();
     expect(screen.getByText(/liquidity/i)).toBeTruthy();
 
-    // Signal engine card
-    expect(screen.getByText(/olixer signal engine/i)).toBeTruthy();
-    expect(screen.getByText(/market structure aligned/i)).toBeTruthy();
+    // Signal engine puck
+    expect(screen.getByText(/signal engine/i)).toBeTruthy();
 
-    // Smart signal card
+    // Smart signal foreground hero card
+    expect(screen.getByText(/smart signal/i)).toBeTruthy();
     expect(screen.getByText(/gbp \/ jpy/i)).toBeTruthy();
     expect(screen.getByText(/buy/i)).toBeTruthy();
-    expect(screen.getByText("198.420")).toBeTruthy();
-    expect(screen.getByText("198.120")).toBeTruthy();
-    expect(screen.getByText("199.020")).toBeTruthy();
+    expect(screen.getByText("195.842")).toBeTruthy();
+    expect(screen.getByText("195.120")).toBeTruthy();
+    expect(screen.getByText("196.850")).toBeTruthy();
 
-    // Outcome row
-    expect(screen.getByText(/copy trade/i)).toBeTruthy();
-    expect(screen.getByText(/risk control/i)).toBeTruthy();
-    expect(screen.getByText(/auto execute/i)).toBeTruthy();
+    // Action pills
+    expect(screen.getByText(/copy/i)).toBeTruthy();
+    expect(screen.getByText(/protect/i)).toBeTruthy();
+    expect(screen.getByText(/execute/i)).toBeTruthy();
   });
 });

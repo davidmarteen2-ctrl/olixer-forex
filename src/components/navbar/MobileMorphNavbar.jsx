@@ -85,11 +85,12 @@ export default function MobileMorphNavbar({ onCloseExternal }) {
         )}
       </AnimatePresence>
 
-      <div className="mobile-nav-positioner">
+      <div className="mobile-nav-positioner mobile-navbar-root">
         <motion.header
           ref={shellRef}
           layout={!shouldReduceMotion}
           className="mobile-nav-shell"
+          data-open={isOpen}
           animate={{
             borderRadius: isOpen ? 22 : 16,
           }}
@@ -100,6 +101,11 @@ export default function MobileMorphNavbar({ onCloseExternal }) {
             },
           }}
         >
+          <div className="mobile-nav-backdrop-layer" aria-hidden="true" />
+          <div className="mobile-nav-tint-layer" aria-hidden="true" />
+          <div className="mobile-nav-scrim-layer" aria-hidden="true" />
+          <div className="mobile-nav-edge-highlight" aria-hidden="true" />
+
           {/* Header Bar */}
           <div className="mobile-nav-header">
             <BrandLockup />

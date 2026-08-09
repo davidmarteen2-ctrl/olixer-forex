@@ -33,11 +33,13 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 72px 72px;
+    linear-gradient(var(--pattern-ink-dark) 1px, transparent 1px),
+    linear-gradient(90deg, var(--pattern-ink-dark) 1px, transparent 1px);
+  background-size: var(--pattern-step-grid) var(--pattern-step-grid);
   content: "";
+  -webkit-mask-image: radial-gradient(circle at center, #000 20%, transparent 72%);
   mask-image: radial-gradient(circle at center, #000 20%, transparent 72%);
+  opacity: var(--pattern-opacity-subdued);
   pointer-events: none;
 }
 
@@ -101,9 +103,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: clamp(10px, 1vw, 13px);
-  font-weight: 650;
-  letter-spacing: 0.12em;
+  font-size: clamp(14px, 1.3vw, 18px);
+  letter-spacing: 0.1em;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.62);
   text-transform: uppercase;
 }
 
@@ -115,9 +117,10 @@
 .card-shuffle__copy p {
   max-width: 54ch;
   margin: 0 0 10px;
-  color: rgba(255, 255, 255, 0.76);
-  font-size: clamp(12px, 1.3vw, 17px);
-  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: clamp(17px, 1.7vw, 22px);
+  line-height: 1.38;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.7);
 }
 
 .card-shuffle__copy h3 {
@@ -162,6 +165,10 @@
 }
 
 @media (max-width: 900px) {
+  #card-shuffle-root {
+    min-height: 240vh;
+  }
+
   .card-shuffle {
     --shuffle-card-width: min(84vw, 720px);
     height: 240vh;
@@ -178,6 +185,10 @@
 }
 
 @media (max-width: 600px) {
+  #card-shuffle-root {
+    min-height: 220vh;
+  }
+
   .card-shuffle {
     --shuffle-card-width: 88vw;
     height: 220vh;
@@ -186,6 +197,10 @@
 
   .card-shuffle__sticky {
     min-height: min(520px, 100svh);
+  }
+
+  .card-shuffle__sticky::before {
+    opacity: var(--pattern-opacity-quiet);
   }
 
   .card-shuffle__deck {
@@ -215,6 +230,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  #card-shuffle-root {
+    min-height: 760px;
+  }
+
   .card-shuffle {
     height: 100svh;
     min-height: 760px;
