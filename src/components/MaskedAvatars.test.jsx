@@ -37,4 +37,18 @@ describe("MaskedAvatars", () => {
       /@media \(max-width:\s*760px\)[\s\S]*?\.marquee::before,[\s\S]*?\.marquee::after\s*\{[^}]*width:\s*32px/s,
     );
   });
+
+  it("centers the narrow mobile proof inside the hero column", () => {
+    const page = readFileSync("index.html", "utf8");
+
+    expect(page).toMatch(
+      /@media \(max-width:\s*760px\)[\s\S]*?#masked-avatars-root\s*\{[^}]*width:\s*100%;[^}]*justify-content:\s*center/s,
+    );
+    expect(page).toMatch(
+      /@media \(max-width:\s*420px\)[\s\S]*?\.social-proof\s*\{[^}]*flex-direction:\s*column;[^}]*align-items:\s*center;[^}]*width:\s*100%/s,
+    );
+    expect(page).toMatch(
+      /@media \(max-width:\s*420px\)[\s\S]*?\.social-proof \.cap\s*\{[^}]*text-align:\s*center/s,
+    );
+  });
 });

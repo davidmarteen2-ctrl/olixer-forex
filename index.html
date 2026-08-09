@@ -625,15 +625,25 @@
       font-weight: 700
     }
 
-    @media (max-width: 389px) {
+    @media (max-width: 760px) {
       #masked-avatars-root {
         display: flex;
         width: 100%;
+        align-items: center;
+        justify-content: center;
       }
+    }
 
+    @media (max-width: 420px) {
       .social-proof {
         flex-direction: column;
+        align-items: center;
         gap: 8px;
+        width: 100%;
+      }
+
+      .social-proof .cap {
+        text-align: center;
       }
     }
 
