@@ -182,10 +182,12 @@
 .step-ui::before {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
-  background-size: 26px 26px;
+  background-image: radial-gradient(var(--pattern-ink-dark) 1px, transparent 1px);
+  background-size: var(--pattern-step-dot) var(--pattern-step-dot);
+  -webkit-mask-image: linear-gradient(135deg, #000, transparent 72%);
   mask-image: linear-gradient(135deg, #000, transparent 72%);
   content: "";
+  opacity: var(--pattern-opacity-subdued);
   pointer-events: none;
 }
 

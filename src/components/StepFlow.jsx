@@ -160,6 +160,7 @@ function AccountVisual({ play, reduceMotion }) {
   return (
     <motion.div
       className="step-ui step-ui--account"
+      data-surface-pattern="dots"
       initial={reduceMotion ? false : "hidden"}
       animate={reduceMotion || play ? "show" : "hidden"}
     >
@@ -251,6 +252,7 @@ function BrokerVisual({ play, reduceMotion }) {
   return (
     <motion.div
       className="step-ui step-ui--broker"
+      data-surface-pattern="dots"
       initial={reduceMotion ? false : "hidden"}
       animate={reduceMotion || play ? "show" : "hidden"}
     >
@@ -344,6 +346,7 @@ function TraderVisual({ play, reduceMotion }) {
   return (
     <motion.div
       className="step-ui step-ui--trader"
+      data-surface-pattern="dots"
       initial={reduceMotion ? false : "hidden"}
       animate={reduceMotion || play ? "show" : "hidden"}
     >
@@ -506,6 +509,7 @@ function CopyVisual({ play, reduceMotion }) {
   return (
     <motion.div
       className="step-ui step-ui--copy"
+      data-surface-pattern="dots"
       initial={reduceMotion ? false : "hidden"}
       animate={reduceMotion || play ? "show" : "hidden"}
     >

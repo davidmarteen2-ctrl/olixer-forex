@@ -13,18 +13,6 @@
   border-radius: 50px 50px 0 0;
 }
 
-.stats-section::before {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 72px 72px, 72px 72px;
-  content: "";
-  mask-image: linear-gradient(to bottom, #000, transparent 82%);
-  pointer-events: none;
-}
-
 .stats-section__inner {
   position: relative;
   z-index: 1;

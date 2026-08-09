@@ -183,6 +183,7 @@ export default function SignalStack({ reducedMotion }) {
   return (
     <div
       className="signal-stack"
+      data-surface-pattern="dots"
       role="region"
       aria-label="Olixer example signals"
       tabIndex="0"

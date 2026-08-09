@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
 import CardShuffle, { cardShuffleItems } from "./CardShuffle.jsx";
@@ -27,6 +27,38 @@ describe("Olixer card shuffle", () => {
 
     expect(screen.getByText("Scroll to shuffle")).toBeTruthy();
     expect(screen.getByText("01 / 04")).toBeTruthy();
+  });
+
+  it("keeps the scaled supporting labels visually assertive", () => {
+    render(<CardShuffle reducedMotion />);
+
+    const card = screen.getByRole("article", {
+      name: "Live Market Intelligence",
+    });
+    const supportingText = within(card).getByText(
+      /Read institutional-grade signals/i,
+    );
+    const topline = within(card).getByText("Olixer / Platform");
+
+    expect(getComputedStyle(supportingText).fontWeight).toBe("700");
+    expect(getComputedStyle(topline).fontWeight).toBe("700");
+  });
+
+  it("uses a unique, locally owned campaign image for every capability", () => {
+    render(<CardShuffle />);
+
+    const images = screen.getAllByRole("img");
+    const sources = images.map((image) => image.getAttribute("src"));
+
+    expect(images).toHaveLength(4);
+    expect(new Set(sources)).toHaveLength(4);
+    sources.forEach((source) => {
+      expect(source).toBeTruthy();
+      expect(source).not.toMatch(/^https?:\/\//);
+    });
+    images.forEach((image) => {
+      expect(image.style.objectPosition).toMatch(/% center$/);
+    });
   });
 
   it("uses aligned 2x2 Bento targets for reduced motion", () => {

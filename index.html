@@ -124,6 +124,13 @@
       --radius: 12px;
       --shadow-card: 0 1px 2px rgba(21, 23, 26, .04), 0 10px 30px -12px rgba(21, 23, 26, .14);
       --shadow-tile: 0 2px 4px rgba(21, 23, 26, .05), 0 24px 48px -16px rgba(21, 23, 26, .18);
+      --pattern-step-compact: 12px;
+      --pattern-step-dot: 24px;
+      --pattern-step-grid: 72px;
+      --pattern-ink-light: rgba(21, 23, 26, .08);
+      --pattern-ink-dark: rgba(255, 255, 255, .11);
+      --pattern-opacity-subdued: .55;
+      --pattern-opacity-quiet: .32;
     }
 
     * {
@@ -1538,8 +1545,11 @@
       content: "";
       position: absolute;
       inset: 0;
-      background-image: radial-gradient(rgba(21, 23, 26, .1) 1px, transparent 1px);
-      background-size: 24px 24px;
+      background-image: radial-gradient(var(--pattern-ink-light) 1px, transparent 1px);
+      background-size: var(--pattern-step-dot) var(--pattern-step-dot);
+      -webkit-mask-image: radial-gradient(circle at center, transparent 0 24%, #000 50%, transparent 94%);
+      mask-image: radial-gradient(circle at center, transparent 0 24%, #000 50%, transparent 94%);
+      opacity: var(--pattern-opacity-subdued);
       pointer-events: none;
     }
 
@@ -1853,15 +1863,6 @@
       flex-direction: column;
       justify-content: space-between;
       padding-top: clamp(60px, 8vh, 100px);
-    }
-
-    .foot::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(rgba(94, 110, 134, .12) 1px, transparent 1px);
-      background-size: 24px 24px;
-      pointer-events: none;
     }
 
     .foot-inner {
@@ -2203,7 +2204,7 @@
       <script type="module" src="/src/step-flow-main.jsx"></script>
 
       <!-- ================= S3: PLATFORM STATS ================= -->
-      <section class="stats-section" id="stats" aria-labelledby="stats-heading">
+      <section class="stats-section" id="stats" aria-labelledby="stats-heading" data-surface-pattern="plain">
         <div class="stats-section__inner">
           <header class="stats-section__head">
             <div>
@@ -2264,7 +2265,7 @@
   <div class="footerTransition">
 
     <!-- ================= CTA SECTION ================= -->
-    <section class="cta preFooterSurface" id="cta">
+    <section class="cta preFooterSurface" id="cta" data-surface-pattern="dots">
       <div class="cta-ring r2"></div>
       <div class="cta-ring r1"></div>
       <div class="cta-glow"></div>
@@ -2366,7 +2367,7 @@
     </section>
 
     <!-- ================= FOOTER ================= -->
-    <footer class="foot siteFooter" id="footer">
+    <footer class="foot siteFooter" id="footer" data-surface-pattern="plain">
       <div class="foot-inner">
         <div class="foot-row">
           <div class="foot-social">

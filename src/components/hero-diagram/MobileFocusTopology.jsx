@@ -112,6 +112,7 @@ export default function MobileFocusTopology() {
   return (
     <motion.div
       className="mobile-focus-topology"
+      data-surface-pattern="dots"
       data-testid="mobile-focus-stage"
       aria-label="Olixer signal system showing market inputs feeding the signal engine and producing a live GBP/JPY trading signal with copy, risk and execution controls."
       role="img"
