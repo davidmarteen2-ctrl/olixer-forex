@@ -66,7 +66,8 @@ long-form copy without a fade mask.
 
 ## Constraints
 
-- Do not add new patterns to currently plain sections.
+- Do not add patterns outside the surfaces explicitly named in the section
+  mapping.
 - Do not combine dots and grids on the same surface.
 - Do not use patterns as generic decoration outside a real data or product
   canvas.
